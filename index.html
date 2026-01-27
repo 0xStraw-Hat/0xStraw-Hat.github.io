@@ -1,7 +1,7 @@
 <!doctype html>
 <html
   lang="en-us" 
-  data-theme-mode="auto"
+  data-theme-mode="true"
   >
   <head>
 	<meta name="generator" content="Hugo 0.154.5"><meta charset="utf-8" />
@@ -12,18 +12,18 @@
   0xStrawHat Blog
 </title>
 <meta name="description" content="クラッシュをコントロールに変える"/><script>
-  window.siteConfig = JSON.parse("{\"anchor_icon\":null,\"base\":\"https://0xStra-wHat.github.io/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (??)?\",\"ja\":\"????? (??)?\",\"pt-br\":\"Falha ao copiar (??)?\",\"zh-cn\":\"???? (??)?\",\"zh-tw\":\"???? (??)?\"},\"success\":{\"en\":\"Copy successfully (*^^*)\",\"ja\":\"????? (*^^*)\",\"pt-br\":\"Copiado com sucesso (*^^*)\",\"zh-cn\":\"???? (*^^*)\",\"zh-tw\":\"???? (*^^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"??????????:{time}???????????????????????????????\",\"pt-br\":\"Este artigo foi atualizado pela �ltima vez em {time}. Observe que o conte�do pode n�o ser mais aplic�vel.\",\"zh-cn\":\"??????? {time},??????????????\",\"zh-tw\":\"??????? {time},??????????????\"}}}");
+  window.siteConfig = JSON.parse("{\"anchor_icon\":false,\"base\":\"https://0xStra-wHat.github.io/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (??)?\",\"ja\":\"????? (??)?\",\"pt-br\":\"Falha ao copiar (??)?\",\"zh-cn\":\"???? (??)?\",\"zh-tw\":\"???? (??)?\"},\"success\":{\"en\":\"Copy successfully (*^^*)\",\"ja\":\"????? (*^^*)\",\"pt-br\":\"Copiado com sucesso (*^^*)\",\"zh-cn\":\"???? (*^^*)\",\"zh-tw\":\"???? (*^^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"??????????:{time}???????????????????????????????\",\"pt-br\":\"Este artigo foi atualizado pela �ltima vez em {time}. Observe que o conte�do pode n�o ser mais aplic�vel.\",\"zh-cn\":\"??????? {time},??????????????\",\"zh-tw\":\"??????? {time},??????????????\"}}}");
   
 </script>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
   rel="preload"
   as="style"
-  href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap"
+  href="https://fonts.googleapis.com/css?family=JetBrains%20Mono:400,400italic,700,700italic%7cSource%20Code%20Pro:400,400italic,700,700italic%7c&amp;display=swap"
 />
 <link
   rel="stylesheet"
-  href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap"
+  href="https://fonts.googleapis.com/css?family=JetBrains%20Mono:400,400italic,700,700italic%7cSource%20Code%20Pro:400,400italic,700,700italic%7c&amp;display=swap"
   media="print"
   onload="this.media='all'"
 />
@@ -33,7 +33,7 @@
     as="font"
     type="font/woff2"
     crossorigin="anonymous"
-  /><link rel="stylesheet" href="/css/loader.min.ac746e154f756f8220326eeb52a719f142ab038be5a8ddf30ea5ef15ef2356ea.css" /><meta property="og:type" content="website" />
+  /><link rel="stylesheet" href="/css/loader.min.35ca2a02a85277a653ff3d0e1cb9b0ffed4192d41fae2758a184b4466d3f4a23.css" /><meta property="og:type" content="website" />
   <meta property="og:title" content="0xStrawHat Blog" />
   <meta
     property="og:description"
@@ -49,10 +49,10 @@
     content="/"
   />
   <meta property="article:author" content="0xStrawHat" />
-  <meta property="article:published_time" content="2026-01-27T00:00:00&#43;00:00" />
-  <meta property="article:modified_time" content="2026-01-27T00:00:00&#43;00:00" /><meta name="twitter:card" content="summary" />
+  <meta property="article:published_time" content="2026-01-27T18:59:18&#43;02:00" />
+  <meta property="article:modified_time" content="2026-01-27T18:59:18&#43;02:00" /><meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="/" /><link rel="alternate" type="application/rss+xml" href="https://0xStra-wHat.github.io/index.xml" title="0xStrawHat Blog">
-<link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.min.c33b3f65da9931cbfc09bbe994fae6c67e442adc0ee8517d5ad15d18c3450128.css" /><link
+<link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.min.e812f479a3cf42c40daaa06e48822afd2886d85352c5cdcb27f1fe943dfac0d2.css" /><link
     rel="preload"
     as="style"
     href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css"
@@ -94,13 +94,14 @@
     margin-bottom: 12px !important;
   }
   
-   
-  :root {
-      --sidebar-width: 350px !important;
-  }
-  .sidebar-wrapper {
-      width: 350px !important;
-  }
+     
+    :root {
+      --sidebar-width: clamp(260px, 28vw, 320px) !important;
+    }
+    .sidebar-wrapper {
+      width: var(--sidebar-width) !important;
+      max-width: 100% !important;
+    }
   .sidebar-wrap {
       width: 100% !important;
   }
@@ -112,23 +113,26 @@
   #content.sidebar-left .sidebar-wrapper {
       margin-right: 20px !important;  
   }
+    #content {
+      gap: 20px !important;
+    }
 
    
   @media screen and (min-width: 960px) {
     .sidebar-left #main {
-        max-width: calc(100% - 350px - 40px) !important;
+        max-width: calc(100% - var(--sidebar-width) - 40px) !important;
         width: auto !important;
-        margin-left: 50px !important;
+        margin-left: 0 !important;
     }
      
     .sidebar-left #sidebar {
-        margin-left: -50px !important;
+        margin-left: 0 !important;
     }
   }
 
    
   
-  :root {
+  [data-theme="dark"] {
        
       --color-background: #0d1117 !important;  
       --color-wrap: #161b22 !important;       
@@ -137,12 +141,178 @@
       --red-1: #58a6ff !important;            
       --red-3: #1f6feb !important;
       
-       
-      --sidebar-width: 300px !important;
+         
+        --sidebar-width: clamp(260px, 28vw, 320px) !important;
   }
 
-   
-  body {
+     
+
+    [data-theme="light"] {
+      --color-background: #ffffff !important;
+      --color-wrap: #ffffff !important;
+      --color-font: #111111 !important;
+      --color-link: #111111 !important;
+      --red-1: #111111 !important;
+      --red-3: #333333 !important;
+      --sidebar-width: clamp(260px, 28vw, 320px) !important;
+    }
+
+    [data-theme="light"] body {
+      background-image: url('/images/background.png') !important;
+      background-repeat: no-repeat !important;
+      background-attachment: fixed !important;
+      background-position: center center !important;
+      background-size: cover !important;
+      background-color: #ffffff !important;
+    }
+
+    [data-theme="light"] #container {
+      background: transparent !important;
+    }
+
+    [data-theme="light"] .post-wrap,
+    [data-theme="light"] .sidebar-wrap,
+    [data-theme="light"] .sidebar-wrapper-container .sidebar-author,
+    [data-theme="light"] .post-categories-wrap {
+      background-color: #ffffff !important;
+      border: 1px solid #e6e6e6 !important;
+      border-radius: 12px !important;
+      box-shadow: none !important;
+      margin-bottom: 20px !important;
+      transform: none !important;
+    }
+
+    [data-theme="light"] .post-wrap {
+      height: auto !important;
+      min-height: 232px !important;
+    }
+
+    [data-theme="light"] .post-title .post-title-link,
+    [data-theme="light"] .sidebar-author-name,
+    [data-theme="light"] .sidebar-description {
+      color: #111111 !important;
+      text-shadow: none !important;
+    }
+
+    [data-theme="light"] .post-meta,
+    [data-theme="light"] .post-content,
+    [data-theme="light"] .sidebar-state-number,
+    [data-theme="light"] .sidebar-state div {
+      color: #333333 !important;
+    }
+
+    [data-theme="light"] #header-nav {
+      background: #ffffff !important;
+      border-bottom: 1px solid #e6e6e6;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    [data-theme="light"] .main-nav-link {
+      color: #111111 !important;
+      font-family: inherit !important;
+      font-size: 1rem !important;
+      letter-spacing: normal !important;
+    }
+
+    [data-theme="light"] .sidebar-author {
+      background: #ffffff !important;
+      border: 1px solid #e6e6e6 !important;
+      border-radius: 16px !important;
+      padding: 16px 16px 14px 16px !important;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08) !important;
+      text-align: center !important;
+    }
+
+    [data-theme="light"] .sidebar-author img {
+      border-radius: 14px !important;
+      width: 170px !important;
+      height: 170px !important;
+      object-fit: cover !important;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12) !important;
+    }
+
+    [data-theme="light"] .sidebar-social {
+      width: 100% !important;
+      gap: 10px;
+      margin-top: 10px;
+      justify-content: center !important;
+    }
+
+    [data-theme="light"] .sidebar-social-icon {
+      width: 42px !important;
+      height: 42px !important;
+      background: #f4f4f4 !important;
+      border: 1px solid #e0e0e0 !important;
+      border-radius: 10px !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    [data-theme="light"] .sidebar-social-icon:hover {
+      background: #eaeaea !important;
+      border-color: #cfcfcf !important;
+      transform: translateY(-2px);
+    }
+
+    [data-theme="light"] .sidebar-social-icon::before {
+      font-size: 20px !important;
+      color: #111111 !important;
+    }
+
+    [data-theme="light"] .sidebar-menu-link-wrap {
+      background: #f6f6f6 !important;
+      border: 1px solid #e0e0e0 !important;
+      border-radius: 6px !important;
+      margin-bottom: 8px !important;
+      padding: 0 16px !important;
+      height: 40px !important;
+      display: flex !important;
+      align-items: center !important;
+      transition: all 0.2s;
+    }
+
+    [data-theme="light"] .sidebar-menu-link-wrap:hover {
+      background: #ededed !important;
+      border-color: #cfcfcf !important;
+      text-decoration: none !important;
+    }
+
+    [data-theme="light"] .sidebar-menu-link,
+    [data-theme="light"] .sidebar-menu-icon {
+      color: #111111 !important;
+      font-weight: 500 !important;
+    }
+
+    [data-theme="light"] .sidebar-menu-icon {
+      margin-right: 10px !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+
+    [data-theme="light"] .widget-title {
+      color: #111111 !important;
+      font-weight: bold;
+      border-left: 3px solid #111111;
+      padding-left: 10px !important;
+    }
+
+    [data-theme="light"] {
+      --color-code-background: #f5f5f5 !important;
+      --highlight-background: #f5f5f5 !important;
+      --highlight-nav: #f0f0f0 !important;
+    }
+
+    [data-theme="light"] .highlight,
+    [data-theme="light"] pre,
+    [data-theme="light"] code,
+    [data-theme="light"] .code-block {
+      background-color: #f5f5f5 !important;
+    }
+
+     
+    [data-theme="dark"] body {
       background-image: url('/images/background.png') !important;
       background-repeat: no-repeat !important;
       background-attachment: fixed !important;
@@ -150,15 +320,15 @@
       background-size: cover !important;
       background-color: #0d1117 !important;
   }
-  #container {
+    [data-theme="dark"] #container {
       background: transparent !important;
   }
 
    
-  .post-wrap, 
-  .sidebar-wrap,
-  .sidebar-wrapper-container .sidebar-author,  
-  .post-categories-wrap {
+  [data-theme="dark"] .post-wrap, 
+  [data-theme="dark"] .sidebar-wrap,
+  [data-theme="dark"] .sidebar-wrapper-container .sidebar-author,  
+  [data-theme="dark"] .post-categories-wrap {
       background-color: #161b22 !important;
       border: 1px solid #30363d !important;  
       border-radius: 12px !important;        
@@ -166,35 +336,41 @@
       margin-bottom: 20px !important;
       transform: none !important;            
   }
+      [data-theme="dark"] .post-wrap {
+        height: auto !important;
+        min-height: 232px !important;
+      }
 
    
-  .post-wrap.left, .post-wrap.right {
-      background-color: #161b22 !important;
-      border: 1px solid #30363d !important;
-      flex-direction: row !important;  
+  @media screen and (min-width: 960px) {
+    [data-theme="dark"] .post-wrap.left, [data-theme="dark"] .post-wrap.right {
+        background-color: #161b22 !important;
+        border: 1px solid #30363d !important;
+        flex-direction: row !important;  
+    }
   }
   
    
-  .post-title .post-title-link,
-  .sidebar-author-name,
-  .sidebar-description {
+    [data-theme="dark"] .post-title .post-title-link,
+    [data-theme="dark"] .sidebar-author-name,
+    [data-theme="dark"] .sidebar-description {
       color: #e6edf3 !important;
       text-shadow: none !important;
   }
-  .post-meta,
-  .post-content,
-  .sidebar-state-number,
-  .sidebar-state div {
+    [data-theme="dark"] .post-meta,
+    [data-theme="dark"] .post-content,
+    [data-theme="dark"] .sidebar-state-number,
+    [data-theme="dark"] .sidebar-state div {
       color: #8b949e !important;  
   }
 
    
-  #header-nav {
+  [data-theme="dark"] #header-nav {
       background: #161b22 !important;
       border-bottom: 1px solid #30363d;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
   }
-  .main-nav-link {
+  [data-theme="dark"] .main-nav-link {
        color: #e6edf3 !important;
        font-family: inherit !important;  
        font-size: 1rem !important;
@@ -202,7 +378,7 @@
   }
 
    
-    .sidebar-author {
+    [data-theme="dark"] .sidebar-author {
       background: #161b22 !important;
       border: 1px solid #30363d !important;
       border-radius: 16px !important;
@@ -214,7 +390,7 @@
    
 
      
-    .sidebar-author img {
+    [data-theme="dark"] .sidebar-author img {
       border-radius: 14px !important;
       width: 170px !important;
       height: 170px !important;
@@ -223,13 +399,13 @@
     }
 
      
-  .sidebar-social {
+      [data-theme="dark"] .sidebar-social {
       width: 100% !important;
       gap: 10px;
       margin-top: 10px;
       justify-content: center !important;
   }
-  .sidebar-social-icon {
+      [data-theme="dark"] .sidebar-social-icon {
       width: 42px !important;
       height: 42px !important;
       background: #21262d !important;
@@ -240,28 +416,28 @@
       justify-content: center;
       transition: all 0.2s;
   }
-  .sidebar-social-icon:hover {
+      [data-theme="dark"] .sidebar-social-icon:hover {
       background: #30363d !important;
       border-color: #8b949e !important;
       transform: translateY(-2px);
   }
    
-  .sidebar-social-icon::before {
+    [data-theme="dark"] .sidebar-social-icon::before {
       font-size: 20px !important;
       color: #8b949e !important;  
   }
-  .sidebar-social-icon:hover::before {
+    [data-theme="dark"] .sidebar-social-icon:hover::before {
       color: #e6edf3 !important;  
   }
   
    
-  .icon-check::before {
+  [data-theme="dark"] .icon-check::before {
       content: "\f00c" !important;
       font-family: "Font Awesome 6 Free", FontAwesome, sans-serif !important;
   }
   
    
-  .sidebar-menu-link-wrap {
+    [data-theme="dark"] .sidebar-menu-link-wrap {
       background: #21262d !important;
       border: 1px solid #30363d !important;
       border-radius: 6px !important;
@@ -272,47 +448,85 @@
       align-items: center !important;
       transition: all 0.2s;
   }
-  .sidebar-menu-link-wrap:hover {
+    [data-theme="dark"] .sidebar-menu-link-wrap:hover {
       background: #30363d !important;
       border-color: #8b949e !important;
       text-decoration: none !important;
   }
-  .sidebar-menu-link, .sidebar-menu-icon {
+    [data-theme="dark"] .sidebar-menu-link, [data-theme="dark"] .sidebar-menu-icon {
       color: #c9d1d9 !important;
       font-weight: 500 !important;
   }
    
-  .sidebar-menu-icon {
+    [data-theme="dark"] .sidebar-menu-icon {
       margin-right: 10px !important;
       display: flex !important;
       align-items: center !important;
   }
 
-   
-   
-  #main > .post-wrapper:nth-child(odd) .post-wrap {
+     
+    @media screen and (min-width: 960px) {
+     
+    #main > .post-wrapper:nth-child(odd) .post-wrap {
       flex-direction: row !important;
-  }
-   
-  #main > .post-wrapper:nth-child(even) .post-wrap {
+    }
+     
+    #main > .post-wrapper:nth-child(even) .post-wrap {
       flex-direction: row-reverse !important; 
-  }
-  
-   
-   
-  #main > .post-wrapper:nth-child(odd) .post-wrap .post-info {
+    }
+    
+     
+     
+    #main > .post-wrapper:nth-child(odd) .post-wrap .post-info {
       text-align: left !important;
       padding-left: 30px !important;  
       padding-right: 20px !important;
-  }
-  #main > .post-wrapper:nth-child(even) .post-wrap .post-info {
+    }
+    #main > .post-wrapper:nth-child(even) .post-wrap .post-info {
       text-align: left !important;
       padding-right: 30px !important;  
       padding-left: 20px !important;
-  }
+    }
+    }
+
+     
+    @media screen and (max-width: 959px) {
+    #content {
+      flex-direction: column !important;
+    }
+    .sidebar-wrapper,
+    #content.sidebar-left .sidebar-wrapper {
+      width: 100% !important;
+      margin-right: 0 !important;
+    }
+    .post-wrap {
+      flex-direction: column !important;
+      height: auto !important;
+    }
+    #main > .post-wrapper:nth-child(odd) .post-wrap,
+    #main > .post-wrapper:nth-child(even) .post-wrap {
+      flex-direction: column !important;
+    }
+    #main > .post-wrapper:nth-child(odd) .post-wrap .post-info,
+    #main > .post-wrapper:nth-child(even) .post-wrap .post-info {
+      padding: 16px !important;
+    }
+    .post-cover {
+      width: 100% !important;
+      height: 180px !important;
+    }
+    .post-title {
+      white-space: normal !important;
+    }
+    .sidebar-author img {
+      width: 140px !important;
+      height: 140px !important;
+      max-width: 100% !important;
+    }
+    }
   
    
-  .widget-title {
+  [data-theme="dark"] .widget-title {
       color: #e6edf3 !important;
       font-weight: bold;
       border-left: 3px solid #58a6ff;  
@@ -320,31 +534,34 @@
   }
   
    
-  :root, [data-theme="dark"] {
+    [data-theme="dark"] {
       --color-code-background: #0d1117 !important;
       --highlight-background: #0d1117 !important;
       --highlight-nav: #161b22 !important;  
   }
    
-  .highlight, pre, code, .code-block {
+    [data-theme="dark"] .highlight,
+    [data-theme="dark"] pre,
+    [data-theme="dark"] code,
+    [data-theme="dark"] .code-block {
       background-color: #0d1117 !important;
   }
-  .category-list-item {
+    [data-theme="dark"] .category-list-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 8px 10px;
       border-bottom: 1px solid #21262d;
   }
-  .category-list-link {
+    [data-theme="dark"] .category-list-link {
       color: #8b949e !important;
       text-decoration: none;
       transition: color 0.2s;
   }
-  .category-list-link:hover {
+    [data-theme="dark"] .category-list-link:hover {
       color: #58a6ff !important;
   }
-  .category-list-count {
+    [data-theme="dark"] .category-list-count {
       background: #1f6feb !important;  
       color: #ffffff !important;
       padding: 2px 8px;
@@ -356,7 +573,7 @@
   }
 
      
-    .widget .tag-list {
+    [data-theme="dark"] .widget .tag-list {
       display: flex !important;
       flex-wrap: wrap !important;
       gap: 8px !important;
@@ -364,10 +581,10 @@
       margin: 0 !important;
       list-style: none !important;
     }
-    .widget .tag-item {
+    [data-theme="dark"] .widget .tag-item {
       margin: 0 !important;
     }
-    .widget .tag-link {
+    [data-theme="dark"] .widget .tag-link {
       display: inline-block !important;
       background: #21262d !important;
       border: 1px solid #30363d !important;
@@ -378,28 +595,28 @@
       text-decoration: none !important;
       transition: all 0.2s ease !important;
     }
-    .widget .tag-link:hover {
+    [data-theme="dark"] .widget .tag-link:hover {
       background: #30363d !important;
       border-color: #58a6ff !important;
       color: #58a6ff !important;
     }
 
      
-    .archives-tag-list-item.active {
+    [data-theme="dark"] .archives-tag-list-item.active {
       background: #e6edf3 !important;
       box-shadow: none !important;
     }
-    .archives-tag-list-item.active .archives-tag-list-link {
+    [data-theme="dark"] .archives-tag-list-item.active .archives-tag-list-link {
       color: #0d1117 !important;
       font-weight: 700 !important;
     }
 
    
-  #header-nav > img, 
-  #header-nav > picture {
+    [data-theme="dark"] #header-nav > img, 
+    [data-theme="dark"] #header-nav > picture {
       display: none !important;
   }
-  #header-nav {
+    [data-theme="dark"] #header-nav {
       height: auto !important;
       min-height: 0 !important;
       background: rgba(13, 17, 23, 0.7) !important;  
@@ -410,13 +627,13 @@
 
    
    
-  .site-search {
+  [data-theme="dark"] .site-search {
       display: none;
       z-index: 9999;
   }
 
    
-    .popup {
+    [data-theme="dark"] .popup {
       position: fixed !important;
       top: 100px !important;  
       left: 50% !important;
@@ -440,13 +657,13 @@
   }
 
    
-  .popup.show {
+  [data-theme="dark"] .popup.show {
       visibility: visible !important;
       opacity: 1 !important;
   }
   
    
-    .reimu-search {
+    [data-theme="dark"] .reimu-search {
       background: rgba(13, 17, 23, 0.7) !important;  
       border-bottom: 1px solid #30363d !important;
       padding: 12px 16px !important;
@@ -456,16 +673,16 @@
       border-radius: 8px 8px 0 0 !important;
     }
 
-  .reimu-search-input-icon {
+  [data-theme="dark"] .reimu-search-input-icon {
       color: #58a6ff !important;  
       font-size: 1.2rem !important;
   }
 
-    #reimu-search-input {
+    [data-theme="dark"] #reimu-search-input {
       flex: 1 !important;
       width: 100% !important;
     }
-    #reimu-search-input input {
+    [data-theme="dark"] #reimu-search-input input {
       background: #161b22 !important;  
       border: 1px solid #30363d !important;
       border-radius: 6px !important;
@@ -475,26 +692,26 @@
       font-family: inherit !important;
       width: 100% !important;
   }
-  #reimu-search-input input:focus {
+  [data-theme="dark"] #reimu-search-input input:focus {
       border-color: #58a6ff !important;
       outline: none !important;
       box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3) !important;
   }
   
    
-  #reimu-stats {
+  [data-theme="dark"] #reimu-stats {
       padding: 10px 20px 5px 20px !important;
       color: #8b949e !important;  
       font-size: 0.9rem !important;
   }
 
    
-  .reimu-hit-item {
+  [data-theme="dark"] .reimu-hit-item {
       padding: 10px 20px !important;
       border-bottom: none !important;  
   }
   
-  .reimu-hit-item-link {
+  [data-theme="dark"] .reimu-hit-item-link {
       display: flex !important;
       align-items: center !important;
       text-decoration: none !important;
@@ -502,12 +719,12 @@
       transition: transform 0.2s ease !important;
   }
   
-  .reimu-hit-item-link:hover {
+  [data-theme="dark"] .reimu-hit-item-link:hover {
       transform: translateX(5px) !important;
   }
 
    
-  .reimu-hit-marker {
+  [data-theme="dark"] .reimu-hit-marker {
       width: 4px !important;
       height: 14px !important;
       background: #1f6feb !important;  
@@ -517,7 +734,7 @@
       border-radius: 2px !important;
   }
 
-  .reimu-hit-item-title {
+  [data-theme="dark"] .reimu-hit-item-title {
       color: #58a6ff !important;  
       font-size: 16px !important;
       font-weight: normal !important;
@@ -525,7 +742,7 @@
   }
   
    
-  .popup-btn-close {
+    [data-theme="dark"] .popup-btn-close {
       color: #8b949e !important;
       font-size: 20px !important;
       border-left: 1px solid #30363d !important;
@@ -533,13 +750,209 @@
       margin-left: 10px !important;
       cursor: pointer !important;
   }
-  .popup-btn-close:hover {
+    [data-theme="dark"] .popup-btn-close:hover {
       color: #ff7b72 !important;  
   }
 
+      [data-theme="light"] .category-list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 10px;
+        border-bottom: 1px solid #e6e6e6;
+      }
+      [data-theme="light"] .category-list-link {
+        color: #333333 !important;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      [data-theme="light"] .category-list-link:hover {
+        color: #111111 !important;
+      }
+      [data-theme="light"] .category-list-count {
+        background: #111111 !important;
+        color: #ffffff !important;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        min-width: 20px;
+        text-align: center;
+      }
+
+      [data-theme="light"] .widget .tag-list {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        padding: 4px 2px !important;
+        margin: 0 !important;
+        list-style: none !important;
+      }
+      [data-theme="light"] .widget .tag-item {
+        margin: 0 !important;
+      }
+      [data-theme="light"] .widget .tag-link {
+        display: inline-block !important;
+        background: #f6f6f6 !important;
+        border: 1px solid #e0e0e0 !important;
+        color: #111111 !important;
+        padding: 6px 10px !important;
+        border-radius: 8px !important;
+        font-size: 0.85rem !important;
+        text-decoration: none !important;
+        transition: all 0.2s ease !important;
+      }
+      [data-theme="light"] .widget .tag-link:hover {
+        background: #ededed !important;
+        border-color: #cfcfcf !important;
+        color: #111111 !important;
+      }
+
+      [data-theme="light"] .archives-tag-list-item.active {
+        background: #111111 !important;
+        box-shadow: none !important;
+      }
+      [data-theme="light"] .archives-tag-list-item.active .archives-tag-list-link {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+      }
+
+      [data-theme="light"] #header-nav > img,
+      [data-theme="light"] #header-nav > picture {
+        display: none !important;
+      }
+      [data-theme="light"] #header-nav {
+        height: auto !important;
+        min-height: 0 !important;
+        background: rgba(255, 255, 255, 0.75) !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        margin-bottom: 20px !important;
+      }
+
+      [data-theme="light"] .site-search {
+        display: none;
+        z-index: 9999;
+      }
+
+      [data-theme="light"] .popup {
+        position: fixed !important;
+        top: 100px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        margin: 0 !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 1px solid #e6e6e6 !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.12) !important;
+        color: #111111 !important;
+        max-width: 900px !important;
+        width: 95% !important;
+        border-radius: 8px !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        z-index: 9999 !important;
+        transition: opacity 0.3s ease !important;
+      }
+
+      [data-theme="light"] .popup.show {
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+
+      [data-theme="light"] .reimu-search {
+        background: rgba(255, 255, 255, 0.8) !important;
+        border-bottom: 1px solid #e6e6e6 !important;
+        padding: 12px 16px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        border-radius: 8px 8px 0 0 !important;
+      }
+
+      [data-theme="light"] .reimu-search-input-icon {
+        color: #111111 !important;
+        font-size: 1.2rem !important;
+      }
+
+      [data-theme="light"] #reimu-search-input {
+        flex: 1 !important;
+        width: 100% !important;
+      }
+
+      [data-theme="light"] #reimu-search-input input {
+        background: #ffffff !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 6px !important;
+        color: #111111 !important;
+        font-size: 16px !important;
+        padding: 8px 12px !important;
+        font-family: inherit !important;
+        width: 100% !important;
+      }
+
+      [data-theme="light"] #reimu-search-input input:focus {
+        border-color: #111111 !important;
+        outline: none !important;
+        box-shadow: 0 0 0 3px rgba(0,0,0,0.12) !important;
+      }
+
+      [data-theme="light"] #reimu-stats {
+        padding: 10px 20px 5px 20px !important;
+        color: #333333 !important;
+        font-size: 0.9rem !important;
+      }
+
+      [data-theme="light"] .reimu-hit-item {
+        padding: 10px 20px !important;
+        border-bottom: none !important;
+      }
+
+      [data-theme="light"] .reimu-hit-item-link {
+        display: flex !important;
+        align-items: center !important;
+        text-decoration: none !important;
+        padding: 5px 0 !important;
+        transition: transform 0.2s ease !important;
+      }
+
+      [data-theme="light"] .reimu-hit-item-link:hover {
+        transform: translateX(5px) !important;
+      }
+
+      [data-theme="light"] .reimu-hit-marker {
+        width: 4px !important;
+        height: 14px !important;
+        background: #111111 !important;
+        margin-right: 15px !important;
+        display: block !important;
+        box-shadow: 0 0 5px rgba(0,0,0,0.35) !important;
+        border-radius: 2px !important;
+      }
+
+      [data-theme="light"] .reimu-hit-item-title {
+        color: #111111 !important;
+        font-size: 16px !important;
+        font-weight: normal !important;
+        margin: 0 !important;
+      }
+
+      [data-theme="light"] .popup-btn-close {
+        color: #333333 !important;
+        font-size: 20px !important;
+        border-left: 1px solid #e6e6e6 !important;
+        padding-left: 15px !important;
+        margin-left: 10px !important;
+        cursor: pointer !important;
+      }
+      [data-theme="light"] .popup-btn-close:hover {
+        color: #111111 !important;
+      }
+
   
    
-    .reimu-bg {
+    [data-theme="dark"] .reimu-bg {
       display: none !important;
     }
   #header-outer {
@@ -547,11 +960,13 @@
   }
 
    
-  #wrap, #container, .outer {
+    [data-theme="dark"] #wrap,
+    [data-theme="dark"] #container,
+    [data-theme="dark"] .outer {
       background: transparent !important;
   }
    
-  #mask {
+    [data-theme="dark"] #mask {
       display: none !important;
   }
 
@@ -660,17 +1075,17 @@ This article does not have a corresponding language version
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>Posts</div><div class="sidebar-state-number">3</div>
+    <div>Posts</div><div class="sidebar-state-number">1</div>
   </div>
   <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>Categories</div>
     <div class="sidebar-state-number">
-      2
+      0
     </div>
   </a>
   <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
     <div>Tags</div>
-    <div class="sidebar-state-number">7</div>
+    <div class="sidebar-state-number">2</div>
   </a>
 </div>
 <div class="sidebar-social" style="margin-bottom: 20px;"><div class="icon-discord sidebar-social-icon">
@@ -704,92 +1119,25 @@ This article does not have a corresponding language version
       data-aos="fade-up"
     >
       <div style="display: flex; justify-content: space-between;">
-        <h3 class="widget-title">Categories</h3>
-      </div>
-      <div class="widget">
-        <ul class="category-list"><li class="category-list-item">
-                <a class="category-list-link" href="/categories/pwn/" title="PWN">
-                    PWN
-                </a>
-                <span class="category-list-count">1</span>
-              </li><li class="category-list-item">
-                <a class="category-list-link" href="/categories/web/" title="Web">
-                    Web
-                </a>
-                <span class="category-list-count">2</span>
-              </li></ul>
-      </div>
-    </div>
-  </div><div class="widget-wrapper">
-    <div
-      class="widget-wrap"
-      data-aos="fade-up"
-    >
-      <div style="display: flex; justify-content: space-between;">
         <h3 class="widget-title">Tags</h3></div>
       <div class="widget">
         <ul class="tag-list" itemprop="keywords"><li class="tag-item">
                 <a
                   class="tag-link"
-                  href="/tags/bof/"
-                  aria-label="Tag: BOF"
-                  title="BOF"
+                  href="/tags/test/"
+                  aria-label="Tag: Test"
+                  title="Test"
                 >
-                  BOF
+                  Test
                 </a>
               </li><li class="tag-item">
                 <a
                   class="tag-link"
-                  href="/tags/csrf/"
-                  aria-label="Tag: CSRF"
-                  title="CSRF"
+                  href="/tags/test2/"
+                  aria-label="Tag: Test2"
+                  title="Test2"
                 >
-                  CSRF
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/mxss/"
-                  aria-label="Tag: MXSS"
-                  title="MXSS"
-                >
-                  MXSS
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/rop-chain/"
-                  aria-label="Tag: ROP Chain"
-                  title="ROP Chain"
-                >
-                  ROP Chain
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/sql-injection/"
-                  aria-label="Tag: SQL Injection"
-                  title="SQL Injection"
-                >
-                  SQL Injection
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/ssrf/"
-                  aria-label="Tag: SSRF"
-                  title="SSRF"
-                >
-                  SSRF
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/ssti/"
-                  aria-label="Tag: SSTI"
-                  title="SSTI"
-                >
-                  SSTI
+                  Test2
                 </a>
               </li></ul>
       </div>
@@ -802,11 +1150,7 @@ This article does not have a corresponding language version
       <h3 class="widget-title">Recent Posts</h3>
       <div class="widget">
         <ul><li>
-              <a href="/post/cat25/" title="Cat Reloaded 2025 CTF | Innocent Note challenge">Cat Reloaded 2025 CTF | Innocent Note challenge</a>
-            </li><li>
-              <a href="/post/jn25/" title="Junior.Crypt.2025 CTF | Pwn challenges">Junior.Crypt.2025 CTF | Pwn challenges</a>
-            </li><li>
-              <a href="/post/egctf25/" title="EG-CTF Finals 2025: WEB-FlagFinder">EG-CTF Finals 2025: WEB-FlagFinder</a>
+              <a href="/post/test/" title="Test">Test</a>
             </li></ul>
       </div>
     </div>
@@ -819,9 +1163,9 @@ This article does not have a corresponding language version
     data-aos="fade-up"
   ><a
         class="post-link"
-        href="/post/cat25/"
-        aria-label="Cat Reloaded 2025 CTF | Innocent Note challenge"
-        title="Cat Reloaded 2025 CTF | Innocent Note challenge"
+        href="/post/test/"
+        aria-label="Test"
+        title="Test"
       >
       </a><div
       class="
@@ -837,103 +1181,18 @@ This article does not have a corresponding language version
       <div class="post-meta">
         <span
           ><span class="icon-calendar"></span
-          >2025-08-24</span
+          >2026-01-27</span
         ><span
           ><span class="icon-pencil"></span
-          >1 word</span
+          >19 words</span
         >
         <span
           ><span class="icon-clock"></span
           >1 min</span
         >
       </div>
-      <h2 class="post-title">Cat Reloaded 2025 CTF | Innocent Note challenge</h2>
-      <article class="post-article">tes3
-</article>
-    </div>
-  </div>
-</div>
-<div class="post-wrapper">
-  <div
-    class="
-      post-wrap right
-    "
-    data-aos="fade-up"
-  ><a
-        class="post-link"
-        href="/post/jn25/"
-        aria-label="Junior.Crypt.2025 CTF | Pwn challenges"
-        title="Junior.Crypt.2025 CTF | Pwn challenges"
-      >
-      </a><div
-      class="
-        post-cover right
-      "
-    ><img
-          data-src="/posts-cover/junior.webp"
-          data-sizes="auto"
-          alt=""
-          class="lazyload"
-        /></div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span
-          ><span class="icon-calendar"></span
-          >2025-07-03</span
-        ><span
-          ><span class="icon-pencil"></span
-          >1 word</span
-        >
-        <span
-          ><span class="icon-clock"></span
-          >1 min</span
-        >
-      </div>
-      <h2 class="post-title">Junior.Crypt.2025 CTF | Pwn challenges</h2>
-      <article class="post-article">test2
-</article>
-    </div>
-  </div>
-</div>
-<div class="post-wrapper">
-  <div
-    class="
-      post-wrap left
-    "
-    data-aos="fade-up"
-  ><a
-        class="post-link"
-        href="/post/egctf25/"
-        aria-label="EG-CTF Finals 2025: WEB-FlagFinder"
-        title="EG-CTF Finals 2025: WEB-FlagFinder"
-      >
-      </a><div
-      class="
-        post-cover left
-      "
-    ><img
-          data-src="/posts-cover/egcert.webp"
-          data-sizes="auto"
-          alt=""
-          class="lazyload"
-        /></div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span
-          ><span class="icon-calendar"></span
-          >2025-05-28</span
-        ><span
-          ><span class="icon-pencil"></span
-          >1 word</span
-        >
-        <span
-          ><span class="icon-clock"></span
-          >1 min</span
-        >
-      </div>
-      <h2 class="post-title">EG-CTF Finals 2025: WEB-FlagFinder</h2>
-      <article class="post-article">test
-</article>
+      <h2 class="post-title">Test</h2>
+      <article class="post-article">hello world hello hello </article>
     </div>
   </div>
 </div>
@@ -947,10 +1206,10 @@ This article does not have a corresponding language version
       <span class="icon-copyright"></span>2020-2026<span class="footer-info-sep rotate"></span>0xStrawHat
     </div><div>
         <span class="icon-brush"
-          >&nbsp;3</span
+          >&nbsp;19</span
         >
         &nbsp;|&nbsp;
-        <span class="icon-coffee">&nbsp;00:03</span>
+        <span class="icon-coffee">&nbsp;00:01</span>
       </div><div>
         <span class="icon-eye"></span>
         <span id="busuanzi_container_site_pv"
@@ -972,6 +1231,7 @@ This article does not have a corresponding language version
             <div class="arrow-up"></div>
           </div><div id="mask" class="hide"></div>
       </div><nav id="mobile-nav" aria-label="Mobile navigation">
+  <button class="mobile-nav-close" type="button" aria-label="Close sidebar"></button>
   <div class="sidebar-wrap"><div class="sidebar-author">
   <img
     data-src="/avatar/avatar.jpg"
@@ -984,17 +1244,17 @@ This article does not have a corresponding language version
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>Posts</div><div class="sidebar-state-number">3</div>
+    <div>Posts</div><div class="sidebar-state-number">1</div>
   </div>
   <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>Categories</div>
     <div class="sidebar-state-number">
-      2
+      0
     </div>
   </a>
   <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
     <div>Tags</div>
-    <div class="sidebar-state-number">7</div>
+    <div class="sidebar-state-number">2</div>
   </a>
 </div>
 <div class="sidebar-social" ><div class="icon-discord sidebar-social-icon">

@@ -457,7 +457,7 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   text-size-adjust: 100%;
-  font-family: "Mulish", "Noto Serif SC", "Mulish", "Noto Serif SC", "-apple-system", "PingFang SC", "Microsoft YaHei", "sans-serif";
+  font-family: "JetBrains Mono", "Source Code Pro", "JetBrains Mono", "Source Code Pro", "-apple-system", "PingFang SC", "Microsoft YaHei", "sans-serif";
   transition: background 1s;
   color: var(--color-default);
   text-autospace: normal;
@@ -2690,6 +2690,38 @@ mjx-container::-webkit-scrollbar {
   .mobile-nav-on #mobile-nav {
     left: 0;
   }
+}
+
+#mobile-nav .mobile-nav-close {
+  position: sticky;
+  top: 12px;
+  margin: 12px 12px 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--color-font) 15%, transparent);
+  background: color-mix(in srgb, var(--color-mobile-nav-background) 85%, transparent);
+  color: var(--color-font);
+  font-size: 0;
+  line-height: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+#mobile-nav .mobile-nav-close:hover {
+  background: color-mix(in srgb, var(--color-mobile-nav-background) 70%, transparent);
+}
+
+#mobile-nav .mobile-nav-close::before {
+  content: "";
+  width: 18px;
+  height: 12px;
+  background: linear-gradient(currentColor, currentColor) 0 0/100% 2px, linear-gradient(currentColor, currentColor) 0 5px/100% 2px, linear-gradient(currentColor, currentColor) 0 10px/100% 2px;
+  background-repeat: no-repeat;
+  display: block;
 }
 
 #mobile-nav .sidebar-wrap {

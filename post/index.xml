@@ -12,7 +12,7 @@
     
     <copyright>All articles on this blog are licensed under the BY-NC-SA license agreement unless otherwise stated. Please indicate the source when reprinting!</copyright>
     
-    <lastBuildDate>Sun, 24 Aug 2025 11:42:32 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 18:59:18 +0200</lastBuildDate>
     
     
     <atom:link href="https://0xStra-wHat.github.io/post/index.xml" rel="self" type="application/rss&#43;xml" />
@@ -22,60 +22,35 @@
     
 
     <item>
-      <title>Cat Reloaded 2025 CTF | Innocent Note challenge</title>
-      <link>https://0xStra-wHat.github.io/post/cat25/</link>
-      <pubDate>Sun, 24 Aug 2025 11:42:32 &#43;0200</pubDate>
+      <title>Test</title>
+      <link>https://0xStra-wHat.github.io/post/test/</link>
+      <pubDate>Tue, 27 Jan 2026 18:59:18 &#43;0200</pubDate>
       <author>xxx@example.com (0xStrawHat)</author>
-      <guid>https://0xStra-wHat.github.io/post/cat25/</guid>
+      <guid>https://0xStra-wHat.github.io/post/test/</guid>
       <description>
-        <![CDATA[<h1>Cat Reloaded 2025 CTF | Innocent Note challenge</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
+        <![CDATA[<h1>Test</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
         
-          <p>tes3</p>
+          <h2 id="header-one">
+<a class="header-anchor" href="#header-one"></a>
+header one
+</h2><ul>
+<li>u can allow this one .</li>
+</ul>
+<h3 id="sub-header-one">
+<a class="header-anchor" href="#sub-header-one"></a>
+sub header one
+</h3><ul>
+<li>hello world.</li>
+</ul>
+<h3 id="sub-sub-header-one">
+<a class="header-anchor" href="#sub-sub-header-one"></a>
+sub sub header one
+</h3><ul>
+<li>hello again</li>
+</ul>
         
-        <hr><p>Published on 2025-08-24 at <a href='https://0xStra-wHat.github.io/'>0xStrawHat Blog</a>, last modified on 2025-08-24</p>]]>
+        <hr><p>Published on 2026-01-27 at <a href='https://0xStra-wHat.github.io/'>0xStrawHat Blog</a>, last modified on 2026-01-27</p>]]>
       </description>
-      
-        <category>Web</category>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>Junior.Crypt.2025 CTF | Pwn challenges</title>
-      <link>https://0xStra-wHat.github.io/post/jn25/</link>
-      <pubDate>Thu, 03 Jul 2025 11:38:05 &#43;0200</pubDate>
-      <author>xxx@example.com (0xStrawHat)</author>
-      <guid>https://0xStra-wHat.github.io/post/jn25/</guid>
-      <description>
-        <![CDATA[<h1>Junior.Crypt.2025 CTF | Pwn challenges</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
-        
-          <p>test2</p>
-        
-        <hr><p>Published on 2025-07-03 at <a href='https://0xStra-wHat.github.io/'>0xStrawHat Blog</a>, last modified on 2025-07-03</p>]]>
-      </description>
-      
-        <category>PWN</category>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>EG-CTF Finals 2025: WEB-FlagFinder</title>
-      <link>https://0xStra-wHat.github.io/post/egctf25/</link>
-      <pubDate>Wed, 28 May 2025 11:30:46 &#43;0200</pubDate>
-      <author>xxx@example.com (0xStrawHat)</author>
-      <guid>https://0xStra-wHat.github.io/post/egctf25/</guid>
-      <description>
-        <![CDATA[<h1>EG-CTF Finals 2025: WEB-FlagFinder</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
-        
-          <p>test</p>
-        
-        <hr><p>Published on 2025-05-28 at <a href='https://0xStra-wHat.github.io/'>0xStrawHat Blog</a>, last modified on 2025-05-28</p>]]>
-      </description>
-      
-        <category>Web</category>
       
     </item>
     
