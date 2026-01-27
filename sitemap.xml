@@ -2,30 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://0xStra-wHat.github.io/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2026-01-27T18:59:18+02:00</lastmod>
   </url><url>
-    <loc>https://0xStra-wHat.github.io/post/</loc>
+    <loc>http://localhost:1313/post/</loc>
     <lastmod>2026-01-27T18:59:18+02:00</lastmod>
   </url><url>
-    <loc>https://0xStra-wHat.github.io/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2026-01-27T18:59:18+02:00</lastmod>
   </url><url>
-    <loc>https://0xStra-wHat.github.io/post/test/</loc>
+    <loc>http://localhost:1313/post/test/</loc>
     <lastmod>2026-01-27T18:59:18+02:00</lastmod>
   </url><url>
-    <loc>https://0xStra-wHat.github.io/tags/test/</loc>
+    <loc>http://localhost:1313/tags/test/</loc>
     <lastmod>2026-01-27T18:59:18+02:00</lastmod>
   </url><url>
-    <loc>https://0xStra-wHat.github.io/tags/test2/</loc>
+    <loc>http://localhost:1313/tags/test2/</loc>
     <lastmod>2026-01-27T18:59:18+02:00</lastmod>
   </url><url>
-    <loc>https://0xStra-wHat.github.io/about/</loc>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2026-01-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://0xStra-wHat.github.io/archives/</loc>
+    <loc>http://localhost:1313/archives/</loc>
     <lastmod>2022-07-26T21:46:25+08:00</lastmod>
   </url><url>
-    <loc>https://0xStra-wHat.github.io/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
   </url>
 </urlset>
