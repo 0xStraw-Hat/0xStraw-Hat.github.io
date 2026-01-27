@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tech on 0xStrawHat Blog</title>
+    <link>http://localhost:1313/tags/tech/</link>
+    <description>Recent content from 0xStrawHat Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    
+    <managingEditor>xxx@example.com (0xStrawHat)</managingEditor>
+    <webMaster>xxx@example.com (0xStrawHat)</webMaster>
+    
+    <copyright>All articles on this blog are licensed under the BY-NC-SA license agreement unless otherwise stated. Please indicate the source when reprinting!</copyright>
+    
+    <lastBuildDate>Tue, 27 Jan 2026 08:46:50 +0200</lastBuildDate>
+    
+    
+    <atom:link href="http://localhost:1313/tags/tech/index.xml" rel="self" type="application/rss&#43;xml" />
+    
+
+    
+    
+
+    <item>
+      <title>Test2</title>
+      <link>http://localhost:1313/post/test2/</link>
+      <pubDate>Tue, 27 Jan 2026 08:46:50 &#43;0200</pubDate>
+      <author>xxx@example.com (0xStrawHat)</author>
+      <guid>http://localhost:1313/post/test2/</guid>
+      <description>
+        <![CDATA[<h1>Test2</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
+        
+          <p>this is my test content</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;hello world&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+        
+        <hr><p>Published on 2026-01-27 at <a href='http://localhost:1313/'>0xStrawHat Blog</a>, last modified on 2026-01-27</p>]]>
+      </description>
+      
+        <category>pwn</category>
+      
+    </item>
+    
+    
+
+    <item>
+      <title>my test Post</title>
+      <link>http://localhost:1313/post/post/</link>
+      <pubDate>Tue, 27 Jan 2026 06:19:22 &#43;0200</pubDate>
+      <author>xxx@example.com (0xStrawHat)</author>
+      <guid>http://localhost:1313/post/post/</guid>
+      <description>
+        <![CDATA[<h1>my test Post</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
+        
+          <h1 id="header-1">
+<a class="header-anchor" href="#header-1"></a>
+header 1
+</h1><h2 id="header-2">
+<a class="header-anchor" href="#header-2"></a>
+header 2
+</h2><p>this is my test content</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;hello world&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="header-2-1">
+<a class="header-anchor" href="#header-2-1"></a>
+header 2
+</h1><h2 id="sub-header-1">
+<a class="header-anchor" href="#sub-header-1"></a>
+sub header 1
+</h2><p>testetst</p>
+<h2 id="sub-header-3">
+<a class="header-anchor" href="#sub-header-3"></a>
+sub header 3
+</h2><h3 id="sub-sub-header">
+<a class="header-anchor" href="#sub-sub-header"></a>
+sub sub header
+</h3>
+        
+        <hr><p>Published on 2026-01-27 at <a href='http://localhost:1313/'>0xStrawHat Blog</a>, last modified on 2026-01-27</p>]]>
+      </description>
+      
+        <category>pwn</category>
+      
+    </item>
+    
+  </channel>
+</rss>

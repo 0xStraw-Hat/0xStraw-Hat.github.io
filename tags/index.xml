@@ -7,10 +7,12 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     
-    <managingEditor>xxx@example.com (D-Sketon)</managingEditor>
-    <webMaster>xxx@example.com (D-Sketon)</webMaster>
+    <managingEditor>xxx@example.com (0xStrawHat)</managingEditor>
+    <webMaster>xxx@example.com (0xStrawHat)</webMaster>
     
     <copyright>All articles on this blog are licensed under the BY-NC-SA license agreement unless otherwise stated. Please indicate the source when reprinting!</copyright>
+    
+    <lastBuildDate></lastBuildDate>
     
     
     <atom:link href="https://0xStra-wHat.github.io/tags/index.xml" rel="self" type="application/rss&#43;xml" />

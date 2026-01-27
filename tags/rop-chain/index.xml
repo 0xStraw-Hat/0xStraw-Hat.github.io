@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ROP Chain on 0xStrawHat Blog</title>
+    <link>https://0xStra-wHat.github.io/tags/rop-chain/</link>
+    <description>Recent content from 0xStrawHat Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    
+    <managingEditor>xxx@example.com (0xStrawHat)</managingEditor>
+    <webMaster>xxx@example.com (0xStrawHat)</webMaster>
+    
+    <copyright>All articles on this blog are licensed under the BY-NC-SA license agreement unless otherwise stated. Please indicate the source when reprinting!</copyright>
+    
+    <lastBuildDate>Thu, 03 Jul 2025 11:38:05 +0200</lastBuildDate>
+    
+    
+    <atom:link href="https://0xStra-wHat.github.io/tags/rop-chain/index.xml" rel="self" type="application/rss&#43;xml" />
+    
+
+    
+    
+
+    <item>
+      <title>Junior.Crypt.2025 CTF | Pwn challenges</title>
+      <link>https://0xStra-wHat.github.io/post/jn25/</link>
+      <pubDate>Thu, 03 Jul 2025 11:38:05 &#43;0200</pubDate>
+      <author>xxx@example.com (0xStrawHat)</author>
+      <guid>https://0xStra-wHat.github.io/post/jn25/</guid>
+      <description>
+        <![CDATA[<h1>Junior.Crypt.2025 CTF | Pwn challenges</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
+        
+          <p>test2</p>
+        
+        <hr><p>Published on 2025-07-03 at <a href='https://0xStra-wHat.github.io/'>0xStrawHat Blog</a>, last modified on 2025-07-03</p>]]>
+      </description>
+      
+        <category>PWN</category>
+      
+    </item>
+    
+  </channel>
+</rss>
