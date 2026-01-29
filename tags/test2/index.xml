@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Test2 on 0xStrawHat Blog</title>
-    <link>http://localhost:1313/tags/test2/</link>
+    <link>https://0xStra-wHat.github.io/tags/test2/</link>
     <description>Recent content from 0xStrawHat Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
@@ -15,7 +15,7 @@
     <lastBuildDate>Tue, 27 Jan 2026 18:59:18 +0200</lastBuildDate>
     
     
-    <atom:link href="http://localhost:1313/tags/test2/index.xml" rel="self" type="application/rss&#43;xml" />
+    <atom:link href="https://0xStra-wHat.github.io/tags/test2/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
     
@@ -23,10 +23,10 @@
 
     <item>
       <title>Test</title>
-      <link>http://localhost:1313/post/test/</link>
+      <link>https://0xStra-wHat.github.io/post/test/</link>
       <pubDate>Tue, 27 Jan 2026 18:59:18 &#43;0200</pubDate>
       <author>xxx@example.com (0xStrawHat)</author>
-      <guid>http://localhost:1313/post/test/</guid>
+      <guid>https://0xStra-wHat.github.io/post/test/</guid>
       <description>
         <![CDATA[<h1>Test</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
         
@@ -49,7 +49,7 @@ sub sub header one
 <li>hello again</li>
 </ul>
         
-        <hr><p>Published on 2026-01-27 at <a href='http://localhost:1313/'>0xStrawHat Blog</a>, last modified on 2026-01-27</p>]]>
+        <hr><p>Published on 2026-01-27 at <a href='https://0xStra-wHat.github.io/'>0xStrawHat Blog</a>, last modified on 2026-01-27</p>]]>
       </description>
       
     </item>
