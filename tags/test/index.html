@@ -86,8 +86,9 @@
     text-align: center !important;
   }
   .sidebar-description {
-    font-family: 'DotGothic16', sans-serif !important;
-    font-size: 1rem !important;
+    font-family: inherit !important;
+    font-size: 0.95rem !important;
+    font-style: italic !important;
     text-align: center !important;
     color: #8b949e !important;
     margin-bottom: 12px !important;
@@ -99,8 +100,22 @@
     letter-spacing: 0.5px !important;
   }
   .post-article {
-    font-family: 'DotGothic16', sans-serif !important;
+    font-family: inherit !important;
     font-style: italic !important;
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+  }
+
+   
+  .article-entry {
+    font-size: 0.95rem !important;
+    line-height: 1.65 !important;
+  }
+
+  @media screen and (max-width: 479px) {
+    .article-entry {
+      font-size: 0.9rem !important;
+    }
   }
   
      
@@ -997,7 +1012,7 @@ This article does not have a corresponding language version
       data-aos="fade-up"
     ><div class="sidebar-author">
   <img
-    data-src="/avatar/avatar.jpg?v=1769714561"
+    data-src="/avatar/avatar.jpg?v=1771677269"
     data-sizes="auto"
     alt="0xStrawHat"
     class="lazyload"
@@ -1007,17 +1022,17 @@ This article does not have a corresponding language version
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>Posts</div><div class="sidebar-state-number">1</div>
+    <div>Posts</div><div class="sidebar-state-number">2</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
     <div class="sidebar-state-number">
-      0
+      1
     </div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">2</div>
+    <div class="sidebar-state-number">4</div>
   </div>
 </div>
 <div class="sidebar-social" style="margin-bottom: 20px;"><div class="icon-discord sidebar-social-icon">
@@ -1051,9 +1066,42 @@ This article does not have a corresponding language version
       data-aos="fade-up"
     >
       <div style="display: flex; justify-content: space-between;">
+        <h3 class="widget-title">Categories</h3>
+      </div>
+      <div class="widget">
+        <ul class="category-list"><li class="category-list-item">
+                <a class="category-list-link" href="/categories/notes/" title="Notes">
+                    Notes
+                </a>
+                <span class="category-list-count">1</span>
+              </li></ul>
+      </div>
+    </div>
+  </div><div class="widget-wrapper">
+    <div
+      class="widget-wrap"
+      data-aos="fade-up"
+    >
+      <div style="display: flex; justify-content: space-between;">
         <h3 class="widget-title">Tags</h3></div>
       <div class="widget">
         <ul class="tag-list" itemprop="keywords"><li class="tag-item">
+                <a
+                  class="tag-link"
+                  href="/tags/c/"
+                  aria-label="Tag: C"
+                >
+                  C
+                </a>
+              </li><li class="tag-item">
+                <a
+                  class="tag-link"
+                  href="/tags/format-string/"
+                  aria-label="Tag: Format String"
+                >
+                  Format String
+                </a>
+              </li><li class="tag-item">
                 <a
                   class="tag-link"
                   href="/tags/test/"
@@ -1080,6 +1128,8 @@ This article does not have a corresponding language version
       <h3 class="widget-title">Recent Posts</h3>
       <div class="widget">
         <ul><li>
+              <a href="/post/vprintf/">Inside glibc vfprintf</a>
+            </li><li>
               <a href="/post/test/">Test</a>
             </li></ul>
       </div>
@@ -1127,7 +1177,7 @@ This article does not have a corresponding language version
   <button class="mobile-nav-close" type="button" aria-label="Close sidebar"></button>
   <div class="sidebar-wrap"><div class="sidebar-author">
   <img
-    data-src="/avatar/avatar.jpg?v=1769714561"
+    data-src="/avatar/avatar.jpg?v=1771677269"
     data-sizes="auto"
     alt="0xStrawHat"
     class="lazyload"
@@ -1137,17 +1187,17 @@ This article does not have a corresponding language version
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>Posts</div><div class="sidebar-state-number">1</div>
+    <div>Posts</div><div class="sidebar-state-number">2</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
     <div class="sidebar-state-number">
-      0
+      1
     </div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">2</div>
+    <div class="sidebar-state-number">4</div>
   </div>
 </div>
 <div class="sidebar-social" ><div class="icon-discord sidebar-social-icon">

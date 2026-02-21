@@ -48,8 +48,8 @@
     content="/"
   />
   <meta property="article:author" content="0xStrawHat" />
-  <meta property="article:published_time" content="2026-01-27T18:59:18&#43;02:00" />
-  <meta property="article:modified_time" content="2026-01-27T18:59:18&#43;02:00" /><meta name="twitter:card" content="summary" />
+  <meta property="article:published_time" content="2026-02-21T14:23:38&#43;02:00" />
+  <meta property="article:modified_time" content="2026-02-21T14:23:38&#43;02:00" /><meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="/" /><link rel="alternate" type="application/rss+xml" href="https://0xStra-wHat.github.io/tags/index.xml" title="0xStrawHat Blog">
 <link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.min.e812f479a3cf42c40daaa06e48822afd2886d85352c5cdcb27f1fe943dfac0d2.css" /><link
     rel="preload"
@@ -95,12 +95,28 @@
 
    
   .post-title {
-    font-family: 'Press Start 2P', cursive !important;
-    letter-spacing: 0.5px !important;
+    font-family: inherit !important;
+    font-size: 1.12rem !important;
+    line-height: 1.35 !important;
+    letter-spacing: normal !important;
+  }
+
+   
+  #header-title #logo h1 {
+    font-size: 1.0rem !important;
+    line-height: 1.25 !important;
+  }
+
+  @media screen and (max-width: 479px) {
+    #header-title #logo h1 {
+      font-size: 0.85rem !important;
+    }
   }
   .post-article {
-    font-family: 'DotGothic16', sans-serif !important;
+    font-family: inherit !important;
     font-style: italic !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
   }
   
      
@@ -164,16 +180,22 @@
       background-color: #0d1117 !important;
       position: relative !important;
     }
-    [data-theme="dark"] body::before {
+     
+    body::before {
       content: "";
       position: fixed;
       inset: 0;
       background: url('/images/background.jpg') center/cover no-repeat fixed;
-      filter: blur(3px);
       transform: scale(1.01);
-      opacity: 0.88;
-      z-index: -1;
+      z-index: -10;
       pointer-events: none;
+      opacity: 0.35;
+    }
+
+     
+    [data-theme="dark"] body::before {
+      filter: blur(3px);
+      opacity: 0.88;
     }
     [data-theme="dark"] #container {
       background: transparent !important;
@@ -892,10 +914,10 @@
   }
 
    
-    [data-theme="dark"] #wrap,
-    [data-theme="dark"] #container,
-    [data-theme="dark"] .outer {
-      background: transparent !important;
+  #wrap,
+  #container,
+  .outer {
+    background: transparent !important;
   }
    
     [data-theme="dark"] #mask {
@@ -957,10 +979,7 @@ This article does not have a corresponding language version
   <nav id="sub-nav" aria-label="Secondary navigation"><a id="nav-search-btn" class="nav-icon popup-trigger" title="Search" aria-label="Search" style="display: flex; align-items: center; justify-content: center;">
          <i class="fas fa-search" style="color:white;"></i>
       </a></nav></div>
-<header id="header" aria-label="Site header">
-  
-
-  <div id="header-outer">
+<header id="header" aria-label="Site header"><picture></picture><div id="header-outer">
     <div id="header-title">
         <style>
             #logo h1 {
@@ -997,7 +1016,7 @@ This article does not have a corresponding language version
       data-aos="fade-up"
     ><div class="sidebar-author">
   <img
-    data-src="/avatar/avatar.jpg?v=1769714561"
+    data-src="/avatar/avatar.jpg?v=1771691501"
     data-sizes="auto"
     alt="0xStrawHat"
     class="lazyload"
@@ -1012,7 +1031,7 @@ This article does not have a corresponding language version
   <div class="sidebar-state-category">
     <div>Categories</div>
     <div class="sidebar-state-number">
-      0
+      1
     </div>
   </div>
   <div class="sidebar-state-tag">
@@ -1051,23 +1070,40 @@ This article does not have a corresponding language version
       data-aos="fade-up"
     >
       <div style="display: flex; justify-content: space-between;">
+        <h3 class="widget-title">Categories</h3>
+      </div>
+      <div class="widget">
+        <ul class="category-list"><li class="category-list-item">
+                <a class="category-list-link" href="/categories/notes/" title="Notes">
+                    Notes
+                </a>
+                <span class="category-list-count">1</span>
+              </li></ul>
+      </div>
+    </div>
+  </div><div class="widget-wrapper">
+    <div
+      class="widget-wrap"
+      data-aos="fade-up"
+    >
+      <div style="display: flex; justify-content: space-between;">
         <h3 class="widget-title">Tags</h3></div>
       <div class="widget">
         <ul class="tag-list" itemprop="keywords"><li class="tag-item">
                 <a
                   class="tag-link"
-                  href="/tags/test/"
-                  aria-label="Tag: Test"
+                  href="/tags/c/"
+                  aria-label="Tag: C"
                 >
-                  Test
+                  C
                 </a>
               </li><li class="tag-item">
                 <a
                   class="tag-link"
-                  href="/tags/test2/"
-                  aria-label="Tag: Test2"
+                  href="/tags/format-string/"
+                  aria-label="Tag: Format String"
                 >
-                  Test2
+                  Format String
                 </a>
               </li></ul>
       </div>
@@ -1080,7 +1116,7 @@ This article does not have a corresponding language version
       <h3 class="widget-title">Recent Posts</h3>
       <div class="widget">
         <ul><li>
-              <a href="/post/test/">Test</a>
+              <a href="/post/vprintf/">Inside glibc vfprintf</a>
             </li></ul>
       </div>
     </div>
@@ -1103,8 +1139,8 @@ This article does not have a corresponding language version
             class="
               archives-tag-list-link
             "
-            href="/tags/test/"
-            >Test</a
+            href="/tags/c/"
+            >C</a
           >
         </div><div
           class="
@@ -1116,8 +1152,8 @@ This article does not have a corresponding language version
             class="
               archives-tag-list-link
             "
-            href="/tags/test2/"
-            >Test2</a
+            href="/tags/format-string/"
+            >Format String</a
           >
         </div></div>
   </div></section>
@@ -1140,7 +1176,7 @@ This article does not have a corresponding language version
   <button class="mobile-nav-close" type="button" aria-label="Close sidebar"></button>
   <div class="sidebar-wrap"><div class="sidebar-author">
   <img
-    data-src="/avatar/avatar.jpg?v=1769714561"
+    data-src="/avatar/avatar.jpg?v=1771691501"
     data-sizes="auto"
     alt="0xStrawHat"
     class="lazyload"
@@ -1155,7 +1191,7 @@ This article does not have a corresponding language version
   <div class="sidebar-state-category">
     <div>Categories</div>
     <div class="sidebar-state-number">
-      0
+      1
     </div>
   </div>
   <div class="sidebar-state-tag">
@@ -1272,7 +1308,7 @@ This article does not have a corresponding language version
           title: "Tags",
           url: "https:\/\/0xStra-wHat.github.io\/tags\/",
           description: "",
-          cover: "https:\/\/0xStra-wHat.github.io\/images\/banner.webp",
+          cover: "https:\/\/0xStra-wHat.github.io\/images\/background.jpg",
         };
       </script><script src="/js/insert_highlight.js" integrity="" crossorigin="anonymous" data-pjax ></script><script src="/js/tabs.js" integrity="" crossorigin="anonymous" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
           if (_$$(`${gallery} ${children}`).length > 0) {

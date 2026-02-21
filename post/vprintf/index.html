@@ -8,9 +8,9 @@
   name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
 /><title>
-  Archives | 0xStrawHat
+  Inside glibc vfprintf | 0xStrawHat
 </title>
-<meta name="description" content="クラッシュをコントロールに変える"/><script>
+<meta name="description" content="This writeup focuses on glibc&#39;s positional-parameter ($) handling in vfprintf."/><script>
   window.siteConfig = JSON.parse("{\"anchor_icon\":false,\"base\":\"https://0xStra-wHat.github.io/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (??)?\",\"ja\":\"????? (??)?\",\"pt-br\":\"Falha ao copiar (??)?\",\"zh-cn\":\"???? (??)?\",\"zh-tw\":\"???? (??)?\"},\"success\":{\"en\":\"Copy successfully (*^^*)\",\"ja\":\"????? (*^^*)\",\"pt-br\":\"Copiado com sucesso (*^^*)\",\"zh-cn\":\"???? (*^^*)\",\"zh-tw\":\"???? (*^^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"??????????:{time}???????????????????????????????\",\"pt-br\":\"Este artigo foi atualizado pela �ltima vez em {time}. Observe que o conte�do pode n�o ser mais aplic�vel.\",\"zh-cn\":\"??????? {time},??????????????\",\"zh-tw\":\"??????? {time},??????????????\"}}}");
   
 </script>
@@ -33,24 +33,24 @@
     type="font/woff2"
     crossorigin="anonymous"
   /><link rel="stylesheet" href="/css/loader.min.35ca2a02a85277a653ff3d0e1cb9b0ffed4192d41fae2758a184b4466d3f4a23.css" /><meta property="og:type" content="website" />
-  <meta property="og:title" content="Archives | 0xStrawHat" />
+  <meta property="og:title" content="Inside glibc vfprintf | 0xStrawHat" />
   <meta
     property="og:description"
-    content="クラッシュをコントロールに変える"
+    content="This writeup focuses on glibc&#39;s positional-parameter ($) handling in vfprintf."
   />
-  <meta property="og:url" content="https://0xStra-wHat.github.io/archives/" />
+  <meta property="og:url" content="https://0xStra-wHat.github.io/post/vprintf/" />
   <meta
     property="og:site_name"
     content="0xStrawHat Blog"
   />
   <meta
     property="og:image"
-    content="/"
+    content="/posts-cover/cat25.gif"
   />
   <meta property="article:author" content="0xStrawHat" />
-  <meta property="article:published_time" content="2022-07-26T21:46:25&#43;08:00" />
-  <meta property="article:modified_time" content="2022-07-26T21:46:25&#43;08:00" /><meta name="twitter:card" content="summary" />
-  <meta name="twitter:image" content="/" /><link rel="alternate" type="application/rss+xml" href="https://0xStra-wHat.github.io/archives/index.xml" title="0xStrawHat Blog">
+  <meta property="article:published_time" content="2026-02-21T14:23:38&#43;02:00" />
+  <meta property="article:modified_time" content="2026-02-21T14:23:38&#43;02:00" /><meta property="article:tag" content="CFormat String" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="/posts-cover/cat25.gif" />
 <link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.min.e812f479a3cf42c40daaa06e48822afd2886d85352c5cdcb27f1fe943dfac0d2.css" /><link
     rel="preload"
     as="style"
@@ -1001,7 +1001,7 @@ This article does not have a corresponding language version
             }
         </style><span id="logo">
             <h1 data-aos="slide-up">
-                アーカイブ | Archives
+                Inside glibc vfprintf
                 <img class="nyan-banner-icon" src="https://media.tenor.com/-bKcw_wV3oAAAAAi/nyan-cat-nyan.gif" alt="nyan">
             </h1>
           </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
@@ -1010,11 +1010,41 @@ This article does not have a corresponding language version
 <div id="content"
           aria-label="Page content"
           class="sidebar-left"
-            ><aside id="sidebar" aria-label="Sidebar"><div class="sidebar-wrapper-container "><div class="sidebar-wrapper">
+            ><aside id="sidebar" aria-label="Sidebar"><div class="sidebar-wrapper-container sticky"><div class="sidebar-wrapper">
     <div
       class="sidebar-wrap"
       data-aos="fade-up"
-    ><div class="sidebar-author">
+    ><div class="sidebar-toc-sidebar"><h3 class="toc-title">Contents</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#description">Description</a></li>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#the-assumption-most-people-make">The Assumption Most People Make</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-hidden-switch-inside-glibc">The Hidden Switch inside glibc</a>
+      <ul>
+        <li><a href="#the-entry-point">The Entry point</a></li>
+      </ul>
+    </li>
+    <li><a href="#mind-map">Mind Map</a></li>
+    <li><a href="#fast-path-vs-do_posistional-path">Fast Path Vs do_Posistional Path</a>
+      <ul>
+        <li><a href="#fast-path">Fast Path</a></li>
+        <li><a href="#do_positional-path">do_positional path</a></li>
+      </ul>
+    </li>
+    <li><a href="#tldr-for-the-pwners">TL;DR; for the pwners</a>
+      <ul>
+        <li><a href="#show-case">show case</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div></div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img
     data-src="/avatar/avatar.jpg?v=1771691501"
     data-sizes="auto"
@@ -1063,87 +1093,402 @@ This article does not have a corresponding language version
         aria-label="linkedin"
         rel="noopener nofollow noreferrer"
       ></a>
-    </div></div></div>
-  </div><div class="sidebar-widget"><div class="widget-wrapper">
-    <div
-      class="widget-wrap"
-      data-aos="fade-up"
-    >
-      <div style="display: flex; justify-content: space-between;">
-        <h3 class="widget-title">Categories</h3>
-      </div>
-      <div class="widget">
-        <ul class="category-list"><li class="category-list-item">
-                <a class="category-list-link" href="/categories/notes/" title="Notes">
-                    Notes
-                </a>
-                <span class="category-list-count">1</span>
-              </li></ul>
-      </div>
-    </div>
-  </div><div class="widget-wrapper">
-    <div
-      class="widget-wrap"
-      data-aos="fade-up"
-    >
-      <div style="display: flex; justify-content: space-between;">
-        <h3 class="widget-title">Tags</h3></div>
-      <div class="widget">
-        <ul class="tag-list" itemprop="keywords"><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/c/"
-                  aria-label="Tag: C"
-                >
-                  C
-                </a>
-              </li><li class="tag-item">
-                <a
-                  class="tag-link"
-                  href="/tags/format-string/"
-                  aria-label="Tag: Format String"
-                >
-                  Format String
-                </a>
-              </li></ul>
-      </div>
-    </div>
-  </div><div class="widget-wrapper">
-    <div
-      class="widget-wrap"
-      data-aos="fade-up"
-    >
-      <h3 class="widget-title">Recent Posts</h3>
-      <div class="widget">
-        <ul><li>
-              <a href="/post/vprintf/">Inside glibc vfprintf</a>
-            </li></ul>
-      </div>
-    </div>
-  </div></div></div></aside>
-<section id="main" aria-label="Main content"><div
-    class="archives-outer-wrap"
+    </div></div></div><div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div></div>
+  </div><div class="sidebar-widget"></div></div></aside>
+<section id="main" aria-label="Main content"><article
+  class="h-entry article"
+  itemscope
+  itemtype="https://schema.org/BlogPosting"
+>
+  <div
+    class="article-inner"
     data-aos="fade-up"
   >
-<section class="archives-wrap" data-aos="fade-up">
-    <div class="archive-year-wrap">
-      <span class="archive-year">2026</span>
-    </div>
-    <ul><li class="archive-article">
-          <div class="archive-article-date">
-            <span>
-              <time
-                class="dt-published"
-                datetime="2026-02-21 14:23:38 &#43;0200 EET"
-                itemprop="datePublished"
-                >2026-02</time
-              >
-            </span>
-          </div><a class="archive-article-title" href="/post/vprintf/"
-              >Inside glibc vfprintf</a
-            ></li></ul>
-  </section></div><nav id="page-nav" aria-label="Pagination navigation" data-aos="fade-up"><span class="page-number current">1</span></nav>
-</section>
+    <div class="article-meta"><div class="article-date">
+  <span
+    class="article-date-link icon-calendar"
+    data-aos="zoom-in"
+  >
+    <time datetime="2026-02-21 14:23:38 &#43;0200 EET" itemprop="datePublished"
+      >2026-02-21</time
+    >
+    <time style="display: none;" id="post-update-time"
+      >2026-02-21</time
+    >
+  </span></div>
+</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h2 id="description">
+<a class="header-anchor" href="#description"></a>
+Description
+</h2><blockquote>
+<p>This writeup focuses on glibc&rsquo;s <strong>positional-parameter ($)</strong> handling in vfprintf: how detecting $ forces an immediate switch from the fast parser to printf_positional. It explains the two-phase positional engine—first parsing all specifiers, then freezing argument values by replaying a saved va_list into args_value[]—and how every later conversion (e.g. %c) is served from that array.</p>
+</blockquote>
+<h2 id="introduction">
+<a class="header-anchor" href="#introduction"></a>
+Introduction
+</h2><p>Format string vulnerabilities are among the most subtle and powerful primitives in memory corruption. At first glance, they look simple: control the format string, leak some pointers with %p, maybe write something with %n, and move on.</p>
+<p>But once you start digging deeper especially into glibc&rsquo;s internals, you realize that not all format strings behave the same.</p>
+<p>Let&rsquo;s quickly recap the basics.</p>
+<p>A Quick Refresher</p>
+<p>When dealing with a format string vulnerability, two specifiers dominate exploitation:</p>
+<ul>
+<li>%p — used to leak stack values (usually pointers).</li>
+<li>%n — used to write the number of printed bytes to an address.
+for example:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%p %p %p&#34;</span>);
+</span></span></code></pre></div><p>This prints consecutive values pulled from the stack.</p>
+<p>If we want to access a specific stack index directly, we can use the positional parameter syntax with <code>$</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%25$p&#34;</span>);
+</span></span></code></pre></div><p>This tells printf:</p>
+<p><strong>&ldquo;Don&rsquo;t consume arguments sequentially, give me the 25th argument</strong>.&rdquo;</p>
+<p>Similarly, we can write to a specific stack argument:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%7$n&#34;</span>);
+</span></span></code></pre></div><p>Which writes to the 7th argument.</p>
+<blockquote>
+<p>So far, everything seems straightforward. The $ modifier just looks like a convenient way to index arguments directly instead of walking through them one by one.</p>
+</blockquote>
+<p>Most tutorials stop here.</p>
+<p><em>But this is where things start getting interesting</em>.</p>
+<h3 id="the-assumption-most-people-make">
+<a class="header-anchor" href="#the-assumption-most-people-make"></a>
+The Assumption Most People Make
+</h3><p>When exploiting format strings, we often rely on a simple mental model:</p>
+<p>printf reads arguments from the stack.</p>
+<p><code>%n</code> modifies memory.</p>
+<p>Any later reads should reflect that modification.</p>
+<p>So naturally, we assume something like this should work:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%n %p&#34;</span>);
+</span></span></code></pre></div><p>If <code>%n</code> modifies some stack value, and <code>%p</code> later reads it, we expect %p to print the modified value, Right?</p>
+<p>Now let&rsquo;s make it more controlled:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%2$n %2$p&#34;</span>);
+</span></span></code></pre></div><p>We write to the second argument then immediately print it again.
+Logically we expect to see the updated value.</p>
+<p>But sometimes…</p>
+<p>You don&rsquo;t.</p>
+<p>Sometimes it prints the original value.</p>
+<p>And that&rsquo;s where the mystery begins.</p>
+<hr>
+<h2 id="the-hidden-switch-inside-glibc">
+<a class="header-anchor" href="#the-hidden-switch-inside-glibc"></a>
+The Hidden Switch inside glibc
+</h2><p>now lets zoom into the internals.</p>
+<p>At this point we&rsquo;ve seen something very very strange:</p>
+<ul>
+<li>using <code>$</code> sometimes causes <code>printf</code> to behave in a different way than usuall , especially when mixing <code>%n</code> and later reads of teh same argument, in fact this is not accidental it is the result of the internal design inside glibc</li>
+</ul>
+<h3 id="the-entry-point">
+<a class="header-anchor" href="#the-entry-point"></a>
+The Entry point
+</h3><p>If we examined the source code of printf.c function we will see this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">printf</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>format, ...)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    va_list arg;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> done;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">va_start</span>(arg, format);
+</span></span><span style="display:flex;"><span>    done <span style="color:#f92672">=</span> <span style="color:#a6e22e">vprintf</span>(format, arg);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">va_end</span>(arg);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> done;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>you will notice that the printf uses the internal function vfprintf to parse and print the format.
+in fact all the <code>printf</code>-style functions do that not just printf.</p>
+<p>This <code>vfprintf</code> function is responsible for:</p>
+<ul>
+<li>parsing the format string.</li>
+<li>Reading the arguments passed to printf</li>
+<li>pereforming conversions</li>
+<li>writing the final output</li>
+</ul>
+<p>So we will need to dive into the <code>vfprintf</code> itself to really understand what&rsquo;s going on under the hood.</p>
+<p>After analyzing the <code>vfprintf.c</code> file I found out this -&gt;</p>
+<p>There are two different paths in the file or lets call them <strong>engines</strong>:</p>
+<ul>
+<li>Fast Path &amp; Positionala Path.</li>
+</ul>
+<p>once <code>$</code> is involved, glibc switches engines and stay there for the rest of the printf call (it does not &ldquo;go back&rdquo; to the first engine)</p>
+<hr>
+<h2 id="mind-map">
+<a class="header-anchor" href="#mind-map"></a>
+Mind Map
+</h2><p>Here&rsquo;s a draw which shows the logic.</p>
+<p><img src="/posts-imgs/vprintf/image.png" alt="vprintf diagram"></p>
+<p>I just want you to remember:</p>
+<blockquote>
+<p>once <code>$</code> is involved, glibc switches engines and stay there for the rest of the printf call (it does not &ldquo;go back&rdquo; to the Fast Path)</p>
+</blockquote>
+<h2 id="fast-path-vs-do_posistional-path">
+<a class="header-anchor" href="#fast-path-vs-do_posistional-path"></a>
+Fast Path Vs do_Posistional Path
+</h2><p>Now lets dive into both of them and study what&rsquo;s different about them.</p>
+<h3 id="fast-path">
+<a class="header-anchor" href="#fast-path"></a>
+Fast Path
+</h3><p>the “normal” non-positional engine that runs when the loop didn&rsquo;t encounter <code>$</code> yet in the string.</p>
+<p>the Function that&rsquo;s responsible for this path is the Xprintf_buffer</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">Xprintf_buffer</span> (<span style="color:#66d9ef">struct</span> Xprintf_buffer <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">const</span> CHAR_T <span style="color:#f92672">*</span>format, va_list ap, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> mode_flags)
+</span></span></code></pre></div><ul>
+<li>
+<p><code>Xprintf_buffer</code> saves a copy of the argument cursor every itiration so it is renewable haha (in case of the fmtstring vuln this is the stack idexes)</p>
+</li>
+<li>
+<p>It scans the format string until the next <code>%</code> <code>(__find_specmb/__find_specwc)</code>, writes the literal text before it, then starts parsing right after <code>%</code>.</p>
+</li>
+</ul>
+<p>It parses one specifier at a time:</p>
+<ul>
+<li>reads the next character after <code>%</code></li>
+<li>if it’s width/precision <code>(123, *, .)</code> it sets width/prec</li>
+<li>if it’s a length modifier <code>(h, hh, l, ll, z, t, j, L, w...)</code> it sets type flags and continues</li>
+<li>when it finally hits the conversion letter <code>(d, x, s, p, c, n, %, etc.)</code>, it immediately consumes the matching argument from <code>va_list</code> with<code> va_arg(ap, ...)</code> and prints it.</li>
+</ul>
+<p>imagine <code>va_list</code> like an array that holds a copy of the printf arguments (in case of the format string vulnerabilty imagine it like the stack idexes)</p>
+<ul>
+<li>
+<p>in every int</p>
+</li>
+<li>
+<p>After finishing that one specifier it advances and finds the next <code>%</code>, and do the same checks again.</p>
+</li>
+</ul>
+<p>Now once the Loop encounters a <code>$</code> (positional parameters) it will switch to the do_positional engine or path.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (pos <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">*</span>tmp <span style="color:#f92672">==</span> <span style="color:#a6e22e">L_</span>(<span style="color:#e6db74">&#39;$&#39;</span>)){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">goto</span> do_positional;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="do_positional-path">
+<a class="header-anchor" href="#do_positional-path"></a>
+do_positional path
+</h3><p>Now its time for the do_positional era haha:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>do_positional:
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">printf_positional</span> (buf, format, readonly_format, ap, <span style="color:#f92672">&amp;</span>ap_save,nspecs_done, lead_str_end, work_buffer,
+</span></span><span style="display:flex;"><span>save_errno, grouping, thousands_sep, mode_flags);
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-md" data-lang="md"><span style="display:flex;"><span>OKay first lets talk about <span style="color:#e6db74">`specs[]`</span> array.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Its just an array of parsed format specifier descriptions.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>In printf_positional, glibc can’t format immediately (because <span style="color:#e6db74">`%2$d`</span> means “use arg #2”), so it first
+</span></span><span style="display:flex;"><span> builds a list:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Each <span style="color:#e6db74">`specs[i]`</span> corresponds to one<span style="color:#e6db74">`%...`</span> in the format string, and it stores things like:
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> <span style="color:#e6db74">`specs[i].info.spec`</span> -&gt; the conversion letter (d, c, s, n, p, ...)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> <span style="color:#e6db74">`specs[i].info.width/prec`</span> -&gt; width/precision 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> <span style="color:#e6db74">`specs[i].next_fmt`</span> -&gt; pointer to where the next <span style="color:#e6db74">`%`</span> starts in the format string
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> <span style="color:#e6db74">`specs[i].end_of_fmt`</span> -&gt; pointer to where this specifier ends so it can printf the literal text after it
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>those are not all of them but the most important things that specs array stores
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>So “parsing specs” means: calling<span style="color:#e6db74">` __parse_one_specmb/__parse_one_specwc`</span>,
+</span></span><span style="display:flex;"><span>to fill <span style="color:#e6db74">`specs[i]`</span> for each <span style="color:#e6db74">`%...`</span> so later code can say “okay, spec 0 is <span style="color:#e6db74">`%2$c`</span>, spec 1 is <span style="color:#e6db74">`%1$d`</span>.
+</span></span></code></pre></div><p>Now moving back to the execution flow of the do_positional engine.</p>
+<p><strong>I will devide it into 4 phases</strong>.</p>
+<h4 id="phase-one">
+<a class="header-anchor" href="#phase-one"></a>
+Phase one
+</h4><ul>
+<li>In this phase it will iterate over the rest of the string and stores it in the specs array like mentioned above.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> UCHAR_T <span style="color:#f92672">*</span>f <span style="color:#f92672">=</span> lead_str_end; <span style="color:#f92672">*</span>f <span style="color:#f92672">!=</span> <span style="color:#a6e22e">L_</span>(<span style="color:#e6db74">&#39;\0&#39;</span>);
+</span></span><span style="display:flex;"><span>       f <span style="color:#f92672">=</span> specs[nspecs<span style="color:#f92672">++</span>].next_fmt)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (nspecs <span style="color:#f92672">==</span> specs_limit)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>	  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">scratch_buffer_grow_preserve</span> (<span style="color:#f92672">&amp;</span>specsbuf))
+</span></span><span style="display:flex;"><span>	    {
+</span></span><span style="display:flex;"><span>	      <span style="color:#a6e22e">Xprintf_buffer_mark_failed</span> (buf);
+</span></span><span style="display:flex;"><span>	      <span style="color:#66d9ef">goto</span> all_done;
+</span></span><span style="display:flex;"><span>	    }
+</span></span><span style="display:flex;"><span>	  specs <span style="color:#f92672">=</span> specsbuf.data;
+</span></span><span style="display:flex;"><span>	  specs_limit <span style="color:#f92672">=</span> specsbuf.length <span style="color:#f92672">/</span> <span style="color:#66d9ef">sizeof</span> (specs[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">/* Parse the format specifier.  */</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">bool</span> failed;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef COMPILE_WPRINTF
+</span></span></span><span style="display:flex;"><span>      nargs <span style="color:#f92672">+=</span> <span style="color:#a6e22e">__parse_one_specwc</span> (f, nargs, <span style="color:#f92672">&amp;</span>specs[nspecs], <span style="color:#f92672">&amp;</span>max_ref_arg,
+</span></span><span style="display:flex;"><span>				   <span style="color:#f92672">&amp;</span>failed);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#else
+</span></span></span><span style="display:flex;"><span>      nargs <span style="color:#f92672">+=</span> <span style="color:#a6e22e">__parse_one_specmb</span> (f, nargs, <span style="color:#f92672">&amp;</span>specs[nspecs], <span style="color:#f92672">&amp;</span>max_ref_arg,
+</span></span><span style="display:flex;"><span>				   <span style="color:#f92672">&amp;</span>failed);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (failed)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>	  <span style="color:#a6e22e">Xprintf_buffer_mark_failed</span> (buf);
+</span></span><span style="display:flex;"><span>	  <span style="color:#66d9ef">goto</span> all_done;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Determine the number of arguments the format string consumes.  */</span>
+</span></span><span style="display:flex;"><span>  nargs <span style="color:#f92672">=</span> <span style="color:#a6e22e">MAX</span> (nargs, max_ref_arg);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">union</span> printf_arg <span style="color:#f92672">*</span>args_value;
+</span></span></code></pre></div><p>calls <code> __parse_one_specmb/__parse_one_specwc</code> repeatedly.
+output: each <code>specs[i]</code> records flags,width,prec,length,spec + which arg indexes it references.</p>
+<hr>
+<h4 id="phase-two">
+<a class="header-anchor" href="#phase-two"></a>
+phase two
+</h4><p><strong>Compute argument types</strong>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (cnt <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; cnt <span style="color:#f92672">&lt;</span> nspecs; <span style="color:#f92672">++</span>cnt)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/* If the width is determined by an argument this is an int.  */</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (specs[cnt].width_arg <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>	args_type[specs[cnt].width_arg] <span style="color:#f92672">=</span> PA_INT;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* If the precision is determined by an argument this is an int.  */</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (specs[cnt].prec_arg <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>	args_type[specs[cnt].prec_arg] <span style="color:#f92672">=</span> PA_INT;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">switch</span> (specs[cnt].ndata_args)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">:</span>		<span style="color:#75715e">/* No arguments.  */</span>
+</span></span><span style="display:flex;"><span>	  <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>		<span style="color:#75715e">/* One argument; we already have the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">			   type and size.  */</span>
+</span></span><span style="display:flex;"><span>	  args_type[specs[cnt].data_arg] <span style="color:#f92672">=</span> specs[cnt].data_arg_type;
+</span></span><span style="display:flex;"><span>	  args_size[specs[cnt].data_arg] <span style="color:#f92672">=</span> specs[cnt].size;
+</span></span><span style="display:flex;"><span>	  <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">default</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	  <span style="color:#75715e">/* We have more than one argument for this format spec.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">	     We must call the arginfo function again to determine
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">	     all the types.  */</span>
+</span></span><span style="display:flex;"><span>	  (<span style="color:#66d9ef">void</span>) (<span style="color:#f92672">*</span>__printf_arginfo_table[specs[cnt].info.spec])
+</span></span><span style="display:flex;"><span>	    (<span style="color:#f92672">&amp;</span>specs[cnt].info,
+</span></span><span style="display:flex;"><span>	     specs[cnt].ndata_args, <span style="color:#f92672">&amp;</span>args_type[specs[cnt].data_arg],
+</span></span><span style="display:flex;"><span>	     <span style="color:#f92672">&amp;</span>args_size[specs[cnt].data_arg]);
+</span></span><span style="display:flex;"><span>	  <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><ul>
+<li>It will build <code>args_type[] / args_size[]</code> so it knows how to read each argument (or the stack indexes in case of fmtstring vuln just to make it clear for u)</li>
+</ul>
+<hr>
+<h4 id="phase-three">
+<a class="header-anchor" href="#phase-three"></a>
+Phase three
+</h4><p><strong>This is the devil this is the part that caused me headaches and drove me crazy while trying to know what&rsquo;s the issue with my exploit</strong>.</p>
+<ul>
+<li>This is the part that it reads alllllll the arguments values (again imagine it like the stack indexes in the fmt vuln just to make things easy) into <code>args_value[]</code> array and use it for the rest of the do positional loop <strong>this is the freeze part</strong> basically it takes a screenshot for the stack and store it and use it tell the end of the execution of the printf function.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>args_value[cnt].mem <span style="color:#f92672">=</span> <span style="color:#a6e22e">va_arg</span> (<span style="color:#f92672">*</span>ap_savep, type);
+</span></span></code></pre></div><p>here it will pull the value from the latest saved va_list and save it into args_value
+and then he will use args_value for the rest of the string that&rsquo;s why we say it will take a screenshot of the stack</p>
+<p>just like in this chart</p>
+<p><img src="/posts-imgs/vprintf/image.png" alt="vprintf diagram"></p>
+<hr>
+<h4 id="phase-4">
+<a class="header-anchor" href="#phase-4"></a>
+Phase 4
+</h4><p><strong>Execute each specifier in order using the frozen args</strong>.</p>
+<p>and after executing all the specifier vfprintf will return back up to the <code>vfprintf</code> caller</p>
+<hr>
+<h2 id="tldr-for-the-pwners">
+<a class="header-anchor" href="#tldr-for-the-pwners"></a>
+TL;DR; for the pwners
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-md" data-lang="md"><span style="display:flex;"><span>Using <span style="color:#e6db74">`$`</span> forces glibc to switch into positional mode, where it copies all arguments into an internal array before executing any conversions.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>In other words, it takes a snapshot of the argument list at the beginning of the printf call
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Because of this: 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> If you modify a stack value using %n
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> And you already triggered positional mode with $
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Any later specifier (like %p, %x, %c) will read from the frozen copy not from the live stack
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>So your modification will not appear during the rest of that printf execution
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>However if you avoid using <span style="color:#e6db74">`$`</span> glibc stays in the fast path:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Arguments are consumed sequentially via va_arg.
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Each specifier reads directly from the live argument stream.
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> A modification made by %n can affect later reads.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>So if your exploit relies on:
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">&gt; </span><span style="font-style:italic">Modify → Then reuse the modified value
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Do not trigger positional mode.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Instead of <span style="color:#e6db74">`%7$p`</span>, advance manually using padding like:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">`%c%c%c%c`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>so that you reach the desired argument without introducing $.
+</span></span></code></pre></div><h3 id="show-case">
+<a class="header-anchor" href="#show-case"></a>
+show case
+</h3><ul>
+<li>first the fast path example</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x41414141</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;Before: x = 0x%x</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, x);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%n&#34;</span>, <span style="color:#f92672">&amp;</span>x);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;After:  x = 0x%x</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, x);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Before: x <span style="color:#f92672">=</span> 0x41414141
+</span></span><span style="display:flex;"><span>After:  x <span style="color:#f92672">=</span> 0x0
+</span></span></code></pre></div><p>notice here x got modified and u printed it sucessfully</p>
+<ul>
+<li>second the positional path example</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x41414141</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;Before: x = 0x%x</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, x);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;During: x = %1$n 0x%2$x</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#f92672">&amp;</span>x, x);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Before: x <span style="color:#f92672">=</span> 0x41414141
+</span></span><span style="display:flex;"><span>During: x <span style="color:#f92672">=</span>  0x41414141
+</span></span></code></pre></div><ul>
+<li>and as we expected it printed the same value not <code>0</code></li>
+</ul>
+<hr>
+<p>That&rsquo;s it we reached the end.</p>
+<p>If there’s one thing you should take away from this writeup, let it be this:</p>
+<p>When exploiting a format string vulnerability if your exploit:</p>
+<ul>
+<li>modifies a stack value using <code>%n</code></li>
+<li>Then expects to use that modified value somehow later</li>
+</ul>
+<p>It will behave differently depending on whether <code>$</code> was used.</p>
+</div>
+    <footer class="article-footer"><ul class="article-category-list"><li class="article-tag-list-item" data-aos="zoom-in">
+    <a
+      class="article-category-link"
+      href="/categories/notes"
+      data-aos="zoom-in"
+      >Notes</a
+    >
+    </li></ul>
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/c"
+        rel="tag"
+        >C</a
+      >
+    </li><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/format-string"
+        rel="tag"
+        >Format String</a
+      >
+    </li></ul>
+</footer>
+  </div></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
     <div class="footer-line"></div>
@@ -1161,7 +1506,37 @@ This article does not have a corresponding language version
           </div><div id="mask" class="hide"></div>
       </div><nav id="mobile-nav" aria-label="Mobile navigation">
   <button class="mobile-nav-close" type="button" aria-label="Close sidebar"></button>
-  <div class="sidebar-wrap"><div class="sidebar-author">
+  <div class="sidebar-wrap"><div class="sidebar-toc-sidebar"><h3 class="toc-title">Contents</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#description">Description</a></li>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#the-assumption-most-people-make">The Assumption Most People Make</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-hidden-switch-inside-glibc">The Hidden Switch inside glibc</a>
+      <ul>
+        <li><a href="#the-entry-point">The Entry point</a></li>
+      </ul>
+    </li>
+    <li><a href="#mind-map">Mind Map</a></li>
+    <li><a href="#fast-path-vs-do_posistional-path">Fast Path Vs do_Posistional Path</a>
+      <ul>
+        <li><a href="#fast-path">Fast Path</a></li>
+        <li><a href="#do_positional-path">do_positional path</a></li>
+      </ul>
+    </li>
+    <li><a href="#tldr-for-the-pwners">TL;DR; for the pwners</a>
+      <ul>
+        <li><a href="#show-case">show case</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div></div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img
     data-src="/avatar/avatar.jpg?v=1771691501"
     data-sizes="auto"
@@ -1228,7 +1603,10 @@ This article does not have a corresponding language version
         href="/about"
         aria-label="About"
       ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">About</div>
-    </div></div></div></nav>
+    </div></div></div></div><div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div></nav>
 </div><div class="site-search">
         <div class="reimu-popup popup">
           <div class="reimu-search">
@@ -1292,10 +1670,10 @@ This article does not have a corresponding language version
   <div><script data-pjax>
         window.REIMU_POST = {
           author: "0xStrawHat",
-          title: "",
-          url: "https:\/\/0xStra-wHat.github.io\/archives\/",
-          description: "",
-          cover: "https:\/\/0xStra-wHat.github.io\/images\/background.jpg",
+          title: "Inside glibc vfprintf",
+          url: "https:\/\/0xStra-wHat.github.io\/post\/vprintf\/",
+          description: "This writeup focuses on glibc\u0027s positional-parameter ($) handling in vfprintf.",
+          cover: "https:\/\/0xStra-wHat.github.io\/posts-cover\/cat25.gif",
         };
       </script><script src="/js/insert_highlight.js" integrity="" crossorigin="anonymous" data-pjax ></script><script src="/js/tabs.js" integrity="" crossorigin="anonymous" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
           if (_$$(`${gallery} ${children}`).length > 0) {

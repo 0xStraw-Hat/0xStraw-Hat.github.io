@@ -86,8 +86,9 @@
     text-align: center !important;
   }
   .sidebar-description {
-    font-family: 'DotGothic16', sans-serif !important;
-    font-size: 1rem !important;
+    font-family: inherit !important;
+    font-size: 0.95rem !important;
+    font-style: italic !important;
     text-align: center !important;
     color: #8b949e !important;
     margin-bottom: 12px !important;
@@ -99,8 +100,22 @@
     letter-spacing: 0.5px !important;
   }
   .post-article {
-    font-family: 'DotGothic16', sans-serif !important;
+    font-family: inherit !important;
     font-style: italic !important;
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+  }
+
+   
+  .article-entry {
+    font-size: 0.95rem !important;
+    line-height: 1.65 !important;
+  }
+
+  @media screen and (max-width: 479px) {
+    .article-entry {
+      font-size: 0.9rem !important;
+    }
   }
   
      
@@ -1010,7 +1025,7 @@ This article does not have a corresponding language version
 </div></div>
           <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img
-    data-src="/avatar/avatar.jpg?v=1769714561"
+    data-src="/avatar/avatar.jpg?v=1771677269"
     data-sizes="auto"
     alt="0xStrawHat"
     class="lazyload"
@@ -1020,17 +1035,17 @@ This article does not have a corresponding language version
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>Posts</div><div class="sidebar-state-number">1</div>
+    <div>Posts</div><div class="sidebar-state-number">2</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
     <div class="sidebar-state-number">
-      0
+      1
     </div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">2</div>
+    <div class="sidebar-state-number">4</div>
   </div>
 </div>
 <div class="sidebar-social" style="margin-bottom: 20px;"><div class="icon-discord sidebar-social-icon">
@@ -1119,7 +1134,23 @@ sub sub header one
       >
     </li></ul>
 </footer>
-  </div></article></section>
+  </div><nav
+    id="article-nav"
+    aria-label="Article navigation"
+    data-aos="fade-up"
+  ><div class="article-nav-link-wrap right"><img
+            data-src="/posts-cover/cat25.gif"
+            data-sizes="auto"
+            alt="Inside glibc vfprintf"
+            class="lazyload"
+          /><a
+          href="/post/vprintf/"
+          aria-label="Next:Inside glibc vfprintf"
+          title="Next:Inside glibc vfprintf"
+        ></a>
+        <div class="article-nav-caption">Next</div>
+        <h3 class="article-nav-title">Inside glibc vfprintf</h3>
+      </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
     <div class="footer-line"></div>
@@ -1152,7 +1183,7 @@ sub sub header one
 </div></div>
         <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img
-    data-src="/avatar/avatar.jpg?v=1769714561"
+    data-src="/avatar/avatar.jpg?v=1771677269"
     data-sizes="auto"
     alt="0xStrawHat"
     class="lazyload"
@@ -1162,17 +1193,17 @@ sub sub header one
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>Posts</div><div class="sidebar-state-number">1</div>
+    <div>Posts</div><div class="sidebar-state-number">2</div>
   </div>
   <div class="sidebar-state-category">
     <div>Categories</div>
     <div class="sidebar-state-number">
-      0
+      1
     </div>
   </div>
   <div class="sidebar-state-tag">
     <div>Tags</div>
-    <div class="sidebar-state-number">2</div>
+    <div class="sidebar-state-number">4</div>
   </div>
 </div>
 <div class="sidebar-social" ><div class="icon-discord sidebar-social-icon">

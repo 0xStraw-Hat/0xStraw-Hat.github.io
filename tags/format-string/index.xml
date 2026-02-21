@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on 0xStrawHat Blog</title>
-    <link>https://0xStra-wHat.github.io/post/</link>
+    <title>Format String on 0xStrawHat Blog</title>
+    <link>https://0xStra-wHat.github.io/tags/format-string/</link>
     <description>Recent content from 0xStrawHat Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
@@ -15,7 +15,7 @@
     <lastBuildDate>Sat, 21 Feb 2026 14:23:38 +0200</lastBuildDate>
     
     
-    <atom:link href="https://0xStra-wHat.github.io/post/index.xml" rel="self" type="application/rss&#43;xml" />
+    <atom:link href="https://0xStra-wHat.github.io/tags/format-string/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
     

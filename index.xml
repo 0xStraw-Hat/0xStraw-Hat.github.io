@@ -12,7 +12,7 @@
     
     <copyright>All articles on this blog are licensed under the BY-NC-SA license agreement unless otherwise stated. Please indicate the source when reprinting!</copyright>
     
-    <lastBuildDate>Tue, 27 Jan 2026 18:59:18 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 14:23:38 +0200</lastBuildDate>
     
     
     <atom:link href="https://0xStra-wHat.github.io/index.xml" rel="self" type="application/rss&#43;xml" />
@@ -22,35 +22,29 @@
     
 
     <item>
-      <title>Test</title>
-      <link>https://0xStra-wHat.github.io/post/test/</link>
-      <pubDate>Tue, 27 Jan 2026 18:59:18 &#43;0200</pubDate>
+      <title>Inside glibc vfprintf</title>
+      <link>https://0xStra-wHat.github.io/post/vprintf/</link>
+      <pubDate>Sat, 21 Feb 2026 14:23:38 &#43;0200</pubDate>
       <author>xxx@example.com (0xStrawHat)</author>
-      <guid>https://0xStra-wHat.github.io/post/test/</guid>
+      <guid>https://0xStra-wHat.github.io/post/vprintf/</guid>
       <description>
-        <![CDATA[<h1>Test</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
+        <![CDATA[<h1>Inside glibc vfprintf</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
         
-          <h2 id="header-one">
-<a class="header-anchor" href="#header-one"></a>
-header one
-</h2><ul>
-<li>u can allow this one .</li>
-</ul>
-<h3 id="sub-header-one">
-<a class="header-anchor" href="#sub-header-one"></a>
-sub header one
-</h3><ul>
-<li>hello world.</li>
-</ul>
-<h3 id="sub-sub-header-one">
-<a class="header-anchor" href="#sub-sub-header-one"></a>
-sub sub header one
-</h3><ul>
-<li>hello again</li>
-</ul>
+          <h2 id="description">
+<a class="header-anchor" href="#description"></a>
+Description
+</h2><blockquote>
+<p>This writeup focuses on glibc&rsquo;s <strong>positional-parameter ($)</strong> handling in vfprintf: how detecting $ forces an immediate switch from the fast parser to printf_positional. It explains the two-phase positional engine—first parsing all specifiers, then freezing argument values by replaying a saved va_list into args_value[]—and how every later conversion (e.g. %c) is served from that array.</p>
+</blockquote>
+<h2 id="introduction">
+<a class="header-anchor" href="#introduction"></a>
+Introduction
+</h2><p>Format string vulnerabilities are among the most subtle and powerful primitives in memory corruption. At first glance, they look simple: control the format string, leak some pointers with %p, maybe write something with %n, and move on.</p>
         
-        <hr><p>Published on 2026-01-27 at <a href='https://0xStra-wHat.github.io/'>0xStrawHat Blog</a>, last modified on 2026-01-27</p>]]>
+        <hr><p>Published on 2026-02-21 at <a href='https://0xStra-wHat.github.io/'>0xStrawHat Blog</a>, last modified on 2026-02-21</p>]]>
       </description>
+      
+        <category>Notes</category>
       
     </item>
     

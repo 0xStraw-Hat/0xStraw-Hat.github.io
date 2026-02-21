@@ -94,12 +94,28 @@ data-theme-mode="true"
 
    
   .post-title {
-    font-family: 'Press Start 2P', cursive !important;
-    letter-spacing: 0.5px !important;
+    font-family: inherit !important;
+    font-size: 1.12rem !important;
+    line-height: 1.35 !important;
+    letter-spacing: normal !important;
+  }
+
+   
+  #header-title #logo h1 {
+    font-size: 1.0rem !important;
+    line-height: 1.25 !important;
+  }
+
+  @media screen and (max-width: 479px) {
+    #header-title #logo h1 {
+      font-size: 0.85rem !important;
+    }
   }
   .post-article {
-    font-family: 'DotGothic16', sans-serif !important;
+    font-family: inherit !important;
     font-style: italic !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
   }
   
      
@@ -163,16 +179,22 @@ data-theme-mode="true"
       background-color: #0d1117 !important;
       position: relative !important;
     }
-    [data-theme="dark"] body::before {
+     
+    body::before {
       content: "";
       position: fixed;
       inset: 0;
       background: url('/images/background.jpg') center/cover no-repeat fixed;
-      filter: blur(3px);
       transform: scale(1.01);
-      opacity: 0.88;
-      z-index: -1;
+      z-index: -10;
       pointer-events: none;
+      opacity: 0.35;
+    }
+
+     
+    [data-theme="dark"] body::before {
+      filter: blur(3px);
+      opacity: 0.88;
     }
     [data-theme="dark"] #container {
       background: transparent !important;
@@ -891,10 +913,10 @@ data-theme-mode="true"
   }
 
    
-    [data-theme="dark"] #wrap,
-    [data-theme="dark"] #container,
-    [data-theme="dark"] .outer {
-      background: transparent !important;
+  #wrap,
+  #container,
+  .outer {
+    background: transparent !important;
   }
    
     [data-theme="dark"] #mask {
@@ -914,10 +936,7 @@ data-theme-mode="true"
   <nav id="sub-nav" aria-label="Secondary navigation"><a id="nav-search-btn" class="nav-icon popup-trigger" title="Search" aria-label="Search" style="display: flex; align-items: center; justify-content: center;">
          <i class="fas fa-search" style="color:white;"></i>
       </a></nav></div>
-<header id="header" aria-label="Site header">
-  
-
-  <div id="header-outer">
+<header id="header" aria-label="Site header"><picture></picture><div id="header-outer">
     <div id="header-title">
         <style>
             #logo h1 {
@@ -998,7 +1017,7 @@ data-theme-mode="true"
           title: "404 Page not found",
           url: "https:\/\/0xStra-wHat.github.io\/404.html",
           description: "",
-          cover: "https:\/\/0xStra-wHat.github.io\/images\/banner.webp",
+          cover: "https:\/\/0xStra-wHat.github.io\/images\/background.jpg",
         };
       </script><script src="/js/insert_highlight.js" integrity="" crossorigin="anonymous" data-pjax ></script><script src="/js/tabs.js" integrity="" crossorigin="anonymous" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
           if (_$$(`${gallery} ${children}`).length > 0) {
