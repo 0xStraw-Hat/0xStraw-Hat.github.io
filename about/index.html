@@ -3,7 +3,7 @@
   lang="en-us" 
   data-theme-mode="true"
   >
-  <head><meta charset="utf-8" />
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8" />
 <meta
   name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -11,7 +11,7 @@
   About Me | 0xStrawHat
 </title>
 <meta name="description" content="About 0xStrawHat"/><script>
-  window.siteConfig = JSON.parse("{\"anchor_icon\":false,\"base\":\"https://0xStra-wHat.github.io/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (??)?\",\"ja\":\"????? (??)?\",\"pt-br\":\"Falha ao copiar (??)?\",\"zh-cn\":\"???? (??)?\",\"zh-tw\":\"???? (??)?\"},\"success\":{\"en\":\"Copy successfully (*^^*)\",\"ja\":\"????? (*^^*)\",\"pt-br\":\"Copiado com sucesso (*^^*)\",\"zh-cn\":\"???? (*^^*)\",\"zh-tw\":\"???? (*^^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"??????????:{time}???????????????????????????????\",\"pt-br\":\"Este artigo foi atualizado pela �ltima vez em {time}. Observe que o conte�do pode n�o ser mais aplic�vel.\",\"zh-cn\":\"??????? {time},??????????????\",\"zh-tw\":\"??????? {time},??????????????\"}}}");
+  window.siteConfig = JSON.parse("{\"anchor_icon\":false,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (??)?\",\"ja\":\"????? (??)?\",\"pt-br\":\"Falha ao copiar (??)?\",\"zh-cn\":\"???? (??)?\",\"zh-tw\":\"???? (??)?\"},\"success\":{\"en\":\"Copy successfully (*^^*)\",\"ja\":\"????? (*^^*)\",\"pt-br\":\"Copiado com sucesso (*^^*)\",\"zh-cn\":\"???? (*^^*)\",\"zh-tw\":\"???? (*^^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"??????????:{time}???????????????????????????????\",\"pt-br\":\"Este artigo foi atualizado pela �ltima vez em {time}. Observe que o conte�do pode n�o ser mais aplic�vel.\",\"zh-cn\":\"??????? {time},??????????????\",\"zh-tw\":\"??????? {time},??????????????\"}}}");
   
 </script>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,13 +32,13 @@
     as="font"
     type="font/woff2"
     crossorigin="anonymous"
-  /><link rel="stylesheet" href="/css/loader.min.35ca2a02a85277a653ff3d0e1cb9b0ffed4192d41fae2758a184b4466d3f4a23.css" /><meta property="og:type" content="website" />
+  /><link rel="stylesheet" href="/css/loader.css" /><meta property="og:type" content="website" />
   <meta property="og:title" content="About Me | 0xStrawHat" />
   <meta
     property="og:description"
     content="About 0xStrawHat"
   />
-  <meta property="og:url" content="https://0xStra-wHat.github.io/about/" />
+  <meta property="og:url" content="http://localhost:1313/about/" />
   <meta
     property="og:site_name"
     content="0xStrawHat Blog"
@@ -51,7 +51,7 @@
   <meta property="article:published_time" content="2026-01-27T00:00:00&#43;00:00" />
   <meta property="article:modified_time" content="2026-01-27T00:00:00&#43;00:00" /><meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="/" />
-<link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.min.e812f479a3cf42c40daaa06e48822afd2886d85352c5cdcb27f1fe943dfac0d2.css" /><link
+<link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.css" /><link
     rel="preload"
     as="style"
     href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css"
@@ -177,7 +177,7 @@
       background-attachment: fixed !important;
       background-position: center center !important;
       background-size: cover !important;
-      background-color: #0d1117 !important;
+      background-color: transparent !important;
       position: relative !important;
     }
      
@@ -189,13 +189,14 @@
       transform: scale(1.01);
       z-index: -10;
       pointer-events: none;
-      opacity: 0.35;
+      opacity: 1;
+      filter: blur(2px);
     }
 
      
     [data-theme="dark"] body::before {
-      filter: blur(3px);
-      opacity: 0.88;
+      filter: blur(2px);
+      opacity: 1;
     }
     [data-theme="dark"] #container {
       background: transparent !important;
@@ -910,7 +911,7 @@
       display: none !important;
     }
   #header-outer {
-      padding: 100px 0 50px 0 !important;  
+      padding: 340px 0 50px 0 !important;  
   }
 
    
@@ -919,6 +920,38 @@
   .outer {
     background: transparent !important;
   }
+
+   
+  #header,
+  #header-outer,
+  #header-title {
+    background: transparent !important;
+  }
+
+  #header {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  #header-nav,
+  #header-nav:hover,
+  [data-theme="dark"] #header-nav,
+  [data-theme="dark"] #header-nav:hover,
+  [data-theme="light"] #header-nav,
+  [data-theme="light"] #header-nav:hover {
+    background: #000 !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
+    border: none !important;
+    backdrop-filter: none !important;
+  }
+
+  #header > img,
+  #header > picture,
+  #header-nav > img,
+  #header-nav > picture {
+    display: none !important;
+  }
+
    
     [data-theme="dark"] #mask {
       display: none !important;
@@ -979,9 +1012,22 @@ This article does not have a corresponding language version
   <nav id="sub-nav" aria-label="Secondary navigation"><a id="nav-search-btn" class="nav-icon popup-trigger" title="Search" aria-label="Search" style="display: flex; align-items: center; justify-content: center;">
          <i class="fas fa-search" style="color:white;"></i>
       </a></nav></div>
-<header id="header" aria-label="Site header"><picture></picture><div id="header-outer">
+<header id="header" aria-label="Site header">
+  <picture></picture>
+
+  <div id="header-outer">
     <div id="header-title">
         <style>
+          #header-nav,
+          #header-nav:hover,
+          [data-theme="dark"] #header-nav,
+          [data-theme="dark"] #header-nav:hover,
+          [data-theme="light"] #header-nav,
+          [data-theme="light"] #header-nav:hover {
+            background: #000 !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
+          }
+
             #logo h1 {
                 font-family: 'Press Start 2P', cursive !important;
                 font-size: 1.8rem !important;  
@@ -1016,7 +1062,7 @@ This article does not have a corresponding language version
       data-aos="fade-up"
     ><div class="sidebar-author">
   <img
-    data-src="/avatar/avatar.jpg?v=1772106494"
+    data-src="/avatar/avatar.jpg?v=1775674888"
     data-sizes="auto"
     alt="0xStrawHat"
     class="lazyload"
@@ -1173,7 +1219,7 @@ This article does not have a corresponding language version
   <button class="mobile-nav-close" type="button" aria-label="Close sidebar"></button>
   <div class="sidebar-wrap"><div class="sidebar-author">
   <img
-    data-src="/avatar/avatar.jpg?v=1772106494"
+    data-src="/avatar/avatar.jpg?v=1775674888"
     data-sizes="auto"
     alt="0xStrawHat"
     class="lazyload"
@@ -1265,7 +1311,7 @@ This article does not have a corresponding language version
     
     
     
-    integrity="sha384-J08i8An/QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script><script src="/js/main.js" integrity="" crossorigin="anonymous"  ></script><script src="/js/aos.js" integrity="" crossorigin="anonymous"  ></script><script>
+    integrity="sha384-J08i8An/QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script><script src="/js/main.js"  ></script><script src="/js/aos.js"  ></script><script>
     var aosInit = () => {
       AOS.init({
         duration: 1000,
@@ -1279,7 +1325,7 @@ This article does not have a corresponding language version
     } else {
       aosInit();
     }
-  </script><script src="/js/pjax_main.js" integrity="" crossorigin="anonymous" data-pjax ></script><script>
+  </script><script src="/js/pjax_main.js" data-pjax ></script><script>
   var setupFirework = () => {
     if (! false  || !window.matchMedia('(max-width: 768px)').matches) {
       if (window.firework) {
@@ -1303,11 +1349,11 @@ This article does not have a corresponding language version
         window.REIMU_POST = {
           author: "0xStrawHat",
           title: "About Me",
-          url: "https:\/\/0xStra-wHat.github.io\/about\/",
+          url: "http:\/\/localhost:1313\/about\/",
           description: "About 0xStrawHat",
-          cover: "https:\/\/0xStra-wHat.github.io\/images\/background.jpg",
+          cover: "http:\/\/localhost:1313\/images\/background.jpg",
         };
-      </script><script src="/js/insert_highlight.js" integrity="" crossorigin="anonymous" data-pjax ></script><script src="/js/tabs.js" integrity="" crossorigin="anonymous" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
+      </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
           if (_$$(`${gallery} ${children}`).length > 0) {
             new PhotoSwipeLightbox({
               gallery,
