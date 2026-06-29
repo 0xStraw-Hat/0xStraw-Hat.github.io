@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Fuzzing on 0xStrawHat Blog</title>
-    <link>http://localhost:1313/tags/fuzzing/</link>
+    <link>https://0xStra-wHat.github.io/tags/fuzzing/</link>
     <description>Recent content from 0xStrawHat Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
@@ -15,7 +15,7 @@
     <lastBuildDate>Mon, 29 Jun 2026 20:25:59 +0300</lastBuildDate>
     
     
-    <atom:link href="http://localhost:1313/tags/fuzzing/index.xml" rel="self" type="application/rss&#43;xml" />
+    <atom:link href="https://0xStra-wHat.github.io/tags/fuzzing/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
     
@@ -23,10 +23,10 @@
 
     <item>
       <title>The Fuzzing NoteBook</title>
-      <link>http://localhost:1313/post/the-fuzzing-notebook/</link>
+      <link>https://0xStra-wHat.github.io/post/the-fuzzing-notebook/</link>
       <pubDate>Mon, 29 Jun 2026 20:25:59 &#43;0300</pubDate>
       <author>xxx@example.com (0xStrawHat)</author>
-      <guid>http://localhost:1313/post/the-fuzzing-notebook/</guid>
+      <guid>https://0xStra-wHat.github.io/post/the-fuzzing-notebook/</guid>
       <description>
         <![CDATA[<h1>The Fuzzing NoteBook</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
         
@@ -66,7 +66,7 @@ The concept =&gt;
       Documentation
     </p>
         
-        <hr><p>Published on 2026-06-29 at <a href='http://localhost:1313/'>0xStrawHat Blog</a>, last modified on 2026-06-29</p>]]>
+        <hr><p>Published on 2026-06-29 at <a href='https://0xStra-wHat.github.io/'>0xStrawHat Blog</a>, last modified on 2026-06-29</p>]]>
       </description>
       
         <category>Notes</category>
