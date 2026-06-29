@@ -1,0 +1,2008 @@
+<!doctype html>
+<html
+  lang="en-us" 
+  data-theme-mode="true"
+  >
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no"
+/><title>
+  The Fuzzing NoteBook | 0xStrawHat
+</title>
+<meta name="description" content="Some Notes for Fuzzing, and doing the exercises from Fuzzing-Module."/><script>
+  window.siteConfig = JSON.parse("{\"anchor_icon\":false,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (??)?\",\"ja\":\"????? (??)?\",\"pt-br\":\"Falha ao copiar (??)?\",\"zh-cn\":\"???? (??)?\",\"zh-tw\":\"???? (??)?\"},\"success\":{\"en\":\"Copy successfully (*^^*)\",\"ja\":\"????? (*^^*)\",\"pt-br\":\"Copiado com sucesso (*^^*)\",\"zh-cn\":\"???? (*^^*)\",\"zh-tw\":\"???? (*^^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"??????????:{time}???????????????????????????????\",\"pt-br\":\"Este artigo foi atualizado pela �ltima vez em {time}. Observe que o conte�do pode n�o ser mais aplic�vel.\",\"zh-cn\":\"??????? {time},??????????????\",\"zh-tw\":\"??????? {time},??????????????\"}}}");
+  
+</script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="preload"
+  as="style"
+  href="https://fonts.googleapis.com/css?family=JetBrains%20Mono:400,400italic,700,700italic%7cSource%20Code%20Pro:400,400italic,700,700italic%7c&amp;display=swap"
+/>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=JetBrains%20Mono:400,400italic,700,700italic%7cSource%20Code%20Pro:400,400italic,700,700italic%7c&amp;display=swap"
+  media="print"
+  onload="this.media='all'"
+/>
+<link
+    rel="preload"
+    href="//at.alicdn.com/t/c/font_4552607_4k4bc36ef96.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  /><link rel="stylesheet" href="/css/loader.css" /><meta property="og:type" content="website" />
+  <meta property="og:title" content="The Fuzzing NoteBook | 0xStrawHat" />
+  <meta
+    property="og:description"
+    content="Some Notes for Fuzzing, and doing the exercises from Fuzzing-Module."
+  />
+  <meta property="og:url" content="http://localhost:1313/post/the-fuzzing-notebook/" />
+  <meta
+    property="og:site_name"
+    content="0xStrawHat Blog"
+  />
+  <meta
+    property="og:image"
+    content="/posts-cover/anime-fuzz.jpg"
+  />
+  <meta property="article:author" content="0xStrawHat" />
+  <meta property="article:published_time" content="2026-06-29T20:25:59&#43;03:00" />
+  <meta property="article:modified_time" content="2026-06-29T20:25:59&#43;03:00" /><meta property="article:tag" content="FuzzingC" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="/posts-cover/anime-fuzz.jpg" />
+<link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.css" /><link
+    rel="preload"
+    as="style"
+    href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css"
+    integrity="sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei&#43;Zx/1oA/0l8ysE" crossorigin="anonymous"
+    onload="this.onload=null;this.rel='stylesheet'"
+  /><link
+    rel="preload"
+    as="style"
+    href="https://npm.webcache.cn/katex@0.16.24/dist/katex.min.css"
+    integrity="sha384-tTgKLjMYmJr94v8qu2PE5MUGSMbyN2xiH266JUB3gpm8vnnJywd1dWSOEfrFz&#43;YI" crossorigin="anonymous"
+    onload="this.onload=null;this.rel='stylesheet'"
+  /><script
+    src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js"
+    
+    
+    
+    
+    integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script><link
+    rel="stylesheet"
+    href="https://npm.webcache.cn/@reimujs/aos@0.1.2/dist/aos.css"
+    integrity="sha384-GMRP93c6Hkz9JVKGAuRR3nTS7M07RwPgTFenXiosjq2VbVgvdDNcz1g6Mkj8AONa" crossorigin="anonymous"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  .sidebar-author-name {
+    font-family: 'Press Start 2P', cursive !important;
+    font-size: 0.9rem !important;
+    margin-top: 12px !important;
+    margin-bottom: 6px !important;
+    text-align: center !important;
+  }
+  .sidebar-description {
+    font-family: 'DotGothic16', sans-serif !important;
+    font-size: 1rem !important;
+    text-align: center !important;
+    color: #8b949e !important;
+    margin-bottom: 12px !important;
+  }
+
+   
+  .post-title {
+    font-family: inherit !important;
+    font-size: 1.12rem !important;
+    line-height: 1.35 !important;
+    letter-spacing: normal !important;
+  }
+
+   
+  #header-title #logo h1 {
+    font-size: 1.0rem !important;
+    line-height: 1.25 !important;
+  }
+
+  @media screen and (max-width: 479px) {
+    #header-title #logo h1 {
+      font-size: 0.85rem !important;
+    }
+  }
+  .post-article {
+    font-family: inherit !important;
+    font-style: italic !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+  }
+  
+     
+    :root {
+      --sidebar-width: clamp(260px, 28vw, 320px) !important;
+    }
+    .sidebar-wrapper {
+      width: var(--sidebar-width) !important;
+      max-width: 100% !important;
+    }
+  .sidebar-wrap {
+      width: 100% !important;
+  }
+  
+   
+  .sidebar-wrapper {
+      margin-right: 20px !important;  
+  }
+  #content.sidebar-left .sidebar-wrapper {
+      margin-right: 20px !important;  
+  }
+    #content {
+      gap: 20px !important;
+    }
+
+   
+  @media screen and (min-width: 960px) {
+    .sidebar-left #main {
+        max-width: calc(100% - var(--sidebar-width) - 40px) !important;
+        width: auto !important;
+        margin-left: 0 !important;
+    }
+     
+    .sidebar-left #sidebar {
+        margin-left: 0 !important;
+    }
+  }
+
+   
+  
+  [data-theme="dark"] {
+       
+      --color-background: #0d1117 !important;  
+      --color-wrap: #161b22 !important;       
+      --color-font: #e6edf3 !important;       
+      --color-link: #58a6ff !important;       
+      --red-1: #58a6ff !important;            
+      --red-3: #1f6feb !important;
+      
+         
+        --sidebar-width: clamp(260px, 28vw, 320px) !important;
+  }
+
+     
+    [data-theme="dark"] body {
+      background-image: none !important;
+      background-repeat: no-repeat !important;
+      background-attachment: fixed !important;
+      background-position: center center !important;
+      background-size: cover !important;
+      background-color: transparent !important;
+      position: relative !important;
+    }
+     
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url('/images/background.jpg') center/cover no-repeat fixed;
+      transform: scale(1.01);
+      z-index: -10;
+      pointer-events: none;
+      opacity: 1;
+      filter: blur(2px);
+    }
+
+     
+    [data-theme="dark"] body::before {
+      filter: blur(2px);
+      opacity: 1;
+    }
+    [data-theme="dark"] #container {
+      background: transparent !important;
+  }
+
+   
+  [data-theme="dark"] .post-wrap, 
+  [data-theme="dark"] .sidebar-wrap,
+  [data-theme="dark"] .sidebar-wrapper-container .sidebar-author,  
+  [data-theme="dark"] .post-categories-wrap {
+      background-color: #161b22 !important;
+      border: 1px solid #30363d !important;  
+      border-radius: 12px !important;        
+      box-shadow: none !important;           
+      margin-bottom: 20px !important;
+      transform: none !important;            
+  }
+      [data-theme="dark"] .post-wrap {
+        height: auto !important;
+        min-height: 232px !important;
+      }
+
+   
+  @media screen and (min-width: 960px) {
+    [data-theme="dark"] .post-wrap.left, [data-theme="dark"] .post-wrap.right {
+        background-color: #161b22 !important;
+        border: 1px solid #30363d !important;
+        flex-direction: row !important;  
+    }
+  }
+  
+   
+    [data-theme="dark"] .post-title .post-title-link,
+    [data-theme="dark"] .sidebar-author-name,
+    [data-theme="dark"] .sidebar-description {
+      color: #e6edf3 !important;
+      text-shadow: none !important;
+  }
+    [data-theme="dark"] .post-meta,
+    [data-theme="dark"] .post-content,
+    [data-theme="dark"] .sidebar-state-number,
+    [data-theme="dark"] .sidebar-state div {
+      color: #8b949e !important;  
+  }
+
+   
+  [data-theme="dark"] #header-nav {
+      background: #161b22 !important;
+      border-bottom: 1px solid #30363d;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  [data-theme="dark"] .main-nav-link {
+       color: #e6edf3 !important;
+       font-family: inherit !important;  
+       font-size: 1rem !important;
+       letter-spacing: normal !important;
+  }
+
+   
+    [data-theme="dark"] .sidebar-wrap {
+      background: #161b22 !important;
+      border: none !important;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.35) !important;
+      border-radius: 16px !important;
+    }
+    [data-theme="dark"] .sidebar-author {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 16px !important;
+      padding: 18px 16px 8px 16px !important;
+      box-shadow: none !important;
+      text-align: center !important;
+    }
+
+   
+  @media screen and (min-width: 960px) {
+    .sidebar-author {
+      margin-left: -10px !important;
+    }
+  }
+
+   
+  #header-title {
+    text-align: center !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translate(-50%, 0) !important;
+    width: 95% !important;
+    max-width: 95% !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+  #header-title h1 {
+    text-align: center !important;
+  }
+  #header-title h1 {
+    text-align: right !important;
+  }
+  
+   
+
+     
+    [data-theme="dark"] .sidebar-author img {
+      border-radius: 14px !important;
+      width: 180px !important;
+      height: 180px !important;
+      object-fit: cover !important;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.35) !important;
+      margin: 8px auto 12px auto !important;
+    }
+
+    [data-theme="dark"] .sidebar-author-name {
+      font-family: 'Press Start 2P', cursive !important;
+      font-size: 1rem !important;
+      letter-spacing: 1px !important;
+      color: #e6edf3 !important;
+      margin: 6px 0 4px 0 !important;
+    }
+
+    [data-theme="dark"] .sidebar-description {
+      font-family: 'DotGothic16', sans-serif !important;
+      font-size: 0.95rem !important;
+      color: #8b949e !important;
+      margin: 0 12px 10px 12px !important;
+    }
+    [data-theme="dark"] .sidebar-description::after {
+      content: "";
+      display: block;
+      width: 26px;
+      height: 2px;
+      margin: 10px auto 8px auto;
+      background: #58a6ff;
+      border-radius: 2px;
+      opacity: 0.9;
+    }
+
+    [data-theme="dark"] .sidebar-state-article,
+    [data-theme="dark"] .sidebar-state-tag {
+      border: none !important;
+    }
+
+     
+      [data-theme="dark"] .sidebar-social {
+      width: 100% !important;
+        gap: 6px;
+      margin: 6px 0 12px 0;
+      justify-content: center !important;
+  }
+    [data-theme="dark"] .sidebar-state {
+      display: flex !important;
+      padding: 2px 0 6px 0 !important;
+      margin-top: -2px !important;
+      background: transparent !important;
+      color: #8b949e !important;
+    }
+
+    [data-theme="dark"] .sidebar-state-article {
+      border-right: 1px solid rgba(88, 166, 255, 0.6) !important;
+    }
+    [data-theme="dark"] .sidebar-state-tag {
+      border-left: 1px solid rgba(88, 166, 255, 0.6) !important;
+    }
+      [data-theme="dark"] .sidebar-social-icon {
+      width: 44px !important;
+      height: 44px !important;
+      background: #21262d !important;
+      border: none !important;
+      border-radius: 12px !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+  }
+      [data-theme="dark"] .sidebar-social-icon:hover {
+      background: #30363d !important;
+      border-color: #8b949e !important;
+      transform: translateY(-2px);
+  }
+   
+    [data-theme="dark"] .sidebar-social-icon::before {
+      font-size: 20px !important;
+      color: #c9d1d9 !important;
+  }
+    [data-theme="dark"] .sidebar-social-icon:hover::before {
+      color: #ffffff !important;
+  }
+  
+   
+  [data-theme="dark"] .icon-check::before {
+      content: "\f00c" !important;
+      font-family: "Font Awesome 6 Free", FontAwesome, sans-serif !important;
+  }
+  
+   
+    [data-theme="dark"] .sidebar-menu-link-wrap {
+      background: #21262d !important;
+      border: 1px solid #30363d !important;
+      border-radius: 6px !important;
+      margin-bottom: 8px !important;
+      padding: 0 16px !important;
+      height: 40px !important;
+      display: flex !important;
+      align-items: center !important;
+      transition: all 0.2s;
+  }
+    [data-theme="dark"] .sidebar-menu-link-wrap:hover {
+      background: #30363d !important;
+      border-color: #8b949e !important;
+      text-decoration: none !important;
+  }
+    [data-theme="dark"] .sidebar-menu-link, [data-theme="dark"] .sidebar-menu-icon {
+      color: #c9d1d9 !important;
+      font-weight: 500 !important;
+  }
+   
+    [data-theme="dark"] .sidebar-menu-icon {
+      margin-right: 10px !important;
+      display: flex !important;
+      align-items: center !important;
+  }
+
+     
+    @media screen and (min-width: 960px) {
+     
+    #main > .post-wrapper:nth-child(odd) .post-wrap {
+      flex-direction: row !important;
+    }
+     
+    #main > .post-wrapper:nth-child(even) .post-wrap {
+      flex-direction: row-reverse !important; 
+    }
+    
+     
+     
+    #main > .post-wrapper:nth-child(odd) .post-wrap .post-info {
+      text-align: left !important;
+      padding-left: 30px !important;  
+      padding-right: 20px !important;
+    }
+    #main > .post-wrapper:nth-child(even) .post-wrap .post-info {
+      text-align: left !important;
+      padding-right: 30px !important;  
+      padding-left: 20px !important;
+    }
+    }
+
+     
+    @media screen and (max-width: 959px) {
+    #content {
+      flex-direction: column !important;
+    }
+    .sidebar-wrapper,
+    #content.sidebar-left .sidebar-wrapper {
+      width: 100% !important;
+      margin-right: 0 !important;
+    }
+    .post-wrap {
+      flex-direction: column !important;
+      height: auto !important;
+    }
+    #main > .post-wrapper:nth-child(odd) .post-wrap,
+    #main > .post-wrapper:nth-child(even) .post-wrap {
+      flex-direction: column !important;
+    }
+    #main > .post-wrapper:nth-child(odd) .post-wrap .post-info,
+    #main > .post-wrapper:nth-child(even) .post-wrap .post-info {
+      padding: 16px !important;
+    }
+    .post-cover {
+      width: 100% !important;
+      height: 180px !important;
+    }
+    .post-title {
+      white-space: normal !important;
+    }
+    .sidebar-author img {
+      width: 140px !important;
+      height: 140px !important;
+      max-width: 100% !important;
+    }
+    }
+  
+   
+  [data-theme="dark"] .widget-title {
+      color: #e6edf3 !important;
+      font-weight: bold;
+      border-left: 3px solid #58a6ff;  
+      padding-left: 10px !important;
+  }
+  
+   
+    [data-theme="dark"] {
+      --color-code-background: #0d1117 !important;
+      --highlight-background: #0d1117 !important;
+      --highlight-nav: #161b22 !important;  
+  }
+   
+    [data-theme="dark"] .highlight,
+    [data-theme="dark"] pre,
+    [data-theme="dark"] code,
+    [data-theme="dark"] .code-block {
+      background-color: #0d1117 !important;
+  }
+    [data-theme="dark"] .category-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      border-bottom: 1px solid #21262d;
+  }
+    [data-theme="dark"] .category-list-link {
+      color: #8b949e !important;
+      text-decoration: none;
+      transition: color 0.2s;
+  }
+    [data-theme="dark"] .category-list-link:hover {
+      color: #58a6ff !important;
+  }
+    [data-theme="dark"] .category-list-count {
+      background: #1f6feb !important;  
+      color: #ffffff !important;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      min-width: 20px;
+      text-align: center;
+  }
+
+     
+    [data-theme="dark"] .widget .tag-list {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      padding: 4px 2px !important;
+      margin: 0 !important;
+      list-style: none !important;
+    }
+    [data-theme="dark"] .widget .tag-item {
+      margin: 0 !important;
+    }
+    [data-theme="dark"] .widget .tag-link {
+      display: inline-block !important;
+      background: #21262d !important;
+      border: 1px solid #30363d !important;
+      color: #c9d1d9 !important;
+      padding: 6px 10px !important;
+      border-radius: 8px !important;
+      font-size: 0.85rem !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+    }
+    [data-theme="dark"] .widget .tag-link:hover {
+      background: #30363d !important;
+      border-color: #58a6ff !important;
+      color: #58a6ff !important;
+    }
+
+     
+    [data-theme="dark"] .archives-tag-list-item.active {
+      background: #e6edf3 !important;
+      box-shadow: none !important;
+    }
+    [data-theme="dark"] .archives-tag-list-item.active .archives-tag-list-link {
+      color: #0d1117 !important;
+      font-weight: 700 !important;
+    }
+
+   
+    [data-theme="dark"] #header-nav > img, 
+    [data-theme="dark"] #header-nav > picture {
+      display: none !important;
+  }
+    [data-theme="dark"] #header-nav {
+      height: auto !important;
+      min-height: 0 !important;
+      background: rgba(13, 17, 23, 0.7) !important;  
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+      margin-bottom: 20px !important;
+  }
+
+   
+   
+  [data-theme="dark"] .site-search {
+      display: none;
+      z-index: 9999;
+  }
+
+   
+    [data-theme="dark"] .popup {
+      position: fixed !important;
+      top: 100px !important;  
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      margin: 0 !important;
+      background: rgba(13, 17, 23, 0.85) !important;  
+      border: 1px solid #30363d !important;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+      color: #c9d1d9 !important;
+      max-width: 900px !important;
+      width: 95% !important;
+      border-radius: 8px !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      
+       
+      visibility: hidden !important;
+      opacity: 0 !important;
+      z-index: 9999 !important;
+      transition: opacity 0.3s ease !important;
+  }
+
+   
+  [data-theme="dark"] .popup.show {
+      visibility: visible !important;
+      opacity: 1 !important;
+  }
+  
+   
+    [data-theme="dark"] .reimu-search {
+      background: rgba(13, 17, 23, 0.7) !important;  
+      border-bottom: 1px solid #30363d !important;
+      padding: 12px 16px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      border-radius: 8px 8px 0 0 !important;
+    }
+
+  [data-theme="dark"] .reimu-search-input-icon {
+      color: #58a6ff !important;  
+      font-size: 1.2rem !important;
+  }
+
+    [data-theme="dark"] #reimu-search-input {
+      flex: 1 !important;
+      width: 100% !important;
+    }
+    [data-theme="dark"] #reimu-search-input input {
+      background: #161b22 !important;  
+      border: 1px solid #30363d !important;
+      border-radius: 6px !important;
+      color: #c9d1d9 !important;
+      font-size: 16px !important;
+      padding: 8px 12px !important;
+      font-family: inherit !important;
+      width: 100% !important;
+  }
+  [data-theme="dark"] #reimu-search-input input:focus {
+      border-color: #58a6ff !important;
+      outline: none !important;
+      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3) !important;
+  }
+  
+   
+  [data-theme="dark"] #reimu-stats {
+      padding: 10px 20px 5px 20px !important;
+      color: #8b949e !important;  
+      font-size: 0.9rem !important;
+  }
+
+   
+  [data-theme="dark"] .reimu-hit-item {
+      padding: 10px 20px !important;
+      border-bottom: none !important;  
+  }
+  
+  [data-theme="dark"] .reimu-hit-item-link {
+      display: flex !important;
+      align-items: center !important;
+      text-decoration: none !important;
+      padding: 5px 0 !important;
+      transition: transform 0.2s ease !important;
+  }
+  
+  [data-theme="dark"] .reimu-hit-item-link:hover {
+      transform: translateX(5px) !important;
+  }
+
+   
+  [data-theme="dark"] .reimu-hit-marker {
+      width: 4px !important;
+      height: 14px !important;
+      background: #1f6feb !important;  
+      margin-right: 15px !important;
+      display: block !important;
+      box-shadow: 0 0 5px #1f6feb !important;  
+      border-radius: 2px !important;
+  }
+
+  [data-theme="dark"] .reimu-hit-item-title {
+      color: #58a6ff !important;  
+      font-size: 16px !important;
+      font-weight: normal !important;
+      margin: 0 !important;
+  }
+  
+   
+    [data-theme="dark"] .popup-btn-close {
+      color: #8b949e !important;
+      font-size: 20px !important;
+      border-left: 1px solid #30363d !important;
+      padding-left: 15px !important;
+      margin-left: 10px !important;
+      cursor: pointer !important;
+  }
+    [data-theme="dark"] .popup-btn-close:hover {
+      color: #ff7b72 !important;  
+  }
+
+      [data-theme="light"] .category-list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 10px;
+        border-bottom: 1px solid #e6e6e6;
+      }
+      [data-theme="light"] .category-list-link {
+        color: #333333 !important;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      [data-theme="light"] .category-list-link:hover {
+        color: #111111 !important;
+      }
+      [data-theme="light"] .category-list-count {
+        background: #111111 !important;
+        color: #ffffff !important;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        min-width: 20px;
+        text-align: center;
+      }
+
+      [data-theme="light"] .widget .tag-list {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        padding: 4px 2px !important;
+        margin: 0 !important;
+        list-style: none !important;
+      }
+      [data-theme="light"] .widget .tag-item {
+        margin: 0 !important;
+      }
+      [data-theme="light"] .widget .tag-link {
+        display: inline-block !important;
+        background: #f6f6f6 !important;
+        border: 1px solid #e0e0e0 !important;
+        color: #111111 !important;
+        padding: 6px 10px !important;
+        border-radius: 8px !important;
+        font-size: 0.85rem !important;
+        text-decoration: none !important;
+        transition: all 0.2s ease !important;
+      }
+      [data-theme="light"] .widget .tag-link:hover {
+        background: #ededed !important;
+        border-color: #cfcfcf !important;
+        color: #111111 !important;
+      }
+
+      [data-theme="light"] .archives-tag-list-item.active {
+        background: #111111 !important;
+        box-shadow: none !important;
+      }
+      [data-theme="light"] .archives-tag-list-item.active .archives-tag-list-link {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+      }
+
+      [data-theme="light"] #header-nav > img,
+      [data-theme="light"] #header-nav > picture {
+        display: none !important;
+      }
+      [data-theme="light"] #header-nav {
+        height: auto !important;
+        min-height: 0 !important;
+        background: rgba(255, 255, 255, 0.75) !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        margin-bottom: 20px !important;
+      }
+
+      [data-theme="light"] .site-search {
+        display: none;
+        z-index: 9999;
+      }
+
+      [data-theme="light"] .popup {
+        position: fixed !important;
+        top: 100px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        margin: 0 !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 1px solid #e6e6e6 !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.12) !important;
+        color: #111111 !important;
+        max-width: 900px !important;
+        width: 95% !important;
+        border-radius: 8px !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        z-index: 9999 !important;
+        transition: opacity 0.3s ease !important;
+      }
+
+      [data-theme="light"] .popup.show {
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+
+      [data-theme="light"] .reimu-search {
+        background: rgba(255, 255, 255, 0.8) !important;
+        border-bottom: 1px solid #e6e6e6 !important;
+        padding: 12px 16px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        border-radius: 8px 8px 0 0 !important;
+      }
+
+      [data-theme="light"] .reimu-search-input-icon {
+        color: #111111 !important;
+        font-size: 1.2rem !important;
+      }
+
+      [data-theme="light"] #reimu-search-input {
+        flex: 1 !important;
+        width: 100% !important;
+      }
+
+      [data-theme="light"] #reimu-search-input input {
+        background: #ffffff !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 6px !important;
+        color: #111111 !important;
+        font-size: 16px !important;
+        padding: 8px 12px !important;
+        font-family: inherit !important;
+        width: 100% !important;
+      }
+
+      [data-theme="light"] #reimu-search-input input:focus {
+        border-color: #111111 !important;
+        outline: none !important;
+        box-shadow: 0 0 0 3px rgba(0,0,0,0.12) !important;
+      }
+
+      [data-theme="light"] #reimu-stats {
+        padding: 10px 20px 5px 20px !important;
+        color: #333333 !important;
+        font-size: 0.9rem !important;
+      }
+
+      [data-theme="light"] .reimu-hit-item {
+        padding: 10px 20px !important;
+        border-bottom: none !important;
+      }
+
+      [data-theme="light"] .reimu-hit-item-link {
+        display: flex !important;
+        align-items: center !important;
+        text-decoration: none !important;
+        padding: 5px 0 !important;
+        transition: transform 0.2s ease !important;
+      }
+
+      [data-theme="light"] .reimu-hit-item-link:hover {
+        transform: translateX(5px) !important;
+      }
+
+      [data-theme="light"] .reimu-hit-marker {
+        width: 4px !important;
+        height: 14px !important;
+        background: #111111 !important;
+        margin-right: 15px !important;
+        display: block !important;
+        box-shadow: 0 0 5px rgba(0,0,0,0.35) !important;
+        border-radius: 2px !important;
+      }
+
+      [data-theme="light"] .reimu-hit-item-title {
+        color: #111111 !important;
+        font-size: 16px !important;
+        font-weight: normal !important;
+        margin: 0 !important;
+      }
+
+      [data-theme="light"] .popup-btn-close {
+        color: #333333 !important;
+        font-size: 20px !important;
+        border-left: 1px solid #e6e6e6 !important;
+        padding-left: 15px !important;
+        margin-left: 10px !important;
+        cursor: pointer !important;
+      }
+      [data-theme="light"] .popup-btn-close:hover {
+        color: #111111 !important;
+      }
+
+  
+   
+    [data-theme="dark"] .reimu-bg {
+      display: none !important;
+    }
+  #header-outer {
+      padding: 340px 0 50px 0 !important;  
+  }
+
+   
+  #wrap,
+  #container,
+  .outer {
+    background: transparent !important;
+  }
+
+   
+  #header,
+  #header-outer,
+  #header-title {
+    background: transparent !important;
+  }
+
+  #header {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  #header-nav,
+  #header-nav:hover,
+  [data-theme="dark"] #header-nav,
+  [data-theme="dark"] #header-nav:hover,
+  [data-theme="light"] #header-nav,
+  [data-theme="light"] #header-nav:hover {
+    background: #000 !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
+    border: none !important;
+    backdrop-filter: none !important;
+  }
+
+  #header > img,
+  #header > picture,
+  #header-nav > img,
+  #header-nav > picture {
+    display: none !important;
+  }
+
+   
+    [data-theme="dark"] #mask {
+      display: none !important;
+  }
+
+</style>
+</head>
+  <body><div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate"><svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+          M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg></div><div class="loading-word">Loading...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var loaderEl = document.getElementById('loader');
+    var startLoading = () => {
+      time = Date.now();
+      loaderEl.classList.remove("loading");
+    }
+    var hideLoader = () => {
+      document.body.style.overflow = 'auto';
+      loader.classList.add('loading');
+    };
+
+    var endLoading = () => {
+      if (!time) {
+        hideLoader();
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          hideLoader();
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    loaderEl.addEventListener('click', endLoading);
+  </script><div id="copy-tooltip"></div>
+<div id="lang-tooltip">
+This article does not have a corresponding language version
+</div>
+<div id="heatmap-tooltip"></div><div id="container">
+      <div id="wrap"><div id="header-nav">
+  <nav id="main-nav" aria-label="Primary navigation"><a class="main-nav-link-wrap" href="/"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">Home</span>
+      </a><a class="main-nav-link-wrap" href="/archives"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">Archives</span>
+      </a><a class="main-nav-link-wrap" href="/about"><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class="main-nav-link">About</span>
+      </a><a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
+  </nav>
+  <nav id="sub-nav" aria-label="Secondary navigation"><a id="nav-search-btn" class="nav-icon popup-trigger" title="Search" aria-label="Search" style="display: flex; align-items: center; justify-content: center;">
+         <i class="fas fa-search" style="color:white;"></i>
+      </a></nav></div>
+<header id="header" aria-label="Site header">
+  <picture></picture>
+
+  <div id="header-outer">
+    <div id="header-title">
+        <style>
+          #header-nav,
+          #header-nav:hover,
+          [data-theme="dark"] #header-nav,
+          [data-theme="dark"] #header-nav:hover,
+          [data-theme="light"] #header-nav,
+          [data-theme="light"] #header-nav:hover {
+            background: #000 !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
+          }
+
+            #logo h1 {
+                font-family: 'Press Start 2P', cursive !important;
+                font-size: 1.8rem !important;  
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                justify-content: center;
+                text-shadow: 2px 2px 0 #000;
+            }
+            .nyan-banner-icon {
+                height: 48px;
+                image-rendering: pixelated;
+            }
+            #subtitle {
+                 font-family: 'DotGothic16', sans-serif !important;
+                  
+            }
+        </style><span id="logo">
+            <h1 data-aos="slide-up">
+                The Fuzzing NoteBook
+                <img class="nyan-banner-icon" src="https://media.tenor.com/-bKcw_wV3oAAAAAi/nyan-cat-nyan.gif" alt="nyan">
+            </h1>
+          </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
+  </div>
+</header>
+<div id="content"
+          aria-label="Page content"
+          class="sidebar-left"
+            ><aside id="sidebar" aria-label="Sidebar"><div class="sidebar-wrapper-container sticky"><div class="sidebar-wrapper">
+    <div
+      class="sidebar-wrap"
+      data-aos="fade-up"
+    ><div class="sidebar-toc-sidebar"><h3 class="toc-title">Contents</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#how-to-find-bugs-">How to find Bugs ?</a>
+      <ul>
+        <li><a href="#so-whats-fuzzing-what-is-the-concept">So what&rsquo;s fuzzing? What is the concept??</a></li>
+      </ul>
+    </li>
+    <li><a href="#types-of-fuzzing-">Types of fuzzing :&gt;</a></li>
+    <li><a href="#instrumenting-the-target">Instrumenting The Target</a>
+      <ul>
+        <li><a href="#instrumenting-types">Instrumenting Types</a></li>
+        <li><a href="#sanitizers">Sanitizers</a></li>
+      </ul>
+    </li>
+    <li><a href="#demo">Demo</a></li>
+    <li><a href="#fuzzing-module">Fuzzing-Module</a>
+      <ul>
+        <li><a href="#exercise-1">Exercise 1</a></li>
+        <li><a href="#exercise-2">Exercise 2</a></li>
+        <li><a href="#exercise-3">Exercise 3</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div></div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img
+    data-src="/avatar/avatar.jpg?v=1782761372"
+    data-sizes="auto"
+    alt="0xStrawHat"
+    class="lazyload"
+  />
+  <div class="sidebar-author-name">0xStrawHat</div>
+  <div class="sidebar-description">クラッシュをコントロールに変える</div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div><div class="sidebar-state-number">3</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">
+      1
+    </div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">5</div>
+  </div>
+</div>
+<div class="sidebar-social" style="margin-bottom: 20px;"><div class="icon-discord sidebar-social-icon">
+      <a
+        href="https://discord.com/users/569254418646564950"
+        itemprop="url"
+        target="_blank"
+        aria-label="discord"
+        rel="noopener nofollow noreferrer"
+      ></a>
+    </div><div class="icon-github sidebar-social-icon">
+      <a
+        href="https://github.com/0xStraw-Hat"
+        itemprop="url"
+        target="_blank"
+        aria-label="github"
+        rel="noopener nofollow noreferrer"
+      ></a>
+    </div><div class="icon-linkedin sidebar-social-icon">
+      <a
+        href="https://www.linkedin.com/in/seif-saad-955264320/"
+        itemprop="url"
+        target="_blank"
+        aria-label="linkedin"
+        rel="noopener nofollow noreferrer"
+      ></a>
+    </div></div></div><div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div></div>
+  </div><div class="sidebar-widget"></div></div></aside>
+<section id="main" aria-label="Main content"><article
+  class="h-entry article"
+  itemscope
+  itemtype="https://schema.org/BlogPosting"
+>
+  <div
+    class="article-inner"
+    data-aos="fade-up"
+  >
+    <div class="article-meta"><div class="article-date">
+  <span
+    class="article-date-link icon-calendar"
+    data-aos="zoom-in"
+  >
+    <time datetime="2026-06-29 20:25:59 &#43;0300 EEST" itemprop="datePublished"
+      >2026-06-29</time
+    >
+    <time style="display: none;" id="post-update-time"
+      >2026-06-29</time
+    >
+  </span></div>
+</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><p>Now lets Start the Real Fun ^^</p>
+<h2 id="how-to-find-bugs-">
+<a class="header-anchor" href="#how-to-find-bugs-"></a>
+How to find Bugs ?
+</h2><ol>
+<li><strong>Static Analysis</strong>: look at the code without running it and find bugs (mistakes).</li>
+<li><strong>Fuzzing</strong>: Give the program lots of unexpected inputs , If one input crashes the program, you may have found a bug (^^ cash ^^).</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>imagine this:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Normal user: 
+</span></span><span style="display:flex;"><span>	input : hello
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fuzzer:
+</span></span><span style="display:flex;"><span>	input : A
+</span></span><span style="display:flex;"><span>	input : AAAAAAAA
+</span></span><span style="display:flex;"><span>	input : \xff\x00\x01
+</span></span><span style="display:flex;"><span>	input : <span style="color:#ae81ff">10000</span> random bytes
+</span></span></code></pre></div><h3 id="so-whats-fuzzing-what-is-the-concept">
+<a class="header-anchor" href="#so-whats-fuzzing-what-is-the-concept"></a>
+So what&rsquo;s fuzzing? What is the concept??
+</h3><ul>
+<li><strong>In basic terms</strong>: Fuzzing is automatically giving a program lots of weird, unexpected, or random inputs to see if it breaks.</li>
+</ul>
+<h4 id="the-concept-">
+<a class="header-anchor" href="#the-concept-"></a>
+The concept =&gt;
+</h4><ul>
+<li>The following concept is translated From <a href="https://aflplus.plus/docs/faq/">Frequently asked questions (FAQ)</a></li>
+</ul>
+
+  <blockquote class="alert-blockquote documentation">
+    <p class="alert-heading">
+      Documentation
+    </p>
+    <p><p>A program contains functions, functions contain the compiled machine code. The compiled machine code in a function can be in a single or many basic blocks. A basic block is the largest possible number of subsequent machine code instructions that has exactly one entry point (which can be be entered by multiple other basic blocks) and runs linearly without branching or jumping to other addresses (except at the end).</p></p>
+  </blockquote>
+
+<p><strong>Example:</strong>
+The following <strong>A</strong>, <strong>B</strong>, <strong>C</strong>, <strong>D</strong>, <strong>E</strong> are the basic blocks:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">function</span>() {
+</span></span><span style="display:flex;"><span>  A:
+</span></span><span style="display:flex;"><span>    some
+</span></span><span style="display:flex;"><span>    code
+</span></span><span style="display:flex;"><span>  B:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (x) <span style="color:#66d9ef">goto</span> C; <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">goto</span> D;
+</span></span><span style="display:flex;"><span>  C:
+</span></span><span style="display:flex;"><span>    some code
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">goto</span> E
+</span></span><span style="display:flex;"><span>  D:
+</span></span><span style="display:flex;"><span>    some code
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">goto</span> B
+</span></span><span style="display:flex;"><span>  E:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>An edge is then the unique relationship between two directly connected basic blocks (from the code example above), Every line between two blocks is an edge</p>
+<p><img src="/posts-imgs/fuzzing-notebook/image.png" alt="block diagram"></p>
+<h2 id="types-of-fuzzing-">
+<a class="header-anchor" href="#types-of-fuzzing-"></a>
+Types of fuzzing :&gt;
+</h2><ol>
+<li><strong>Based on input Awareness</strong>:
+<ol>
+<li><strong>Dumb Fuzzer</strong>: know nothing , Just throws random data, and that makes it to miss the deep bugs</li>
+<li><strong>Smart Fuzzer</strong>: Understands the input format, instead of random JPEG bytes, it creates almost valid JPEG files this makes it explore much more code</li>
+</ol>
+</li>
+<li><strong>Based on input generation</strong>:
+<ol>
+<li><strong>Mutation-based</strong>: starts from valid files, and changes them slightly maybe bit by bit or byte. (like what AFL++ mainly does)</li>
+<li><strong>Generation based</strong>: creates files from scratch using rules, instead of mutating a PDF, it builds a PDF according to its specification.</li>
+</ol>
+</li>
+<li><strong>Based on knowledge of Target</strong>:
+<ol>
+<li><strong>White box</strong>: source code available , you can use every detail</li>
+<li><strong>Black box</strong>: No source code , you can only observe the input &gt; program &gt; crash or not.</li>
+<li><strong>Grey box</strong>: Most popular , no full source , but uses feedback like (code coverage) (AFL++ belongs here as well)</li>
+</ol>
+</li>
+<li><strong>Based on Target</strong>:
+Different targets need different fuzzers.
+Examples:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-md" data-lang="md"><span style="display:flex;"><span>| target               | input                                          |
+</span></span><span style="display:flex;"><span>| -------------------- | ---------------------------------------------- |
+</span></span><span style="display:flex;"><span>| File fuzzing         | PDFs, PNGs                                     |
+</span></span><span style="display:flex;"><span>| Network fuzzing      | Protocols                                      |
+</span></span><span style="display:flex;"><span>| Command-line fuzzing | linux tools                                    |
+</span></span><span style="display:flex;"><span>| Kernel fuzzing       | syscalls  or drivers                           |
+</span></span><span style="display:flex;"><span>| Web fuzzing          | HTTP requests                                  |
+</span></span><span style="display:flex;"><span>| Firmware fuzzing     | target it via emulation or hardware interfaces |
+</span></span><span style="display:flex;"><span>| Browser fuzzing      | HTML/JS/CSS                                    |
+</span></span><span style="display:flex;"><span>| Stateful fuzzing     | FTP, DHCP                                      |
+</span></span><span style="display:flex;"><span>| Windows fuzzing      | winAFL                                         |
+</span></span></code></pre></div>Always understand your target before choosing a fuzzer.</li>
+</ol>
+<hr>
+<h2 id="instrumenting-the-target">
+<a class="header-anchor" href="#instrumenting-the-target"></a>
+Instrumenting The Target
+</h2><ul>
+<li><strong>Instumetation</strong> is adding extra code into the binary during compilation often at specific points like before (basic blocks, function calls) to collect information and it makes the compiled program looks like this</li>
+</ul>
+<p><img src="/posts-imgs/fuzzing-notebook/image-1.png" alt="alt text"></p>
+<ul>
+<li>This tracks which lines, basic blocks, or branches of code are executed by a given input.</li>
+</ul>
+<h3 id="instrumenting-types">
+<a class="header-anchor" href="#instrumenting-types"></a>
+Instrumenting Types
+</h3><ol>
+<li><strong>PCGUARD</strong>:
+<ul>
+<li>Compiler: <code>afl-clang-fast</code></li>
+<li>LLVM SanitizerCoverage</li>
+<li>Instrumentation during <strong>compilation</strong></li>
+<li>Faster compile time</li>
+</ul>
+</li>
+<li><strong>LTO (Recommended)</strong>
+<ul>
+<li>Compiler: <code>afl-clang-lto</code></li>
+<li>Instrumentation during <strong>linking</strong></li>
+<li>Better optimization</li>
+<li>Usually best performance &amp; coverage</li>
+</ul>
+</li>
+<li><strong>GCC Plugin</strong>
+<ul>
+<li>Compiler: <code>afl-gcc-fast</code></li>
+<li>Uses GCC plugin</li>
+<li>Use only if Clang/LLVM isn&rsquo;t available</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="sanitizers">
+<a class="header-anchor" href="#sanitizers"></a>
+Sanitizers
+</h3><ul>
+<li>Sanitizers insert runtime checks to detect bugs.</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Sanitizer</th>
+          <th>Detects</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>ASAN</td>
+          <td>Buffer overflow, UAF, OOB, NULL dereference</td>
+      </tr>
+      <tr>
+          <td>MSAN</td>
+          <td>Uninitialized memory reads</td>
+      </tr>
+      <tr>
+          <td>UBSAN</td>
+          <td>Undefined behavior</td>
+      </tr>
+      <tr>
+          <td>CFISAN</td>
+          <td>Invalid control flow / type confusion</td>
+      </tr>
+      <tr>
+          <td>TSAN</td>
+          <td>Thread race conditions</td>
+      </tr>
+      <tr>
+          <td>LSAN</td>
+          <td>Memory leaks</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li><strong>ASAN</strong> is the most commonly used during fuzzing.</li>
+<li>Sanitizers slow execution (ASAN ≈ <strong>2–3× slower</strong>).</li>
+<li>Real fuzzing often runs:
+<ul>
+<li>One instance with ASAN</li>
+<li>Other instances without sanitizers for speed.</li>
+</ul>
+</li>
+</ul>
+<h2 id="demo">
+<a class="header-anchor" href="#demo"></a>
+Demo
+</h2><ul>
+<li>Lets consider the following c program just to examine the basic usage of fuzzing and its idea</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">isBigPrime</span>(<span style="color:#66d9ef">int</span> n) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>; i <span style="color:#f92672">*</span> i <span style="color:#f92672">&lt;=</span> n; i<span style="color:#f92672">++</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (n <span style="color:#f92672">%</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> s[<span style="color:#ae81ff">35</span>];
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">scanf</span>(<span style="color:#e6db74">&#34;%s&#34;</span>, s);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> cnt[<span style="color:#ae81ff">300</span>] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0</span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; s[i]; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    cnt[s[i]]<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (s[i] <span style="color:#f92672">&lt;</span> <span style="color:#e6db74">&#39;x&#39;</span> <span style="color:#f92672">||</span> s[i] <span style="color:#f92672">&gt;</span> <span style="color:#e6db74">&#39;z&#39;</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;unacceptable&#34;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">isBigPrime</span>(cnt[<span style="color:#e6db74">&#39;x&#39;</span>]) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">isBigPrime</span>(cnt[<span style="color:#e6db74">&#39;y&#39;</span>]) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">isBigPrime</span>(cnt[<span style="color:#e6db74">&#39;z&#39;</span>]))
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">abort</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;Nice string&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li><strong>Input Limits</strong>: The program only accepts strings consisting of characters <code>x</code>,<code>y</code>,<code>z</code>. If other characters are included,
+The program will output the unacceptable and exit normally.</li>
+<li><strong>Counting statistics</strong>: Counting the number of times each appears in the input string using <code>cnt</code> arrays</li>
+<li><strong>Trigger crash</strong>:
+<ul>
+<li>The <code>isBigPrime</code> function checks whether a number is greater than 5 prime (e.g. 7, 11, 13, 17 etc.)</li>
+<li>The program executes <code>abort</code> only if the number <code>x</code>, <code>y</code> and <code>z</code> are all prime numbers greater than 5 at the same time</li>
+</ul>
+</li>
+<li><strong>Additional Bugs</strong>:
+<ul>
+<li><code>scanf</code> does not limit input length, there is stack overflow</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>According to</strong> <a href="https://aflplus.plus/docs/fuzzing_in_depth/#:~:text=a%29%20Selecting%20the%20best%20AFL%2B%2B%20compiler%20for%20instrumenting%20the%20target">Selecting the best AFL++ compiler for instrumenting the target</a> we will use <code>afl-clang-lt</code> as the compiler for instrumentation</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>afl-clang-lto ./test.c -o test
+</span></span></code></pre></div><ul>
+<li>we can provide initial simples for the inputs as well and put them in the <code>inputs</code> directory</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdir inputs
+</span></span><span style="display:flex;"><span>nano inputs/text
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>aaaaabbbbddddddd
+</span></span><span style="display:flex;"><span>helloworld
+</span></span><span style="display:flex;"><span>xxxyyyzzzzzzxxxyyy
+</span></span><span style="display:flex;"><span>xxxzzzyyy
+</span></span></code></pre></div><ul>
+<li>maybe none of them will crash the program , but the thing is AFL++ can mutate these samples on its own and find an input that can crash the program
+<strong>Now Lets Fuzz</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>afl-fuzz -i inputs -out/ ./test
+</span></span></code></pre></div><p>and after just few seconds we will notice that we got some crashes, (aborts and stack overflow)</p>
+<p><img src="/posts-imgs/fuzzing-notebook/test2.png" alt="alt text"></p>
+<ul>
+<li>The inputs that caused the program to crash can be found in <code>out/default/crashes</code></li>
+<li>And I use this script to check the input and crashes</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#! /usr/bin/env bash
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> f in out/default/crashes/id:*; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  echo <span style="color:#e6db74">&#34;=== </span>$f<span style="color:#e6db74"> ===&#34;</span>
+</span></span><span style="display:flex;"><span>  hexdump -C <span style="color:#e6db74">&#34;</span>$f<span style="color:#e6db74">&#34;</span> | head
+</span></span><span style="display:flex;"><span>  ./test &lt;<span style="color:#e6db74">&#34;</span>$f<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span></code></pre></div><hr>
+<h2 id="fuzzing-module">
+<a class="header-anchor" href="#fuzzing-module"></a>
+Fuzzing-Module
+</h2><p><a href="https://github.com/alex-maleno/Fuzzing-Module">Fuzzing-Module</a> is the official AFL++ Beginners practice. there are three small exercises</p>
+<h3 id="exercise-1">
+<a class="header-anchor" href="#exercise-1"></a>
+Exercise 1
+</h3><ul>
+<li>The source code =&gt;</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  string str;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;enter input string: &#34;</span>;
+</span></span><span style="display:flex;"><span>  getline(cin, str);
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> str <span style="color:#f92672">&lt;&lt;</span> endl <span style="color:#f92672">&lt;&lt;</span> str[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (str[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> str[str.length() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>    abort();
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> prev_num <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;x&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (count <span style="color:#f92672">!=</span> str.length() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">char</span> c <span style="color:#f92672">=</span> str[count];
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (c <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">48</span> <span style="color:#f92672">&amp;&amp;</span> c <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">57</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (c <span style="color:#f92672">==</span> prev_num <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>          abort();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        prev_num <span style="color:#f92672">=</span> c;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      count<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>okay I will use the <code>afl-clang-lto++</code> as the instrumentation</li>
+</ul>
+<pre tabindex="0"><code>CC=afl-clang-lto CXX=afl-clang-lto++
+cmake ..
+make
+</code></pre><ul>
+<li>First lets analyze a few places that can cause a crash
+<ol>
+<li><code>str[0] == \x00</code></li>
+<li><code>str[str.length() - 1] == \x00</code></li>
+<li>The next read num is one greater than the prev one example <code>12</code></li>
+<li><code>EOF</code></li>
+</ol>
+<ul>
+<li>okay now As required by the exercise 1 we will generate 5 seeds using this script:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  mkdir seeds
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>0..4<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>/dev/urandom of<span style="color:#f92672">=</span>seeds/seed_<span style="color:#e6db74">&#34;</span>$i<span style="color:#e6db74">&#34;</span> bs<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> count<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">done</span>
+</span></span></code></pre></div></li>
+<li>now lets fuzz
+<code>afl-fuzz -i seeds -o out -m 0 -d -- ./build/simple_crash</code></li>
+</ul>
+<p>After a few seconds I found 3 crashes</p>
+<p><img src="/posts-imgs/fuzzing-notebook/test3.png" alt="alt text"></p>
+<ul>
+<li>it feels amazing when i see those crashes XD</li>
+</ul>
+
+  <blockquote class="alert-blockquote note">
+    <p class="alert-heading">
+      Note
+    </p>
+    <p><ol>
+<li>okay the first crash <code>id:000000</code> this matches our second case</li>
+<li>the second crash <code>id:000001</code> matches our third case</li>
+<li>and the third one <code>id:000002</code> matches our first case</li>
+</ol></p>
+  </blockquote>
+
+<p><strong>As you surely notice the fuzzer didn&rsquo;t detect our last case which is <code>EOF</code></strong>
+This is mainly caused by its result this specific input <code>EOF</code> will cause <strong>undefine Behaviour</strong></p>
+<p><strong>Possible results:</strong></p>
+<ul>
+<li>Crash</li>
+<li>No crash</li>
+<li>Garbage value</li>
+<li>Different behavior every run</li>
+</ul>
+<p>Because it is <strong>not reproducible</strong>, AFL++ usually marks it as <strong>flaky</strong> and discards it.</p>
+<ul>
+<li>so we need to enhance its crash performance somehow to make it more certain like this maybe:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(str.<span style="color:#a6e22e">length</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>	  <span style="color:#a6e22e">abort</span>();
+</span></span></code></pre></div><ul>
+<li>or we can use the AddressSanitize <code>ASAN</code> and UndefinedBehaviorSanitizer <code>UBSAN</code></li>
+</ul>
+
+  <blockquote class="alert-blockquote note">
+    <p class="alert-heading">
+      Note
+    </p>
+    <p><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cmake -S . -B build <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-DCMAKE_C_COMPILER<span style="color:#f92672">=</span>afl-clang-lto <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-DCMAKE_CXX_COMPILER<span style="color:#f92672">=</span>afl-clang-lto++ <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-DCMAKE_C_FLAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-O1 -g -fno-omit-frame-pointer -fsanitize=address,undefined&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-DCMAKE_CXX_FLAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-O1 -g -fno-omit-frame-pointer -fsanitize=address,undefined&#34;</span>
+</span></span></code></pre></div><p><strong>Why these flags?</strong></p>
+<ol>
+<li><code>-O1</code> small optimization just to make debugging easier</li>
+<li><code>-g</code> also makes debugging with gdb much easier it tells u exactly at which line in the source the binary crashed</li>
+<li><code>-fno-omit-frame-pointer</code> Produces accurate stack traces.</li>
+<li><code>fsanitize=address,undefined</code> enables both ASan and UBSan.</li>
+</ol>
+<hr>
+<p>Okay before fuzzing we need to set these vars</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export ASAN_OPTIONS<span style="color:#f92672">=</span>abort_on_error<span style="color:#f92672">=</span>1:symbolize<span style="color:#f92672">=</span>0:detect_leaks<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>export UBSAN_OPTIONS<span style="color:#f92672">=</span>abort_on_error<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p><strong>WHY?</strong></p>
+<ol>
+<li><code>symbolize=1</code> it prints <code>simple_crash.cpp:15</code> instead of just an address &ldquo;much easier to debug&rdquo;</li>
+<li><code>print_stacktrace=1</code> prints the call stack where the bug occurred
+<strong>And for better Debugging Use this one</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export ASAN_OPTIONS<span style="color:#f92672">=</span>abort_on_error<span style="color:#f92672">=</span>1:symbolize<span style="color:#f92672">=</span>1:detect_leaks<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>export UBSAN_OPTIONS<span style="color:#f92672">=</span>abort_on_error<span style="color:#f92672">=</span>1:print_stacktrace<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span></code></pre></div></p>
+  </blockquote>
+
+<hr>
+<h3 id="exercise-2">
+<a class="header-anchor" href="#exercise-2"></a>
+Exercise 2
+</h3><ul>
+<li>This one is easy , the only condition to abort is to enter <code>ffl</code> this will trigger it</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (input[i] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;l&#39;</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (crew.num <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>        abort();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    land();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>I used the same pervious seed ( I know its a bit missy But I like it XD)</li>
+</ul>
+<p><img src="/posts-imgs/fuzzing-notebook/test4.png" alt="alt text"></p>
+<ul>
+<li>by observing the crashes they all about the <code>ffl</code> but with different paths in the code</li>
+</ul>
+<hr>
+<h3 id="exercise-3">
+<a class="header-anchor" href="#exercise-3"></a>
+Exercise 3
+</h3><ul>
+<li>Hmmmm Too much code in here so we will use <a href="(https://github.com/CoatiSoftware/Sourcetrail)">Sourcetrail</a> as the guide says</li>
+<li>okay Next lets search for the abort points
+<ol>
+<li><code>choose_color</code> If we entered a pure number</li>
+<li><code>main_alt</code> input negative number</li>
+<li><code>main_airspeed</code> input negative number</li>
+<li><code>fuel_cap</code> input negative number</li>
+<li><code>check_alt</code>  if the <code>alt</code> is less than 0</li>
+<li><code>check_fuel</code> if the <code>fuel</code> is less than 0</li>
+<li><code>check_speed</code> if the <code>speed</code> is less than 0</li>
+</ol>
+</li>
+</ul>
+
+  <blockquote class="alert-blockquote note">
+    <p class="alert-heading">
+      Note
+    </p>
+    <p><p>in such projects that have lots of files, headers, classes sourcetrail is a really big help for us it helps us to trace the functions and map it in a very easy way</p></p>
+  </blockquote>
+
+<ul>
+<li>In this exercise we need to use a really important technique <strong>create a slice</strong> its basically that we want to narrow down the code that will be running as much as possible. so instead for example fuzzing a full drone system we will slice it to just fuzz the GPS module or something</li>
+<li>For the slice, you can comment out some of the code in the target to ignore features that you are not interested in fuzzing.</li>
+</ul>
+<p><strong>This exercise gives us a template for a slice <code>specs_slice</code></strong> so we will fuzz only the <code>specs class </code> and test the <code>choose_color</code> function specifically</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * This file isolates the Specs class and tests out the 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * choose_color function specifically.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;specs.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span><span style="color:#f92672">**</span> argv) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// In order to call any functions in the Specs class, a Specs
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// object is necessary. This is using one of the constructors
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// found in the Specs class.
+</span></span></span><span style="display:flex;"><span>    Specs spec(<span style="color:#ae81ff">505</span>, <span style="color:#ae81ff">110</span>, <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// By looking at all the code in our project, this is all the 
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// necessary setup required. Most projects will have much more
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// that is needed to be done in order to properly setup objects.
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// This section should be in your code that you write after all the 
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// necessary setup is done. It allows AFL++ to start from here in 
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// your main() to save time and just throw new input at the target.
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">#ifdef __AFL_HAVE_MANUAL_CONTROL
+</span></span></span><span style="display:flex;"><span>        __AFL_INIT();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    spec.choose_color();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//spec.min_alt();
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>We can set the fuzz entry by defining <code>__AFL_HAVE_MANUAL_CONTROL</code>,
+<ul>
+<li><code>__AFL_INIT()</code> tells <strong>AFL++</strong> to start fuzzing only after your program&rsquo;s initialization is complete, so it skips one-time setup and focuses on the target code</li>
+</ul>
+</li>
+</ul>
+<p>We will test <code>chosse_color</code> first , we know if we entered a pure number it will collapse so lets fuzz and see</p>
+<p><img src="/posts-imgs/fuzzing-notebook/test5.png" alt="alt text">
+wooh more crashes than i expected, lets analyze them.</p>
+<ol>
+<li>okay the first crash input is like this <code>\x39\x0c\x36</code> we know that <code>cin</code> stops at white space so it will take the first digit <code>9</code> and ignores the others , so the digit now aborts the program</li>
+<li>the second and fourth one are simple  they are pure digits so it will crash the program</li>
+<li>the third one its <code>\x09\x09</code> its <code>\t\t</code> so when it tries to saves an empty color so this loop right here will return true , and returning true causes a crash
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cin <span style="color:#f92672">&gt;&gt;</span> color;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (isNumber(color))
+</span></span><span style="display:flex;"><span>  abort();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> Specs<span style="color:#f92672">::</span>isNumber(std<span style="color:#f92672">::</span>string str) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> str.length(); i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (isdigit(str[i]) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>      Return to False;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> true;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ol>
+<hr>
+<p><strong>Lets fuzz one more function <code>min-airspeed</code></strong></p>
+<ul>
+<li>first i used this slice</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;specs.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span><span style="color:#f92672">**</span> argv) {
+</span></span><span style="display:flex;"><span>    Specs spec(<span style="color:#ae81ff">505</span>, <span style="color:#ae81ff">110</span>, <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#ifdef __AFL_HAVE_MANUAL_CONTROL
+</span></span></span><span style="display:flex;"><span>        __AFL_INIT();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    spec.min_airspeed();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Don&rsquo;t forget</strong> to add this line in the <code>CMakeLists.txt</code></p>
+<blockquote>
+<p><code>add_executable(min-airspeed-slice min-airspeed-slice.cpp specs.cpp)</code></p>
+</blockquote>
+<p>and then build again</p>
+<ul>
+<li>I fuzzed this function specifically to see how the exec speed gonna increase  since this function has a loop and may ask for more than one input in different paths.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Specs<span style="color:#f92672">::</span>min_airspeed() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">bool</span> out_of_bounds <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>  std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;enter aircraft minimum airspeed:&#34;</span>;
+</span></span><span style="display:flex;"><span>  std<span style="color:#f92672">::</span>cin <span style="color:#f92672">&gt;&gt;</span> speed;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">do</span> {
+</span></span><span style="display:flex;"><span>    out_of_bounds <span style="color:#f92672">=</span> false;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (speed <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>      abort();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (speed <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">100</span>) {
+</span></span><span style="display:flex;"><span>      std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;too low. please re-enter:&#34;</span>;
+</span></span><span style="display:flex;"><span>      std<span style="color:#f92672">::</span>cin <span style="color:#f92672">&gt;&gt;</span> speed;
+</span></span><span style="display:flex;"><span>      out_of_bounds <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (speed <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">200</span>) {
+</span></span><span style="display:flex;"><span>      std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;too high. please re-enter:&#34;</span>;
+</span></span><span style="display:flex;"><span>      std<span style="color:#f92672">::</span>cin <span style="color:#f92672">&gt;&gt;</span> speed;
+</span></span><span style="display:flex;"><span>      out_of_bounds <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span> (out_of_bounds);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>As I expected the exec speed was too slow <code>60/sec</code>  but we got some crashes</li>
+</ul>
+<p><img src="/posts-imgs/fuzzing-notebook/test1.png" alt="alt text"></p>
+<ul>
+<li>The fourth crash is a bit interesting the input <code>11111-11+13</code> crashes the program because <code>std::cin &gt;&gt;</code> automatically splits the input while reading integers It first reads <code>11111</code> and leaves <code>-11+13</code> in the input buffer since <code>11111</code> is greater than <code>200</code> the program asks for another input the next <code>std::cin &gt;&gt;</code> speed reads <code>-11</code> from the remaining buffer and stops before the <code>+</code> now speed is negative so the program reaches <code>abort()</code></li>
+</ul>
+<hr>
+<p>okay that&rsquo;s it , I won&rsquo;t fuzz the other function cause they are easier and it will be a waste of time to fuzz them.</p>
+</div>
+    <footer class="article-footer"><ul class="article-category-list"><li class="article-tag-list-item" data-aos="zoom-in">
+    <a
+      class="article-category-link"
+      href="/categories/notes"
+      data-aos="zoom-in"
+      >Notes</a
+    >
+    </li></ul>
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/fuzzing"
+        rel="tag"
+        >Fuzzing</a
+      >
+    </li><li class="article-tag-list-item" data-aos="zoom-in">
+      <a
+        class="article-tag-list-link"
+        href="/tags/c"
+        rel="tag"
+        >C</a
+      >
+    </li></ul>
+</footer>
+  </div><nav
+    id="article-nav"
+    aria-label="Article navigation"
+    data-aos="fade-up"
+  ><div class="article-nav-link-wrap left"><img
+            src="/posts-cover/cat25.gif"
+            data-sizes="auto"
+            alt="Inside glibc vfprintf"
+            class="lazyloaded"
+          /><a
+          href="/post/vprintf/"
+          aria-label="Prev:Inside glibc vfprintf"
+          title="Prev:Inside glibc vfprintf"
+        ></a>
+        <div class="article-nav-caption">Prev</div>
+        <h3 class="article-nav-title">Inside glibc vfprintf</h3>
+      </div></nav></article></section>
+        </div><footer id="footer" aria-label="Site footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    <div>
+      <span class="icon-copyright"></span>
+      2026<span class="footer-info-sep rotate"></span>0xStrawHat
+    </div>
+  </div>
+</footer>
+<div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div><div id="mask" class="hide"></div>
+      </div><nav id="mobile-nav" aria-label="Mobile navigation">
+  <button class="mobile-nav-close" type="button" aria-label="Close sidebar"></button>
+  <div class="sidebar-wrap"><div class="sidebar-toc-sidebar"><h3 class="toc-title">Contents</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#how-to-find-bugs-">How to find Bugs ?</a>
+      <ul>
+        <li><a href="#so-whats-fuzzing-what-is-the-concept">So what&rsquo;s fuzzing? What is the concept??</a></li>
+      </ul>
+    </li>
+    <li><a href="#types-of-fuzzing-">Types of fuzzing :&gt;</a></li>
+    <li><a href="#instrumenting-the-target">Instrumenting The Target</a>
+      <ul>
+        <li><a href="#instrumenting-types">Instrumenting Types</a></li>
+        <li><a href="#sanitizers">Sanitizers</a></li>
+      </ul>
+    </li>
+    <li><a href="#demo">Demo</a></li>
+    <li><a href="#fuzzing-module">Fuzzing-Module</a>
+      <ul>
+        <li><a href="#exercise-1">Exercise 1</a></li>
+        <li><a href="#exercise-2">Exercise 2</a></li>
+        <li><a href="#exercise-3">Exercise 3</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div></div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img
+    data-src="/avatar/avatar.jpg?v=1782761372"
+    data-sizes="auto"
+    alt="0xStrawHat"
+    class="lazyload"
+  />
+  <div class="sidebar-author-name">0xStrawHat</div>
+  <div class="sidebar-description">クラッシュをコントロールに変える</div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div><div class="sidebar-state-number">3</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>Categories</div>
+    <div class="sidebar-state-number">
+      1
+    </div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>Tags</div>
+    <div class="sidebar-state-number">5</div>
+  </div>
+</div>
+<div class="sidebar-social" ><div class="icon-discord sidebar-social-icon">
+      <a
+        href="https://discord.com/users/569254418646564950"
+        itemprop="url"
+        target="_blank"
+        aria-label="discord"
+        rel="noopener nofollow noreferrer"
+      ></a>
+    </div><div class="icon-github sidebar-social-icon">
+      <a
+        href="https://github.com/0xStraw-Hat"
+        itemprop="url"
+        target="_blank"
+        aria-label="github"
+        rel="noopener nofollow noreferrer"
+      ></a>
+    </div><div class="icon-linkedin sidebar-social-icon">
+      <a
+        href="https://www.linkedin.com/in/seif-saad-955264320/"
+        itemprop="url"
+        target="_blank"
+        aria-label="linkedin"
+        rel="noopener nofollow noreferrer"
+      ></a>
+    </div></div><div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/"
+        aria-label="Home"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">Home</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/archives"
+        aria-label="Archives"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">Archives</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/about"
+        aria-label="About"
+      ></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class="sidebar-menu-link">About</div>
+    </div></div></div></div><div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div></nav>
+</div><div class="site-search">
+        <div class="reimu-popup popup">
+          <div class="reimu-search">
+            <div class="reimu-search-input-icon"></div><div id="reimu-search-input">
+                 <input type="text" placeholder="Search..." />
+              </div><div class="popup-btn-close"></div>
+          </div>
+          <div class="reimu-results">
+            <div id="reimu-stats"></div>
+            <div id="reimu-hits"></div>
+            <div id="reimu-pagination" class="reimu-pagination"></div>
+          </div>
+          <img class="reimu-bg" src="/images/reimu.png" />
+        </div>
+      </div><script
+    src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"
+    
+    
+    
+    
+    integrity="sha384-3gT/vsepWkfz/ff7PpWNUeMzeWoH3cDhm/A8jM7ouoAK0/fP/9bcHHR5kHq2nf&#43;e" crossorigin="anonymous"></script><script
+    src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js"
+    
+    
+    
+    
+    integrity="sha384-J08i8An/QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script><script src="/js/main.js"  ></script><script src="/js/aos.js"  ></script><script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", aosInit);
+    } else {
+      aosInit();
+    }
+  </script><script src="/js/pjax_main.js" data-pjax ></script><script>
+  var setupFirework = () => {
+    if (! false  || !window.matchMedia('(max-width: 768px)').matches) {
+      if (window.firework) {
+        const options = JSON.parse("{\"excludeelements\":[\"a\",\"button\"],\"particles\":[{\"colors\":[\"var(--red-1)\",\"var(--red-2)\",\"var(--red-3)\",\"var(--red-4)\"],\"duration\":[1200,1800],\"easing\":\"easeOutExpo\",\"move\":[\"emit\"],\"number\":20,\"shape\":\"circle\",\"shapeOptions\":{\"alpha\":[0.3,0.5],\"radius\":[16,32]}},{\"colors\":[\"var(--red-0)\"],\"duration\":[1200,1800],\"easing\":\"easeOutExpo\",\"move\":[\"diffuse\"],\"number\":1,\"shape\":\"circle\",\"shapeOptions\":{\"alpha\":[0.2,0.5],\"lineWidth\":6,\"radius\":20}}]}");
+        options.excludeElements = options.excludeelements;
+        delete options.excludeelements;
+        window.firework(options);
+      }
+    }
+  }
+</script><script
+    src="https://npm.webcache.cn/mouse-firework@0.2.0/dist/index.umd.js"
+    defer
+    
+    
+    onload="setupFirework()"
+    integrity="sha384-qi9WggRt19tv8Vc7pCHW3ulMNLwrn515zaLEWZjl1px07vz8&#43;pUoWX8n1rgq282T" crossorigin="anonymous"></script>
+
+<div id="lazy-script">
+  <div><script data-pjax>
+        window.REIMU_POST = {
+          author: "0xStrawHat",
+          title: "The Fuzzing NoteBook",
+          url: "http:\/\/localhost:1313\/post\/the-fuzzing-notebook\/",
+          description: "Some Notes for Fuzzing, and doing the exercises from Fuzzing-Module.",
+          cover: "http:\/\/localhost:1313\/posts-cover\/anime-fuzz.jpg",
+        };
+      </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
+          if (_$$(`${gallery} ${children}`).length > 0) {
+            new PhotoSwipeLightbox({
+              gallery,
+              children,pswpModule: () => safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8\u002boTJ7m3DfYEWX1fu1scuS4\u002bs")}).init();
+          }
+        }
+        const pswp = () => {
+          initPswp('.article-entry', 'a.article-gallery-item');
+          initPswp('.article-gallery', 'a.article-gallery-item');
+        }
+        pswp()
+      </script></div>
+</div><script
+    src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js"
+    
+    async
+    
+    
+    integrity="sha384-0M75wtSkhjIInv4coYlaJU83&#43;OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id&#43;S" crossorigin="anonymous"></script><script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+  </script><script>
+  const reimuCopyright = String.raw`
+   ______     ______     __     __    __     __  __    
+  /\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+  \ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+   \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+    \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                    
+  `;
+  console.log(String.raw`%c ${reimuCopyright}`, "color: #ff5252;");
+  console.log(
+    "%c Theme.Reimu" + " %c https://github.com/D-Sketon/hugo-theme-reimu ",
+    "color: white; background: #ff5252; padding:5px 0;",
+    "padding:4px;border:1px solid #ff5252;",
+  );
+</script><script src="/js/tag-active.js"></script><script src="/js/search.js"></script></body>
+</html>

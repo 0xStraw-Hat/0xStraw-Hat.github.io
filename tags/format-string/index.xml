@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Format String on 0xStrawHat Blog</title>
-    <link>https://0xStra-wHat.github.io/tags/format-string/</link>
+    <link>http://localhost:1313/tags/format-string/</link>
     <description>Recent content from 0xStrawHat Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
@@ -15,7 +15,7 @@
     <lastBuildDate>Sat, 21 Feb 2026 14:23:38 +0200</lastBuildDate>
     
     
-    <atom:link href="https://0xStra-wHat.github.io/tags/format-string/index.xml" rel="self" type="application/rss&#43;xml" />
+    <atom:link href="http://localhost:1313/tags/format-string/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
     
@@ -23,10 +23,10 @@
 
     <item>
       <title>Inside glibc vfprintf</title>
-      <link>https://0xStra-wHat.github.io/post/vprintf/</link>
+      <link>http://localhost:1313/post/vprintf/</link>
       <pubDate>Sat, 21 Feb 2026 14:23:38 &#43;0200</pubDate>
       <author>xxx@example.com (0xStrawHat)</author>
-      <guid>https://0xStra-wHat.github.io/post/vprintf/</guid>
+      <guid>http://localhost:1313/post/vprintf/</guid>
       <description>
         <![CDATA[<h1>Inside glibc vfprintf</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
         
@@ -41,7 +41,7 @@ Description
 Introduction
 </h2><p>Format string vulnerabilities are among the most subtle and powerful primitives in memory corruption. At first glance, they look simple: control the format string, leak some pointers with %p, maybe write something with %n, and move on.</p>
         
-        <hr><p>Published on 2026-02-21 at <a href='https://0xStra-wHat.github.io/'>0xStrawHat Blog</a>, last modified on 2026-02-21</p>]]>
+        <hr><p>Published on 2026-02-21 at <a href='http://localhost:1313/'>0xStrawHat Blog</a>, last modified on 2026-02-21</p>]]>
       </description>
       
         <category>Notes</category>
