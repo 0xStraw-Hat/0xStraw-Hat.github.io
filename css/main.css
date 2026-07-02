@@ -2039,15 +2039,7 @@ a.article-gallery-item,
   flex-shrink: 0;
 }
 
-.article-nav-link-wrap a {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 3;
-}
-
+.article-nav-link-wrap a,
 .article-nav-link-wrap img {
   position: absolute;
   top: 0;
@@ -2055,10 +2047,13 @@ a.article-gallery-item,
   width: 100%;
   height: 100%;
   filter: brightness(70%);
+}
+
+.article-nav-link-wrap img {
   display: block;
   opacity: 0;
   object-fit: cover;
-  z-index: 1;
+  z-index: -1;
 }
 
 .article-nav-link-wrap img.lazyloaded {
@@ -2078,8 +2073,6 @@ a.article-gallery-item,
   letter-spacing: 2px;
   font-weight: bold;
   text-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.7);
-  position: relative;
-  z-index: 2;
 }
 
 .article-nav-title {
@@ -2092,8 +2085,6 @@ a.article-gallery-item,
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  position: relative;
-  z-index: 2;
 }
 
 .article-gallery {
@@ -2699,38 +2690,6 @@ mjx-container::-webkit-scrollbar {
   .mobile-nav-on #mobile-nav {
     left: 0;
   }
-}
-
-#mobile-nav .mobile-nav-close {
-  position: sticky;
-  top: 12px;
-  margin: 12px 12px 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  border: 1px solid color-mix(in srgb, var(--color-font) 15%, transparent);
-  background: color-mix(in srgb, var(--color-mobile-nav-background) 85%, transparent);
-  color: var(--color-font);
-  font-size: 0;
-  line-height: 0;
-  cursor: pointer;
-  z-index: 2;
-}
-
-#mobile-nav .mobile-nav-close:hover {
-  background: color-mix(in srgb, var(--color-mobile-nav-background) 70%, transparent);
-}
-
-#mobile-nav .mobile-nav-close::before {
-  content: "";
-  width: 18px;
-  height: 12px;
-  background: linear-gradient(currentColor, currentColor) 0 0/100% 2px, linear-gradient(currentColor, currentColor) 0 5px/100% 2px, linear-gradient(currentColor, currentColor) 0 10px/100% 2px;
-  background-repeat: no-repeat;
-  display: block;
 }
 
 #mobile-nav .sidebar-wrap {
