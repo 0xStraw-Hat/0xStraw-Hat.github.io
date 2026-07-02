@@ -937,6 +937,12 @@ data-theme-mode="true"
     mask: none !important;
     z-index: -3 !important;
   }
+  :root, [data-theme="dark"], [data-theme-mode="true"] {
+    --color-wrap: rgba(33, 37, 43, 0.7) !important;
+  }
+  [data-theme="light"], [data-theme-mode="false"] {
+    --color-wrap: rgba(255, 255, 255, 0.7) !important;
+  }
 </style>
 </head>
 <body><div id="container">

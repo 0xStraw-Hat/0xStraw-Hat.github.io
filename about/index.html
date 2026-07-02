@@ -938,6 +938,12 @@
     mask: none !important;
     z-index: -3 !important;
   }
+  :root, [data-theme="dark"], [data-theme-mode="true"] {
+    --color-wrap: rgba(33, 37, 43, 0.7) !important;
+  }
+  [data-theme="light"], [data-theme-mode="false"] {
+    --color-wrap: rgba(255, 255, 255, 0.7) !important;
+  }
 </style>
 </head>
   <body><div id='loader'>
@@ -1195,7 +1201,7 @@ This article does not have a corresponding language version
     <div class="footer-line"></div>
   </div>
   <div id="footer-info"><div>
-      <span class="icon-copyright"></span>2020-2026<span class="footer-info-sep rotate"></span>0xStrawHat
+      <span class="icon-copyright"></span>2026<span class="footer-info-sep rotate"></span>0xStrawHat
     </div><div>
         <span class="icon-brush"
           >&nbsp;4.1k</span
