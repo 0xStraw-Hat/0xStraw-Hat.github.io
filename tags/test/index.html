@@ -3,7 +3,14 @@
   lang="en-us" 
   data-theme-mode="true"
   >
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8" />
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><script>
+  localStorage.setItem("dark_mode", "true");
+  document.documentElement.setAttribute("data-theme", "dark");
+</script>
+<style>
+  .dark-mode-btn { display: none !important; }
+</style>
+<meta charset="utf-8" />
 <meta
   name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -177,7 +184,7 @@
       background-attachment: fixed !important;
       background-position: center center !important;
       background-size: cover !important;
-      background-color: transparent !important;
+      background-color: #0d1117 !important;
       position: relative !important;
     }
      
@@ -189,14 +196,13 @@
       transform: scale(1.01);
       z-index: -10;
       pointer-events: none;
-      opacity: 1;
-      filter: blur(2px);
+      opacity: 0.35;
     }
 
      
     [data-theme="dark"] body::before {
-      filter: blur(2px);
-      opacity: 1;
+      filter: blur(3px);
+      opacity: 0.88;
     }
     [data-theme="dark"] #container {
       background: transparent !important;
@@ -911,7 +917,7 @@
       display: none !important;
     }
   #header-outer {
-      padding: 340px 0 50px 0 !important;  
+      padding: 100px 0 50px 0 !important;  
   }
 
    
@@ -920,38 +926,6 @@
   .outer {
     background: transparent !important;
   }
-
-   
-  #header,
-  #header-outer,
-  #header-title {
-    background: transparent !important;
-  }
-
-  #header {
-    min-height: 0 !important;
-    height: auto !important;
-  }
-
-  #header-nav,
-  #header-nav:hover,
-  [data-theme="dark"] #header-nav,
-  [data-theme="dark"] #header-nav:hover,
-  [data-theme="light"] #header-nav,
-  [data-theme="light"] #header-nav:hover {
-    background: #000 !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
-    border: none !important;
-    backdrop-filter: none !important;
-  }
-
-  #header > img,
-  #header > picture,
-  #header-nav > img,
-  #header-nav > picture {
-    display: none !important;
-  }
-
    
     [data-theme="dark"] #mask {
       display: none !important;
@@ -1012,22 +986,9 @@ This article does not have a corresponding language version
   <nav id="sub-nav" aria-label="Secondary navigation"><a id="nav-search-btn" class="nav-icon popup-trigger" title="Search" aria-label="Search" style="display: flex; align-items: center; justify-content: center;">
          <i class="fas fa-search" style="color:white;"></i>
       </a></nav></div>
-<header id="header" aria-label="Site header">
-  <picture></picture>
-
-  <div id="header-outer">
+<header id="header" aria-label="Site header"><picture></picture><div id="header-outer">
     <div id="header-title">
         <style>
-          #header-nav,
-          #header-nav:hover,
-          [data-theme="dark"] #header-nav,
-          [data-theme="dark"] #header-nav:hover,
-          [data-theme="light"] #header-nav,
-          [data-theme="light"] #header-nav:hover {
-            background: #000 !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
-          }
-
             #logo h1 {
                 font-family: 'Press Start 2P', cursive !important;
                 font-size: 1.8rem !important;  
@@ -1062,7 +1023,7 @@ This article does not have a corresponding language version
       data-aos="fade-up"
     ><div class="sidebar-author">
   <img
-    data-src="/avatar/avatar.jpg?v=1782761372"
+    data-src="/avatar/avatar.jpg"
     data-sizes="auto"
     alt="0xStrawHat"
     class="lazyload"
@@ -1074,16 +1035,16 @@ This article does not have a corresponding language version
   <div class="sidebar-state-article">
     <div>Posts</div><div class="sidebar-state-number">3</div>
   </div>
-  <div class="sidebar-state-category">
+  <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>Categories</div>
     <div class="sidebar-state-number">
       1
     </div>
-  </div>
-  <div class="sidebar-state-tag">
+  </a>
+  <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
     <div>Tags</div>
     <div class="sidebar-state-number">5</div>
-  </div>
+  </a>
 </div>
 <div class="sidebar-social" style="margin-bottom: 20px;"><div class="icon-discord sidebar-social-icon">
       <a
@@ -1140,6 +1101,7 @@ This article does not have a corresponding language version
                   class="tag-link"
                   href="/tags/c/"
                   aria-label="Tag: C"
+                  title="C"
                 >
                   C
                 </a>
@@ -1148,6 +1110,7 @@ This article does not have a corresponding language version
                   class="tag-link"
                   href="/tags/format-string/"
                   aria-label="Tag: Format String"
+                  title="Format String"
                 >
                   Format String
                 </a>
@@ -1156,6 +1119,7 @@ This article does not have a corresponding language version
                   class="tag-link"
                   href="/tags/fuzzing/"
                   aria-label="Tag: Fuzzing"
+                  title="Fuzzing"
                 >
                   Fuzzing
                 </a>
@@ -1164,6 +1128,7 @@ This article does not have a corresponding language version
                   class="tag-link"
                   href="/tags/test/"
                   aria-label="Tag: Test"
+                  title="Test"
                 >
                   Test
                 </a>
@@ -1172,6 +1137,7 @@ This article does not have a corresponding language version
                   class="tag-link"
                   href="/tags/test2/"
                   aria-label="Tag: Test2"
+                  title="Test2"
                 >
                   Test2
                 </a>
@@ -1186,11 +1152,11 @@ This article does not have a corresponding language version
       <h3 class="widget-title">Recent Posts</h3>
       <div class="widget">
         <ul><li>
-              <a href="/post/the-fuzzing-notebook/">The Fuzzing NoteBook</a>
+              <a href="/post/the-fuzzing-notebook/" title="The Fuzzing NoteBook">The Fuzzing NoteBook</a>
             </li><li>
-              <a href="/post/vprintf/">Inside glibc vfprintf</a>
+              <a href="/post/vprintf/" title="Inside glibc vfprintf">Inside glibc vfprintf</a>
             </li><li>
-              <a href="/post/test/">Test</a>
+              <a href="/post/test/" title="Test">Test</a>
             </li></ul>
       </div>
     </div>
@@ -1222,22 +1188,18 @@ This article does not have a corresponding language version
   <div style="width: 100%; overflow: hidden">
     <div class="footer-line"></div>
   </div>
-  <div id="footer-info">
-    <div>
-      <span class="icon-copyright"></span>
-      2026<span class="footer-info-sep rotate"></span>0xStrawHat
-    </div>
-  </div>
+  <div id="footer-info"><div>
+      <span class="icon-copyright"></span>2026<span class="footer-info-sep rotate"></span>0xStrawHat
+    </div></div>
 </footer>
 <div class="sidebar-top">
             <div class="sidebar-top-taichi rotate"></div>
             <div class="arrow-up"></div>
           </div><div id="mask" class="hide"></div>
       </div><nav id="mobile-nav" aria-label="Mobile navigation">
-  <button class="mobile-nav-close" type="button" aria-label="Close sidebar"></button>
   <div class="sidebar-wrap"><div class="sidebar-author">
   <img
-    data-src="/avatar/avatar.jpg?v=1782761372"
+    data-src="/avatar/avatar.jpg"
     data-sizes="auto"
     alt="0xStrawHat"
     class="lazyload"
@@ -1249,16 +1211,16 @@ This article does not have a corresponding language version
   <div class="sidebar-state-article">
     <div>Posts</div><div class="sidebar-state-number">3</div>
   </div>
-  <div class="sidebar-state-category">
+  <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>Categories</div>
     <div class="sidebar-state-number">
       1
     </div>
-  </div>
-  <div class="sidebar-state-tag">
+  </a>
+  <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
     <div>Tags</div>
     <div class="sidebar-state-number">5</div>
-  </div>
+  </a>
 </div>
 <div class="sidebar-social" ><div class="icon-discord sidebar-social-icon">
       <a
@@ -1369,7 +1331,7 @@ This article does not have a corresponding language version
           title: "Test",
           url: "http:\/\/localhost:1313\/tags\/test\/",
           description: "",
-          cover: "http:\/\/localhost:1313\/images\/background.jpg",
+          cover: "http:\/\/localhost:1313\/false",
         };
       </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
           if (_$$(`${gallery} ${children}`).length > 0) {
@@ -1384,13 +1346,7 @@ This article does not have a corresponding language version
         }
         pswp()
       </script></div>
-</div><script
-    src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js"
-    
-    async
-    
-    
-    integrity="sha384-0M75wtSkhjIInv4coYlaJU83&#43;OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id&#43;S" crossorigin="anonymous"></script><script>
+</div><script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then((registrations) => {
         for (let registration of registrations) {
