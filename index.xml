@@ -36,7 +36,7 @@
 How to find Bugs ?
 </h2><ol>
 <li><strong>Static Analysis</strong>: look at the code without running it and find bugs (mistakes).</li>
-<li><strong>Fuzzing</strong>: Give the program lots of unexpected inputs , If one input crashes the program, you may have found a bug (^^ cash ^^).</li>
+<li><strong>Fuzzing</strong>: Give the program lots of unexpected inputs , If one input crashes the program, you may have found a bug (^^ cash ^^) .</li>
 </ol>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>imagine this:
 </span></span><span style="display:flex;"><span>
