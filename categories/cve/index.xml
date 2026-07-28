@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CVE on 0xStrawHat Blog</title>
-    <link>http://localhost:1313/categories/cve/</link>
+    <link>https://0xStra-wHat.github.io/categories/cve/</link>
     <description>Recent content from 0xStrawHat Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
@@ -15,7 +15,7 @@
     <lastBuildDate>Thu, 23 Jul 2026 15:18:47 +0300</lastBuildDate>
     
     
-    <atom:link href="http://localhost:1313/categories/cve/index.xml" rel="self" type="application/rss&#43;xml" />
+    <atom:link href="https://0xStra-wHat.github.io/categories/cve/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
     
@@ -23,17 +23,17 @@
 
     <item>
       <title>CVE-2019-13288: Xpdf</title>
-      <link>http://localhost:1313/post/xpdf/</link>
+      <link>https://0xStra-wHat.github.io/post/xpdf/</link>
       <pubDate>Thu, 23 Jul 2026 15:18:47 &#43;0300</pubDate>
       <author>xxx@example.com (0xStrawHat)</author>
-      <guid>http://localhost:1313/post/xpdf/</guid>
+      <guid>https://0xStra-wHat.github.io/post/xpdf/</guid>
       <description>
         <![CDATA[<h1>CVE-2019-13288: Xpdf</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
         
           <h2 id="info">
 <a class="header-anchor" href="#info"></a>
 Info
-</h2><p>Okay in this post I will do this <a href="https://github.com/antonio-morales/Fuzzing101/tree/main/Exercise%201">exercise 1 </a> which is fuzzing XPDF 3.02 to reproduce this CVE : CVE-2019-13288.</p>
+</h2><p>Okay in this post I will do this <a href="https://github.com/antonio-morales/Fuzzing101/tree/main/Exercise%201">exercise 1 </a> which is fuzzing XPDF 3.02 to reproduce this <a href="https://web.archive.org/web/20260313030036/https://www.cve.org/CVERecord?id=CVE-2019-13288">CVE-2019-13288</a>.</p>
 <h2 id="download--build">
 <a class="header-anchor" href="#download--build"></a>
 Download &amp; build
@@ -321,7 +321,7 @@ Fuzzzing
 And literally after <strong>20 SEC</strong> We got  A crash its not the crash we want but we got one XD.
 so I waited about five minutes to gather some crashes and picked the one I need to replicate the vulnerability described in the CVE-2019-13288, so now lets analyze this DOS attack for this recursive stack calls.</p>
         
-        <hr><p>Published on 2026-07-23 at <a href='http://localhost:1313/'>0xStrawHat Blog</a>, last modified on 2026-07-23</p>]]>
+        <hr><p>Published on 2026-07-23 at <a href='https://0xStra-wHat.github.io/'>0xStrawHat Blog</a>, last modified on 2026-07-23</p>]]>
       </description>
       
         <category>CVE</category>

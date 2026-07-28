@@ -12,12 +12,321 @@
     
     <copyright>All articles on this blog are licensed under the BY-NC-SA license agreement unless otherwise stated. Please indicate the source when reprinting!</copyright>
     
-    <lastBuildDate>Mon, 29 Jun 2026 20:25:59 +0300</lastBuildDate>
+    <lastBuildDate>Thu, 23 Jul 2026 15:18:47 +0300</lastBuildDate>
     
     
     <atom:link href="https://0xStra-wHat.github.io/tags/fuzzing/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>CVE-2019-13288: Xpdf</title>
+      <link>https://0xStra-wHat.github.io/post/xpdf/</link>
+      <pubDate>Thu, 23 Jul 2026 15:18:47 &#43;0300</pubDate>
+      <author>xxx@example.com (0xStrawHat)</author>
+      <guid>https://0xStra-wHat.github.io/post/xpdf/</guid>
+      <description>
+        <![CDATA[<h1>CVE-2019-13288: Xpdf</h1><p>Author: 0xStrawHat(xxx@example.com)</p>
+        
+          <h2 id="info">
+<a class="header-anchor" href="#info"></a>
+Info
+</h2><p>Okay in this post I will do this <a href="https://github.com/antonio-morales/Fuzzing101/tree/main/Exercise%201">exercise 1 </a> which is fuzzing XPDF 3.02 to reproduce this <a href="https://web.archive.org/web/20260313030036/https://www.cve.org/CVERecord?id=CVE-2019-13288">CVE-2019-13288</a>.</p>
+<h2 id="download--build">
+<a class="header-anchor" href="#download--build"></a>
+Download &amp; build
+</h2><ul>
+<li>use this command to download the version 3.02 I know in the CVE the version is 4.01.01 but as the exercise want we will work with 3.02</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://dl.xpdfreader.com/old/xpdf-3.02.tar.gz
+</span></span><span style="display:flex;"><span>tar -zxvf xpdf-3.02.tar.gz
+</span></span></code></pre></div><h3 id="build">
+<a class="header-anchor" href="#build"></a>
+build
+</h3><ul>
+<li>I will build two versions one with LTO mode</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd xpdf-3.02
+</span></span><span style="display:flex;"><span>CC<span style="color:#f92672">=</span>afl-clang-lto CXX<span style="color:#f92672">=</span>afl-clang-lto++ ./configure --prefix<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$PWD<span style="color:#e6db74">/install&#34;</span>
+</span></span><span style="display:flex;"><span>make -j<span style="color:#e6db74">`</span>nproc<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>make install
+</span></span></code></pre></div><ul>
+<li>And another debuggin version</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>CC<span style="color:#f92672">=</span>clang CXX<span style="color:#f92672">=</span>clang++ CFLAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-O0 -g -gdwarf-4 -fno-inline -fno-builtin -fno-omit-frame-pointer&#34;</span> CXXFLAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$CFLAGS<span style="color:#e6db74">&#34;</span> ./configure --prefix<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$PWD<span style="color:#e6db74">/install-dbg&#34;</span>
+</span></span><span style="display:flex;"><span>make -j<span style="color:#e6db74">`</span>nproc<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>make install
+</span></span></code></pre></div><hr>
+<h2 id="corpus">
+<a class="header-anchor" href="#corpus"></a>
+Corpus
+</h2><ul>
+<li>In this step I used ai to write a script that generates some small seeds .</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-generate_seeds.py" data-lang="generate_seeds.py"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OUTDIR <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;targeted_corpus&#34;</span>
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>makedirs(OUTDIR, exist_ok<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write_pdf</span>(filename, objects):
+</span></span><span style="display:flex;"><span>    pdf <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;%PDF-1.4</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    offsets <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> objnum, body <span style="color:#f92672">in</span> objects:
+</span></span><span style="display:flex;"><span>        offsets<span style="color:#f92672">.</span>append(len(pdf))
+</span></span><span style="display:flex;"><span>        pdf <span style="color:#f92672">+=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>objnum<span style="color:#e6db74">}</span><span style="color:#e6db74"> 0 obj</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>encode()
+</span></span><span style="display:flex;"><span>        pdf <span style="color:#f92672">+=</span> body
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> body<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>):
+</span></span><span style="display:flex;"><span>            pdf <span style="color:#f92672">+=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>        pdf <span style="color:#f92672">+=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;endobj</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    xref <span style="color:#f92672">=</span> len(pdf)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    pdf <span style="color:#f92672">+=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;xref</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">0 </span><span style="color:#e6db74">{</span>len(offsets)<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>encode()
+</span></span><span style="display:flex;"><span>    pdf <span style="color:#f92672">+=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;0000000000 65535 f </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> off <span style="color:#f92672">in</span> offsets[<span style="color:#ae81ff">1</span>:]:
+</span></span><span style="display:flex;"><span>        pdf <span style="color:#f92672">+=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>off<span style="color:#e6db74">:</span><span style="color:#e6db74">010d</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> 00000 n </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>encode()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    pdf <span style="color:#f92672">+=</span> (
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;trailer
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;&lt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/Size </span><span style="color:#e6db74">{</span>len(offsets)<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/Root 1 0 R
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&gt;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">startxref
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">{</span>xref<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">%%EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#f92672">.</span>encode()
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(OUTDIR, filename), <span style="color:#e6db74">&#34;wb&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>        f<span style="color:#f92672">.</span>write(pdf)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Common objects</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CATALOG <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&lt;&lt; /Type /Catalog /Pages 2 0 R &gt;&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PAGES <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&lt;&lt; /Type /Pages /Kids [3 0 R] /Count 1 &gt;&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PAGE <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&#34;&#34;&lt;&lt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/Type /Page
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/Parent 2 0 R
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/MediaBox [0 0 612 792]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/Resources &lt;&lt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/Font &lt;&lt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/F1 &lt;&lt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/Type /Font
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/Subtype /Type1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/BaseFont /Helvetica
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&gt;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&gt;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&gt;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/Contents 4 0 R
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&gt;&gt;&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. Normal PDF</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>stream <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&#34;&#34;&lt;&lt; /Length 35 &gt;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">stream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">BT
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/F1 18 Tf
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">72 720 Td
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">(Hello) Tj
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ET
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">endstream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>write_pdf(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;00_normal.pdf&#34;</span>,
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">1</span>, CATALOG),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">2</span>, PAGES),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">3</span>, PAGE),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">4</span>, stream),
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. Indirect Length</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>stream <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&#34;&#34;&lt;&lt; /Length 5 0 R &gt;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">stream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">BT
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/F1 18 Tf
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">72 720 Td
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">(AAAA) Tj
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ET
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">endstream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>write_pdf(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;01_indirect_length.pdf&#34;</span>,
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">1</span>, CATALOG),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">2</span>, PAGES),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">3</span>, PAGE),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">4</span>, stream),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">5</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;35&#34;</span>),
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. Reference chain</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 5 -&gt; 6 -&gt; 7 -&gt; 35</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>stream <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&#34;&#34;&lt;&lt; /Length 5 0 R &gt;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">stream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">BT
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/F1 18 Tf
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">72 720 Td
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">(BBBB) Tj
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ET
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">endstream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>write_pdf(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;02_chain.pdf&#34;</span>,
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">1</span>, CATALOG),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">2</span>, PAGES),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">3</span>, PAGE),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">4</span>, stream),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">5</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;6 0 R&#34;</span>),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">6</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;7 0 R&#34;</span>),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">7</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;35&#34;</span>),
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. Long chain</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>objs <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    (<span style="color:#ae81ff">1</span>, CATALOG),
+</span></span><span style="display:flex;"><span>    (<span style="color:#ae81ff">2</span>, PAGES),
+</span></span><span style="display:flex;"><span>    (<span style="color:#ae81ff">3</span>, PAGE),
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>objs<span style="color:#f92672">.</span>append(
+</span></span><span style="display:flex;"><span>    (
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&#34;&#34;&lt;&lt; /Length 5 0 R &gt;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">stream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ABC
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">endstream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">20</span>):
+</span></span><span style="display:flex;"><span>    objs<span style="color:#f92672">.</span>append((i, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> 0 R&#34;</span><span style="color:#f92672">.</span>encode()))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>objs<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">20</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;3&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>write_pdf(<span style="color:#e6db74">&#34;03_long_chain.pdf&#34;</span>, objs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 5. Self reference</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>stream <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&#34;&#34;&lt;&lt; /Length 5 0 R &gt;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">stream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ABC
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">endstream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>write_pdf(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;04_self_reference.pdf&#34;</span>,
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">1</span>, CATALOG),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">2</span>, PAGES),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">3</span>, PAGE),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">4</span>, stream),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">5</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;5 0 R&#34;</span>),
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 6. Two-object cycle</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>write_pdf(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;05_cycle2.pdf&#34;</span>,
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">1</span>, CATALOG),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">2</span>, PAGES),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">3</span>, PAGE),
+</span></span><span style="display:flex;"><span>        (
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&#34;&#34;&lt;&lt; /Length 5 0 R &gt;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">stream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ABC
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">endstream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>        ),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">5</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;6 0 R&#34;</span>),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">6</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;5 0 R&#34;</span>),
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 7. Three-object cycle</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>write_pdf(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;06_cycle3.pdf&#34;</span>,
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">1</span>, CATALOG),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">2</span>, PAGES),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">3</span>, PAGE),
+</span></span><span style="display:flex;"><span>        (
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&#34;&#34;&lt;&lt; /Length 5 0 R &gt;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">stream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ABC
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">endstream
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>        ),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">5</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;6 0 R&#34;</span>),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">6</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;7 0 R&#34;</span>),
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">7</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;5 0 R&#34;</span>),
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[+] Generated targeted PDFs in </span><span style="color:#e6db74">{</span>OUTDIR<span style="color:#e6db74">}</span><span style="color:#e6db74">/&#34;</span>)
+</span></span></code></pre></div><hr>
+<h2 id="fuzzzing">
+<a class="header-anchor" href="#fuzzzing"></a>
+Fuzzzing
+</h2><ul>
+<li>Okay now we can start fuzzing</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>afl-fuzz -i corpus/ -o out/ -s <span style="color:#ae81ff">127</span> -- ./install/bin/pdftotext @@ -
+</span></span></code></pre></div><p><img src="/posts-imgs/xpdf/crash.png" alt="first-crash">
+And literally after <strong>20 SEC</strong> We got  A crash its not the crash we want but we got one XD.
+so I waited about five minutes to gather some crashes and picked the one I need to replicate the vulnerability described in the CVE-2019-13288, so now lets analyze this DOS attack for this recursive stack calls.</p>
+        
+        <hr><p>Published on 2026-07-23 at <a href='https://0xStra-wHat.github.io/'>0xStrawHat Blog</a>, last modified on 2026-07-23</p>]]>
+      </description>
+      
+        <category>CVE</category>
+      
+    </item>
     
     
 
