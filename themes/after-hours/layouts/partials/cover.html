@@ -1,0 +1,6 @@
+{{- $cover := .Params.cover | default "images/anime-city.webp" -}}
+{{- $src := $cover | relURL -}}
+{{- with .Resources.GetMatch $cover }}{{ $src = .RelPermalink }}{{ end -}}
+{{- $poster := $src -}}
+{{- if and (strings.HasSuffix $cover ".gif") (fileExists (printf "static/%s" (replace (strings.TrimPrefix "/" $cover) ".gif" "-poster.webp"))) -}}{{ $poster = replace $src ".gif" "-poster.webp" }}{{ end -}}
+<img src="{{ $poster }}" alt="" width="640" height="360" loading="lazy" decoding="async">

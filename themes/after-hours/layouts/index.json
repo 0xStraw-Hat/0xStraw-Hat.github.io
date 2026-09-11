@@ -1,0 +1,1 @@
+{{- $entries := slice -}}{{- range where site.RegularPages "Section" "post" -}}{{- $entries = $entries | append (dict "title" .Title "url" .RelPermalink "description" .Description "tags" .Params.tags "date" .Date) -}}{{- end -}}{{- $entries | jsonify -}}

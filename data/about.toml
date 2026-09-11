@@ -1,0 +1,28 @@
+# Edit the short introduction in content/about.md.
+# Findings come automatically from data/advisories.toml and data/cves.toml.
+[[focus]]
+title = 'Vulnerability research'
+icon = 'search'
+description = 'Following unexpected behavior back to the assumption that broke.'
+[[focus]]
+title = 'Binary exploitation'
+icon = 'code'
+description = 'Memory, primitives, and the details hiding below the abstraction.'
+[[focus]]
+title = 'Fuzzing'
+icon = 'folder'
+description = 'Interesting inputs. Strange crashes. A debugger waiting nearby.'
+[[roles]]
+title = 'Pwner'
+organization = '0xL4ugh'
+description = 'Binary exploitation, with the team.'
+[[roles]]
+title = 'Founder · Binary Exploitation Circle'
+organization = 'CAT Reloaded Student Activity'
+description = 'A place to share what I learn and learn alongside others.'
+[off_duty]
+title = 'Save point.'
+description = 'Anime, games, and a Monster nearby. Still working on the Valorant part.'
+interests = ['Anime', 'Games', 'Monster']
+japanese = 'まだ、冒険の途中。'
+translation = 'Still in the middle of the adventure.'

@@ -1,0 +1,42 @@
+[[sites]]
+name = 'Pawnyable'
+url = 'https://pawnyable.cafe/'
+label = 'pwn + paws'
+description = 'Deep exploitation material with a hand-drawn personality.'
+kind = 'Exploitation'
+color = 'mint'
+[[sites]]
+name = 'Entropic'
+url = 'https://www.cubeyond.net/'
+label = 'ENTROPIC'
+description = 'Security research, philes, and terminal-minded minimalism.'
+kind = 'Security research'
+color = 'mint'
+[[sites]]
+name = '0x5t'
+url = 'https://0x5t.raptx.org/'
+label = '0x5t'
+description = 'Another rabbit hole for the security reading list.'
+kind = 'Security blog'
+color = 'amber'
+[[sites]]
+name = 'Mushroom'
+url = 'https://mushroom.cat/'
+label = 'mushroom.cat'
+description = 'CTF write-ups, web exploitation, and a lot of cats.'
+kind = 'CTF write-ups'
+color = 'rust'
+[[sites]]
+name = 'Niko'
+url = 'https://nikolan.net/'
+label = "NIKO'S WEB"
+description = 'Computing, curious projects, and a wonderfully personal web.'
+kind = 'Personal web'
+color = 'blue'
+[[sites]]
+name = 'Lona'
+url = 'https://lona.moe/'
+label = 'lona.moe'
+description = 'Code, photography, and small-web connections.'
+kind = 'Personal web'
+color = 'lavender'

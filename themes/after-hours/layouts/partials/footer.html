@@ -1,0 +1,5 @@
+<footer class="site-footer wrap">
+  <div><a class="footer-brand" href="{{ site.Home.RelPermalink }}">{{ partial "hat.html" . }}<span>Keep a little curiosity.</span></a><p>A personal corner of the internet. Est. 2026.</p></div>
+  <div class="footer-links"><a href="{{ "archives/" | relURL }}">Archives</a><a href="{{ "index.xml" | relURL }}">RSS {{ partial "icon.html" "rss" }}</a><a href="{{ site.Params.github }}" rel="me">GitHub {{ partial "icon.html" "external" }}</a><span>© {{ now.Year }} 0xStrawHat · Built with Hugo</span></div>
+</footer>
+<div class="toast" role="status" aria-live="polite" aria-atomic="true" id="status-message"></div>

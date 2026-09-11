@@ -1,0 +1,21 @@
+# Public advisories. The theme displays these first in the combined discoveries list.
+# Set draft = true to hide an entry. File order controls display order.
+[[entries]]
+id = 'GHSA-9rpj-3789-2645'
+target = 'libyang'
+summary = 'Heap use-after-free caused by stale extension-instance state in the schema compiler.'
+severity = 'High'
+score = 8.6
+cvss_version = '3.1'
+date = '2026-08-25'
+url = 'https://github.com/CESNET/libyang/security/advisories/GHSA-9rpj-3789-2645'
+draft = false
+
+[[entries]]
+id = 'GHSA-rrc3-9rpp-qrh5'
+target = 'libyang'
+summary = 'Malformed augment or deviation paths can underflow the path counter and trigger an out-of-bounds read.'
+severity = 'Moderate'
+date = '2026-08-25'
+url = 'https://github.com/CESNET/libyang/security/advisories/GHSA-rrc3-9rpp-qrh5'
+draft = false

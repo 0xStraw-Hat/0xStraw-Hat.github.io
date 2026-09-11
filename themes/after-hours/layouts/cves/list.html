@@ -1,0 +1,42 @@
+{{ define "main" }}
+{{ $records := partial "research-data.html" . }}
+{{ $projects := slice }}
+{{ range $records }}{{ $projects = $projects | append .target }}{{ end }}
+<div class="wrap interior disclosure-page">
+  <header class="disclosure-cover">
+    <img class="disclosure-scenery" src="{{ "images/anime-city.webp" | relURL }}" alt="" aria-hidden="true" width="1920" height="1358">
+    <div class="disclosure-intro">
+      <span class="disclosure-kicker">0xStrawHat <span aria-hidden="true">/</span> security research</span>
+      <h1>CVEs & <span>advisories.</span></h1>
+      <p>Interesting bugs. Public findings.</p>
+      <div class="disclosure-phrase"><span lang="ja">好奇心に、終わりはない。</span><span>Curiosity has no end.</span></div>
+    </div>
+    <div class="disclosure-counter">
+      <span class="counter-label">DISCLOSURE LOG</span>
+      <div class="record-digits" aria-hidden="true">{{ range split (printf "%02d" (len $records)) "" }}<span>{{ . }}</span>{{ end }}</div>
+      <span><span class="sr-only">{{ len $records }} </span>public records <span aria-hidden="true">/</span> {{ len ($projects | uniq) }} projects</span>
+    </div>
+  </header>
+
+  <section id="discoveries" class="disclosure-index" aria-labelledby="disclosure-list-title">
+    <span id="advisories" class="anchor-alias" aria-hidden="true"></span>
+    <div class="disclosure-index-heading"><h2 id="disclosure-list-title">The disclosure files</h2><span>Discovered & responsibly disclosed</span></div>
+    <ul class="disclosure-list">
+      {{ range $records }}
+      <li id="{{ .id | urlize }}" class="disclosure-file project-{{ .target | urlize }}">
+        <article aria-labelledby="title-{{ .id | urlize }}">
+          <div class="file-top"><span class="file-project">{{ partial "icon.html" "folder" }} {{ .target }}</span><time datetime="{{ .date }}">{{ (time.AsTime .date).Format "02 Jan 2006" }}</time></div>
+          <h3 id="title-{{ .id | urlize }}"><a href="{{ .url }}">{{ .id }} {{ partial "icon.html" "external" }}</a></h3>
+          <p class="file-summary">{{ .summary }}</p>
+          <div class="file-rating">{{ partial "score.html" . }}<span>{{ .severity | default "Unrated" }}</span><small>{{ if isset . "score" }}CVSS {{ .cvss_version }}{{ else }}No published numeric score{{ end }}</small></div>
+          <div class="file-links"><a class="file-primary-link" href="{{ .url }}">Read advisory {{ partial "icon.html" "arrow" }}</a><div>{{ with .article }}<a href="{{ . | relURL }}">Write-up {{ partial "icon.html" "external" }}</a>{{ end }}{{ if hasPrefix .id "CVE-" }}<a href="https://www.cve.org/CVERecord?id={{ .id }}">CVE record {{ partial "icon.html" "external" }}</a>{{ end }}</div></div>
+        </article>
+      </li>
+      {{ else }}
+      <li class="disclosure-empty"><h3>No public disclosures yet.</h3><p>Published findings will appear here.</p><a href="{{ "post/" | relURL }}">Explore the logbook {{ partial "icon.html" "arrow" }}</a></li>
+      {{ end }}
+    </ul>
+  </section>
+  <footer class="disclosure-footer"><span>Behind every finding, a few late nights.</span><a href="{{ "post/" | relURL }}">More from the logbook {{ partial "icon.html" "arrow" }}</a></footer>
+</div>
+{{ end }}

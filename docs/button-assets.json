@@ -1,0 +1,105 @@
+[
+  {
+    "name": "github",
+    "file": "github.gif",
+    "source": "https://matdoes.dev/buttons#b23e9d42f0d9f97d97e1ea41e6434af5",
+    "asset_url": "https://matdoes.dev/buttons/i/b23e9d42f0d9f97d97e1ea41e6434af5.gif",
+    "size": [
+      88,
+      31
+    ],
+    "frames": 1
+  },
+  {
+    "name": "linux",
+    "file": "linux.gif",
+    "source": "https://matdoes.dev/buttons#b105790f39ba840532a2604c7bc6bf0a",
+    "asset_url": "https://matdoes.dev/buttons/i/b105790f39ba840532a2604c7bc6bf0a.gif",
+    "size": [
+      88,
+      31
+    ],
+    "frames": 25,
+    "still": "linux-still.png"
+  },
+  {
+    "name": "neovim",
+    "file": "neovim.gif",
+    "source": "https://matdoes.dev/buttons#53e926b81ece9dfc2b3e5ccc2bcdbbb7",
+    "asset_url": "https://matdoes.dev/buttons/i/53e926b81ece9dfc2b3e5ccc2bcdbbb7.gif",
+    "size": [
+      88,
+      31
+    ],
+    "frames": 6,
+    "still": "neovim-still.png"
+  },
+  {
+    "name": "python",
+    "file": "python.gif",
+    "source": "https://matdoes.dev/buttons#5d0a654ae48fc72716676fd96ef86d9c",
+    "asset_url": "https://matdoes.dev/buttons/i/5d0a654ae48fc72716676fd96ef86d9c.gif",
+    "size": [
+      88,
+      31
+    ],
+    "frames": 22,
+    "still": "python-still.png"
+  },
+  {
+    "name": "ida",
+    "file": "ida.png",
+    "source": "https://matdoes.dev/buttons#4723ab88ffebb29db3a91fe96d4f681d",
+    "asset_url": "https://matdoes.dev/buttons/i/4723ab88ffebb29db3a91fe96d4f681d.png",
+    "size": [
+      88,
+      31
+    ],
+    "frames": 1
+  },
+  {
+    "name": "hugo",
+    "file": "hugo.png",
+    "source": "https://matdoes.dev/buttons#26c8c135c614529bfa77860a5aee117f",
+    "asset_url": "https://matdoes.dev/buttons/i/26c8c135c614529bfa77860a5aee117f.png",
+    "size": [
+      88,
+      31
+    ],
+    "frames": 1
+  },
+  {
+    "name": "rss",
+    "file": "rss.gif",
+    "source": "https://matdoes.dev/buttons#5b0cfc1c30472c5590d9af01e67b8499",
+    "asset_url": "https://matdoes.dev/buttons/i/5b0cfc1c30472c5590d9af01e67b8499.gif",
+    "size": [
+      88,
+      31
+    ],
+    "frames": 1
+  },
+  {
+    "name": "strawhat",
+    "file": "strawhat.gif",
+    "source": "https://matdoes.dev/buttons#a8d0a95165940b92463119b5d6ecf96d",
+    "asset_url": "https://matdoes.dev/buttons/i/a8d0a95165940b92463119b5d6ecf96d.gif",
+    "size": [
+      88,
+      31
+    ],
+    "frames": 60,
+    "still": "strawhat-still.png"
+  },
+  {
+    "name": "cubeyond",
+    "file": "cubeyond.gif",
+    "source": "https://www.cubeyond.net/assets/88x31/button.gif",
+    "size": [
+      88,
+      31
+    ],
+    "frames": 21,
+    "still": "cubeyond-still.png"
+  }
+]

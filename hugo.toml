@@ -1,0 +1,37 @@
+baseURL = 'https://0xstraw-hat.github.io/'
+languageCode = 'en-us'
+title = '0xStrawHat'
+theme = 'after-hours'
+enableRobotsTXT = true
+summaryLength = 30
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+[params]
+  author = '0xStrawHat'
+  description = 'Binary exploitation, vulnerability research, and field notes from a curious mind.'
+  github = 'https://github.com/0xStraw-Hat'
+  discord = 'https://discord.com/users/569254418646564950'
+  linkedin = 'https://www.linkedin.com/in/seif-saad-955264320/'
+  contact = 'https://guns.lol/0xStrawHat'
+[markup.goldmark.renderer]
+  unsafe = false
+[markup.highlight]
+  noClasses = false
+  codeFences = true
+  guessSyntax = false
+[markup.tableOfContents]
+  startLevel = 2
+  endLevel = 3
+  ordered = false
+[services.rss]
+  limit = 30
+[related]
+  threshold = 20
+  includeNewer = true
+  [[related.indices]]
+    name = 'tags'
+    weight = 100

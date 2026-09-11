@@ -1,0 +1,5 @@
+{{ $records := partial "research-data.html" . }}
+<aside class="home-sidebar discovery-sidebar" aria-label="Security discoveries">
+<section class="cve-console"><h2>SECURITY DISCOVERIES</h2><ul>{{ range $records }}<li><a href="{{ .url }}"><span>{{ .id }}</span>{{ partial "score.html" . }}</a></li>{{ else }}<li class="console-empty">No public records yet.</li>{{ end }}</ul><a class="console-footer" href="{{ "cves/" | relURL }}">VIEW ALL {{ len $records }} RECORDS {{ partial "icon.html" "arrow" }}</a></section>
+{{ partial "sidebar-cat.html" . }}
+</aside>

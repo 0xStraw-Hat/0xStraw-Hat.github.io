@@ -1,0 +1,5 @@
+{{- $entries := slice -}}
+{{- range where site.RegularPages "Section" "post" -}}
+  {{- $entries = $entries | append (dict "title" .Title "url" .RelPermalink "description" (.Description | default (.Summary | plainify)) "content" .Plain "tags" (.Params.tags | default slice) "category" (delimit (.Params.categories | default slice) " ") "date" (.Date.Format "02 Jan 2006") "minutes" .ReadingTime) -}}
+{{- end -}}
+<script id="search-index" type="application/json">{{ $entries | jsonify | safeJS }}</script>

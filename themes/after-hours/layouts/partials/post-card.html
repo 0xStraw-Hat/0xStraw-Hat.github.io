@@ -1,0 +1,6 @@
+<article class="post-card" data-entry data-topic-list="{{ (.Params.tags | default slice) | jsonify }}" data-categories="{{ delimit (.Params.categories | default slice) " " }}" data-title="{{ .Title }}" data-topics="{{ delimit (.Params.tags | default slice) " " }}">
+  <a class="post-cover" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">{{ partial "cover.html" . }}<span class="cover-arrow">{{ partial "icon.html" "arrow" }}</span></a>
+  <div class="post-card-body"><div class="entry-meta meta"><span class="category">{{ delimit (.Params.categories | default (slice "Notes")) " / " }}</span><span>·</span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan 2006" }}</time>{{ if .Draft }}<span class="draft-badge">Draft</span>{{ end }}</div>
+  <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3><p>{{ .Description | default (.Summary | plainify | truncate 140) }}</p>
+  <div class="post-card-bottom"><div class="tags">{{ range .GetTerms "tags" }}<a href="{{ partial "topic-url.html" . }}">{{ .LinkTitle }}</a>{{ end }}</div><span class="meta reading-time">{{ .ReadingTime }} min read</span></div></div>
+</article>

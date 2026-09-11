@@ -1,0 +1,9 @@
+<dialog id="search-dialog" class="search-dialog" aria-labelledby="search-heading">
+  <div class="search-panel" data-search>
+    <div class="dialog-heading"><div><span class="eyebrow">FOLLOW THE THREAD</span><h2 id="search-heading">Search the logbook</h2></div><button disabled data-enhance class="icon-button" type="button" data-close-search aria-label="Close search">{{ partial "icon.html" "close" }}</button></div>
+    <label class="sr-only" for="dialog-query">Search articles</label>
+    <div class="search-field">{{ partial "icon.html" "search" }}<input id="dialog-query" type="search" placeholder="A topic, a function, a crash…" autocomplete="off" data-query><button disabled data-enhance class="icon-button" type="button" data-clear-search aria-label="Clear search" hidden>{{ partial "icon.html" "close" }}</button></div>
+    <p class="search-count meta" data-search-count role="status" aria-live="polite"></p><div class="search-results" data-search-results></div>
+    <p class="search-hint meta"><kbd>Esc</kbd> to close <span>Searches titles, topics, and full articles.</span></p>
+  </div>
+</dialog>

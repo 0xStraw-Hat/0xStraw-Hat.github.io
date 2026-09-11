@@ -1,0 +1,67 @@
+# Homepage 88x31 shelf. Group and button order match the order below.
+title = 'Friends & stuff'
+
+[[groups]]
+title = 'Friends'
+
+[[groups.buttons]]
+name = 'Entropic / Cubeyond'
+image = 'https://www.cubeyond.net/assets/88x31/button.gif'
+animated = true
+url = 'https://www.cubeyond.net/'
+source = 'https://www.cubeyond.net/assets/88x31/button.gif'
+
+[[groups.buttons]]
+name = '0xStrawHat blog'
+image = '/images/buttons/strawhat.gif'
+url = '/'
+still = '/images/buttons/strawhat-still.png'
+source = 'https://matdoes.dev/buttons#a8d0a95165940b92463119b5d6ecf96d'
+
+[[groups]]
+title = 'Random stuff'
+
+[[groups.buttons]]
+name = '0xStrawHat on GitHub'
+image = 'https://matdoes.dev/buttons/i/b23e9d42f0d9f97d97e1ea41e6434af5.gif'
+site_param = 'github'
+source = 'https://matdoes.dev/buttons#b23e9d42f0d9f97d97e1ea41e6434af5'
+
+[[groups.buttons]]
+name = 'Linux kernel source code'
+image = 'https://matdoes.dev/buttons/i/b105790f39ba840532a2604c7bc6bf0a.gif'
+animated = true
+url = 'https://github.com/torvalds/linux'
+source = 'https://matdoes.dev/buttons#b105790f39ba840532a2604c7bc6bf0a'
+
+[[groups.buttons]]
+name = 'Neovim'
+image = 'https://matdoes.dev/buttons/i/53e926b81ece9dfc2b3e5ccc2bcdbbb7.gif'
+animated = true
+url = 'https://neovim.io/'
+source = 'https://matdoes.dev/buttons#53e926b81ece9dfc2b3e5ccc2bcdbbb7'
+
+[[groups.buttons]]
+name = 'Python'
+image = 'https://matdoes.dev/buttons/i/5d0a654ae48fc72716676fd96ef86d9c.gif'
+animated = true
+url = 'https://www.python.org/'
+source = 'https://matdoes.dev/buttons#5d0a654ae48fc72716676fd96ef86d9c'
+
+[[groups.buttons]]
+name = 'IDA Pro'
+image = 'https://matdoes.dev/buttons/i/4723ab88ffebb29db3a91fe96d4f681d.png'
+url = 'https://hex-rays.com/ida-pro'
+source = 'https://matdoes.dev/buttons#4723ab88ffebb29db3a91fe96d4f681d'
+
+[[groups.buttons]]
+name = 'Hugo'
+image = 'https://matdoes.dev/buttons/i/26c8c135c614529bfa77860a5aee117f.png'
+url = 'https://gohugo.io/'
+source = 'https://matdoes.dev/buttons#26c8c135c614529bfa77860a5aee117f'
+
+[[groups.buttons]]
+name = 'Subscribe to this blog via RSS'
+image = 'https://matdoes.dev/buttons/i/5b0cfc1c30472c5590d9af01e67b8499.gif'
+url = '/index.xml'
+source = 'https://matdoes.dev/buttons#5b0cfc1c30472c5590d9af01e67b8499'

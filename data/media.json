@@ -1,0 +1,98 @@
+{
+  "avatar/avatar.jpg": {
+    "width": 736,
+    "height": 890
+  },
+  "posts-cover/anime-fuzz.jpg": {
+    "width": 1095,
+    "height": 730
+  },
+  "posts-cover/cat25-poster.webp": {
+    "width": 1152,
+    "height": 648
+  },
+  "posts-cover/cat25.gif": {
+    "width": 1152,
+    "height": 648
+  },
+  "posts-cover/xpdf-cover-poster.webp": {
+    "width": 1280,
+    "height": 720
+  },
+  "posts-cover/xpdf-cover.gif": {
+    "width": 1280,
+    "height": 720
+  },
+  "posts-imgs/fuzzing-notebook/image-1.png": {
+    "width": 747,
+    "height": 751
+  },
+  "posts-imgs/fuzzing-notebook/image.png": {
+    "width": 656,
+    "height": 765
+  },
+  "posts-imgs/fuzzing-notebook/test1.png": {
+    "width": 1903,
+    "height": 768
+  },
+  "posts-imgs/fuzzing-notebook/test2.png": {
+    "width": 1887,
+    "height": 820
+  },
+  "posts-imgs/fuzzing-notebook/test3.png": {
+    "width": 1787,
+    "height": 861
+  },
+  "posts-imgs/fuzzing-notebook/test4.png": {
+    "width": 1909,
+    "height": 831
+  },
+  "posts-imgs/fuzzing-notebook/test5.png": {
+    "width": 1913,
+    "height": 520
+  },
+  "posts-imgs/vprintf/image.png": {
+    "width": 1429,
+    "height": 697
+  },
+  "posts-imgs/xpdf/crash.png": {
+    "width": 757,
+    "height": 403
+  },
+  "posts-imgs/xpdf/dict.png": {
+    "width": 866,
+    "height": 805
+  },
+  "posts-imgs/xpdf/dict2.png": {
+    "width": 811,
+    "height": 717
+  },
+  "posts-imgs/xpdf/docs.png": {
+    "width": 1269,
+    "height": 998
+  },
+  "posts-imgs/xpdf/DOS.png": {
+    "width": 1862,
+    "height": 606
+  },
+  "posts-imgs/xpdf/fix.png": {
+    "width": 1403,
+    "height": 604
+  },
+  "posts-imgs/xpdf/makeStream.png": {
+    "width": 1787,
+    "height": 911
+  },
+  "posts-imgs/xpdf/rec.png": {
+    "width": 812,
+    "height": 615
+  },
+  "posts-imgs/xpdf/rec2.png": {
+    "width": 437,
+    "height": 482
+  },
+  "posts-imgs/xpdf/trace.png": {
+    "width": 522,
+    "height": 789
+  }
+}

@@ -1,0 +1,6 @@
+name = 'After Hours'
+license = 'MIT'
+description = 'Anime atmosphere, colorful terminal details, and a quiet notebook for low-level research.'
+min_version = '0.146.0'
+[author]
+  name = '0xStrawHat'

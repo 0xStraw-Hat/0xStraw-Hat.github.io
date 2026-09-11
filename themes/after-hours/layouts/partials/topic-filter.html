@@ -1,0 +1,2 @@
+<div class="topic-filter js-only"><label>Topic <select data-topic-filter disabled><option value="">All topics</option>{{ range site.Taxonomies.tags.Alphabetical }}<option value="{{ .Page.LinkTitle }}">{{ .Page.LinkTitle }} ({{ .Count }})</option>{{ end }}</select></label></div>
+<noscript><nav class="topic-fallback" aria-label="Browse topics">{{ range site.Taxonomies.tags.Alphabetical }}<a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a>{{ end }}</nav></noscript>

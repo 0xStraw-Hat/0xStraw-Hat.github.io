@@ -1,0 +1,40 @@
+# Public GHSAs appear first, then CVEs by descending score, across all discovery lists.
+# Set draft = true to keep an entry out of every public view.
+# This section contains the author's discoveries. Exercises stay in content/post.
+# Leave kind = 'Discovery'. Add article = '/post/your-slug/' when a write-up is public.
+
+[[entries]]
+id = 'CVE-2026-5038'
+target = 'Multer'
+score = 5.3
+cvss_version = '3.1'
+severity = 'Moderate'
+summary = 'Aborted uploads leave partial files behind, allowing disk exhaustion.'
+kind = 'Discovery'
+date = '2026-06-15'
+advisory = 'https://github.com/expressjs/multer/security/advisories/GHSA-3p4h-7m6x-2hcm'
+draft = false
+
+[[entries]]
+id = 'CVE-2026-44658'
+target = 'Zen Browser'
+score = 2.4
+cvss_version = '3.1'
+severity = 'Low'
+summary = 'RSS live-folder item URLs reach trusted tab creation without scheme restrictions.'
+kind = 'Discovery'
+date = '2026-05-11'
+advisory = 'https://github.com/zen-browser/desktop/security/advisories/GHSA-cc9c-mmmf-c5j6'
+draft = false
+
+[[entries]]
+id = 'CVE-2026-41907'
+target = 'uuid'
+score = 6.3
+cvss_version = '4.0'
+severity = 'Moderate'
+summary = 'Missing buffer bounds checks in v3, v5, and v6 allow silent partial writes.'
+kind = 'Discovery'
+date = '2026-04-24'
+advisory = 'https://github.com/uuidjs/uuid/security/advisories/GHSA-w5hq-g745-h8pq'
+draft = false

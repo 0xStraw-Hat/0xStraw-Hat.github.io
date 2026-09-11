@@ -1,0 +1,17 @@
+{
+  "profile": "content-site",
+  "sourceRoots": [
+    "themes/after-hours/assets",
+    "themes/after-hours/layouts"
+  ],
+  "commands": {
+    "build": "hugo --minify --destination .checks/site",
+    "javascript": "node --check themes/after-hours/assets/js/main.js",
+    "verify": "python scripts/verify.py .checks/site"
+  },
+  "requiredCommands": [
+    "build",
+    "javascript",
+    "verify"
+  ]
+}

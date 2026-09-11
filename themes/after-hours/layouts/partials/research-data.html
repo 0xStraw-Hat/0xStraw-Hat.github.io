@@ -1,0 +1,9 @@
+{{- $records := slice -}}
+{{- range where (site.Data.advisories.entries | default slice) "draft" "ne" true -}}
+  {{- $records = $records | append . -}}
+{{- end -}}
+{{- range sort (partial "cve-data.html" .) "score" "desc" -}}
+  {{- $url := .advisory | default (printf "https://www.cve.org/CVERecord?id=%s" .id) -}}
+  {{- $records = $records | append (merge . (dict "url" $url)) -}}
+{{- end -}}
+{{- return $records -}}

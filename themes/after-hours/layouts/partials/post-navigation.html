@@ -1,0 +1,6 @@
+{{ if or .PrevInSection .NextInSection }}
+<nav class="post-navigation" aria-label="Previous and next articles">
+  {{ with .PrevInSection }}<a class="post-direction post-previous" href="{{ .RelPermalink }}" rel="prev">{{ partial "cover.html" . }}<span class="post-direction-copy"><span class="post-direction-label">{{ partial "icon.html" "arrow" }} <span>PREV</span></span><strong>{{ .Title }}</strong><span class="post-direction-hint" lang="ja" aria-hidden="true">前の記録</span></span></a>{{ end }}
+  {{ with .NextInSection }}<a class="post-direction post-next" href="{{ .RelPermalink }}" rel="next">{{ partial "cover.html" . }}<span class="post-direction-copy"><span class="post-direction-label"><span>NEXT</span> {{ partial "icon.html" "arrow" }}</span><strong>{{ .Title }}</strong><span class="post-direction-hint" lang="ja" aria-hidden="true">次の記録</span></span></a>{{ end }}
+</nav>
+{{ end }}

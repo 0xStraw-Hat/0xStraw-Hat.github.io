@@ -1,0 +1,27 @@
+# Hugo output and local development artifacts
+/public/
+/build-check/
+/fresh-check/
+/.checks/
+/resources/
+/.hugo_build.lock
+/node_modules/
+*.log
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+# Old local recovery and preview material; not part of the new repository
+/.local-history/
+/docs/retired-blogroll-route/
+/docs/retired-notebook-route/
+/docs/retired-demo-buttons/
+/docs/recovery-manifest.json
+/docs/MIGRATION.md
+/docs/button-source.html
+/docs/github-pages.yaml.example
+/docs/build-verification.json
+/docs/audit.json
+/scripts/refine.py
+/static/images/buttons/demo/

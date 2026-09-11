@@ -1,0 +1,24 @@
+{{ with site.Data.friends }}
+<section class="wrap friends-shelf" aria-labelledby="friends-title">
+  <header class="friends-heading"><h2 id="friends-title">{{ .title }}</h2><span class="friends-format" aria-hidden="true">88 × 31</span></header>
+  <div class="friends-groups">
+    {{ range $index, $group := .groups }}
+    <section class="friends-group" aria-labelledby="friends-group-{{ $index }}">
+      <h3 id="friends-group-{{ $index }}">{{ .title }}</h3>
+      <ul class="friends-buttons">
+        {{ range .buttons }}
+        {{ $url := .url }}
+        {{ with .site_param }}{{ $url = index site.Params . }}{{ end }}
+        <li><a href="{{ $url | relURL }}" aria-label="{{ .name }}" title="{{ .name }}">
+          {{ if .still }}
+          <img class="friend-button-animated" src="{{ .image | relURL }}" alt="{{ .alt | default .name }}" width="88" height="31" loading="lazy" decoding="async">
+          <img class="friend-button-still" src="{{ .still | relURL }}" alt="{{ .alt | default .name }}" width="88" height="31" loading="lazy" decoding="async">
+          {{ else }}<img{{ if .animated }} class="friend-button-remote-animation"{{ end }} src="{{ .image | relURL }}" alt="{{ .alt | default .name }}" width="88" height="31" loading="lazy" decoding="async">{{ if .animated }}<span class="friend-button-text">{{ .name }}</span>{{ end }}{{ end }}
+        </a></li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

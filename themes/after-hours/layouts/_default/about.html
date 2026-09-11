@@ -1,0 +1,65 @@
+{{ define "main" }}
+{{ $profile := site.Data.about }}
+{{ $records := partial "research-data.html" . }}
+<article class="wrap interior about-page about-resume">
+  <header class="about-identity">
+    <div class="about-intro">
+      <span class="eyebrow">~/ABOUT · THE HUMAN BEHIND THE HEX</span>
+      <h1>Curious by default.<br><span>Low-level by choice.</span></h1>
+      <p class="japanese" lang="ja">知ることは、強くなること。</p>
+      <span class="phrase-translation">To learn is to grow stronger.</span>
+      <p class="about-lede">StrawHat / cybersecurity-focused engineer</p>
+      <div class="about-pills"><span>Pwner @ 0xL4ugh</span><span>Vulnerability research & fuzzing</span></div>
+    </div>
+    <div class="about-portrait">
+      <img src="{{ "avatar/avatar.jpg" | relURL }}" alt="0xStrawHat’s anime avatar: a swordsman in a misty field" width="736" height="890">
+      <div class="portrait-caption meta"><span>0xStrawHat</span><span lang="ja">冒険の途中</span></div>
+    </div>
+  </header>
+  <div class="resume-grid">
+    <div class="resume-main">
+      <section class="resume-bio" aria-labelledby="resume-bio-title">
+        <div class="terminal-bar"><span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span><h2 id="resume-bio-title">about.md</h2><span class="meta">UTF-8</span></div>
+        <div class="prose">{{ .Content }}</div>
+      </section>
+      <section class="resume-focus" aria-labelledby="resume-focus-title">
+        <div class="resume-heading"><span class="resume-index" aria-hidden="true">01 /</span><h2 id="resume-focus-title">Where I dig.</h2><span class="resume-jp" lang="ja" aria-hidden="true">探究</span></div>
+        <div class="focus-grid">{{ range $profile.focus }}<div class="focus-tile">{{ partial "icon.html" .icon }}<h3>{{ .title }}</h3><p>{{ .description }}</p></div>{{ end }}</div>
+      </section>
+      <section class="resume-findings" aria-labelledby="resume-findings-title">
+        <div class="resume-heading"><span class="resume-index" aria-hidden="true">02 /</span><h2 id="resume-findings-title">Research on record.</h2><span class="resume-jp" lang="ja" aria-hidden="true">発見</span></div>
+        <p class="resume-section-note">Discovered, analyzed, and responsibly disclosed.</p>
+        <ul class="resume-records">
+          {{ range $records }}
+          <li><a href="{{ .url }}"><div class="resume-record-name"><span class="resume-record-id">{{ .id }}</span><span class="resume-record-target">{{ .target }}</span></div>{{ partial "score.html" . }}{{ partial "icon.html" "external" }}</a></li>
+          {{ else }}<li class="resume-record-empty">Public disclosures will appear here.</li>{{ end }}
+        </ul>
+        <a class="resume-more" href="{{ "cves/" | relURL }}">Explore the disclosures {{ partial "icon.html" "arrow" }}</a>
+      </section>
+    </div>
+    <aside class="resume-rail" aria-label="Community and personal details">
+      <section class="resume-community" aria-labelledby="resume-community-title">
+        <span class="eyebrow">BETTER WITH A CREW</span><h2 id="resume-community-title">People & places.</h2>
+        <ul class="resume-roles">{{ range $profile.roles }}<li><h3>{{ .title }}</h3><span class="role-organization">{{ .organization }}</span><p>{{ .description }}</p></li>{{ end }}</ul>
+      </section>
+      <section class="resume-connect" aria-labelledby="resume-connect-title">
+        <span class="eyebrow">OPEN A CONVERSATION</span><h2 id="resume-connect-title">Compare notes?</h2>
+        <div class="resume-socials">
+          {{ with site.Params.github }}<a href="{{ . }}">{{ partial "icon.html" "github" }}<span>GitHub</span>{{ partial "icon.html" "external" }}</a>{{ end }}
+          {{ with site.Params.linkedin }}<a href="{{ . }}">{{ partial "icon.html" "linkedin" }}<span>LinkedIn</span>{{ partial "icon.html" "external" }}</a>{{ end }}
+          {{ with site.Params.discord }}<a href="{{ . }}">{{ partial "icon.html" "discord" }}<span>Discord</span>{{ partial "icon.html" "external" }}</a>{{ end }}
+          {{ with site.Params.contact }}<a href="{{ . }}">{{ partial "icon.html" "folder" }}<span>Elsewhere · guns.lol</span>{{ partial "icon.html" "external" }}</a>{{ end }}
+        </div>
+      </section>
+      {{ with $profile.off_duty }}
+      <section class="resume-off-duty" aria-labelledby="resume-off-duty-title">
+        <div class="save-point-art" aria-hidden="true"><svg width="80" height="64" viewBox="0 0 80 64" fill="none"><path d="M40 4 54 23 40 43 26 23 40 4Z" fill="currentColor" opacity=".2"/><path d="m40 4 14 19-14 20-14-20L40 4Zm0 0v39M26 23h28" stroke="currentColor" stroke-width="2"/><path d="M24 43h-6v5h-6v5h56v-5h-6v-5h-6M26 57h28M8 17h8m-4-4v8m52 8h8m-4-4v8" stroke="currentColor" stroke-width="2"/></svg></div>
+        <span class="eyebrow">AFTER HOURS</span><h2 id="resume-off-duty-title">{{ .title }}</h2><p>{{ .description }}</p>
+        <ul class="off-duty-tags">{{ range .interests }}<li>{{ . }}</li>{{ end }}</ul>
+        <p class="japanese" lang="ja">{{ .japanese }}</p><span class="phrase-translation">{{ .translation }}</span>
+      </section>
+      {{ end }}
+    </aside>
+  </div>
+</article>
+{{ end }}
