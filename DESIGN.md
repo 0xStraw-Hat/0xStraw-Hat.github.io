@@ -126,3 +126,9 @@ The selected After Hours project is now the single self-contained main repositor
 ## GitHub Pages publication
 
 The user authorized publication to the existing 0xStraw-Hat/0xStraw-Hat.github.io repository with its history preserved. Canonical base URL is https://0xstraw-hat.github.io/. Only the author’s own button GIF and still are local published assets; all other buttons use their original remote URLs. Remote animations have text fallbacks for reduced motion and print. Production checks reject localhost references. The Pages workflow replaces the old generated-HTML publishing setup.
+
+## Article card navigation
+
+The shared post-card title is a native link with a CSS hit area covering the entire card. Clicking the cover, description, metadata, or padding opens the article on the homepage and logbook/taxonomy lists. Topic links sit above that hit area and retain their own destinations. Keyboard focus outlines the whole card; native Enter, modifier-click, and open-in-new-tab behavior remain available without JavaScript. The approved card layout and colors are unchanged.
+
+The existing topic filter intentionally uses the native select: an operating-system-owned popup is acceptable for this small topic list, with built-in keyboard and touch behavior. This ownership is recorded in `premium-ui.json`.
