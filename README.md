@@ -8,7 +8,7 @@ E:\strawhat-blog-anime-v1
 
 Old projects are archived under `E:\old`: the original `my-blog` source (including `0xStrawHat-Blog`), the generated `0xStrawHat.github.io` checkout, the comparison redesign, and the Harbor artwork. This project contains both the Hugo source and its custom `after-hours` theme; you do not need to copy posts between two folders.
 
-**Main repository:** [0xStraw-Hat/0xStraw-Hat.github.io](https://github.com/0xStraw-Hat/0xStraw-Hat.github.io). The public URL is **https://0xstraw-hat.github.io/** (the hyphen matches your GitHub username). Posts, images, configuration, and the custom theme live together in this repository. Pushing to `main` runs the GitHub Pages workflow. The old projects remain backed up in `E:\old`.
+**Main repository:** [0xStraw-Hat/0xStraw-Hat.github.io](https://github.com/0xStraw-Hat/0xStraw-Hat.github.io). The public URL is **https://0xstrawhat.tech/**. Posts, images, configuration, and the custom theme live together in this repository. Pushing to `main` runs the GitHub Pages workflow. The old projects remain backed up in `E:\old`.
 
 ## Quick navigation
 
@@ -355,21 +355,21 @@ Set-Location '0xStraw-Hat.github.io'
 hugo server --buildDrafts
 ```
 
-Follow Hugo's printed preview URL (the default is localhost:1313). Local preview URLs are only for development. Production canonical links, feeds, sitemap entries, and the site URL use `https://0xstraw-hat.github.io/`.
+Follow Hugo's printed preview URL (the default is localhost:1313). Local preview URLs are only for development. Production canonical links, feeds, sitemap entries, and the site URL use `https://0xstrawhat.tech/`.
 
-The workflow `.github/workflows/hugo.yaml` runs on pushes to `main` or manually from Actions. It installs Hugo Extended 0.154.5, builds without draft/future posts, verifies generated links and feeds, and deploys the website artifact. Pages must use **GitHub Actions** as its publishing source. The former `0xstrawhat.tech` custom-domain setting is replaced with the repository's native GitHub Pages address; no DNS change is needed for the github.io address.
+The workflow `.github/workflows/hugo.yaml` runs on pushes to `main` or manually from Actions. It installs Hugo Extended 0.154.5, builds without draft/future posts, verifies generated links and feeds, and deploys the website artifact. Pages must use **GitHub Actions** as its publishing source. The custom domain is `0xstrawhat.tech`, with HTTPS enforced. The GitHub Pages address redirects to this domain. Keep `baseURL` in `hugo.toml` aligned with Settings > Pages > Custom domain. This Actions workflow does not require a CNAME file.
 
 Your own shareable button image is hosted at:
 
 ```text
-https://0xstraw-hat.github.io/images/buttons/strawhat.gif
+https://0xstrawhat.tech/images/buttons/strawhat.gif
 ```
 
 To share it with a friend:
 
 ```html
-<a href="https://0xstraw-hat.github.io/">
-  <img src="https://0xstraw-hat.github.io/images/buttons/strawhat.gif"
+<a href="https://0xstrawhat.tech/">
+  <img src="https://0xstrawhat.tech/images/buttons/strawhat.gif"
        alt="0xStrawHat" width="88" height="31">
 </a>
 ```

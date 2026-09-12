@@ -2,7 +2,7 @@
 
 Edit `data/friends.toml`. Group order and button order follow the file. Friends are first (Cubeyond, then your own blog); Random stuff follows.
 
-Only your own GIF and its still frame are stored in `static/images/buttons/`. Your public button URL is https://0xstraw-hat.github.io/images/buttons/strawhat.gif. It links to https://0xstraw-hat.github.io/. Every other button image is loaded from the exact original host selected by you, not copied into the published website.
+Only your own GIF and its still frame are stored in `static/images/buttons/`. Your public button URL is https://0xstrawhat.tech/images/buttons/strawhat.gif. It links to https://0xstrawhat.tech/. Every other button image is loaded from the exact original host selected by you, not copied into the published website.
 
 Add entries before the next `[[groups]]` header:
 
