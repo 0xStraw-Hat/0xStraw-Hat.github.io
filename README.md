@@ -397,7 +397,7 @@ The [Hugo deployment guide](https://gohugo.io/host-and-deploy/host-on-github-pag
 
 Open the changed page and check its title, links, pictures, mobile layout, and code controls. For a CVE, check both `/cves/` and the homepage/About list. For buttons, click each changed link. Build with drafts disabled before pushing.
 
-Release checks passed locally: the production Hugo build, JavaScript syntax, 18 HTML pages, 49 local targets, 3 RSS articles, 11 theme-token mappings, public canonical URLs, and no localhost references. Desktop/mobile browser checks covered search, filtering, theme switching, code folding/copy, and reduced motion. Check the GitHub Actions run for the live deployment status. Details: [verification record](docs/VERIFICATION.md).
+Release checks passed locally: the production Hugo build, JavaScript syntax, 18 HTML pages, 49 local targets, 3 RSS articles, 11 theme-token mappings, public canonical URLs, and no localhost references. Desktop/mobile browser checks covered search, filtering, theme switching, code folding/copy, and reduced motion. The first GitHub Actions deployment also passed, and the live site passed the same browser checks plus HTTP checks for all 18 pages and 68 internal targets. Your hosted button GIF matches the original file. Check Actions after future pushes. Details: [verification record](docs/VERIFICATION.md).
 
 ## Folder reference
 
